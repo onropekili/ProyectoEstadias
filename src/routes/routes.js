@@ -13,15 +13,5 @@ router.use(bodyParser.json());
 router.get("/", controller.loginView);
 
 
-router.post("/login", async (req, res) => {
-  const {username, password} = req.body;
-
-  console.log(req.body);
-
-  const userAndPassword = await databaseInstance.query(
-    "SELECT username from usuario where username = $1 and password = $2", [username, password]
-  );
-
-  res.send(userAndPassword.rows[0].username);
-});
+router.post("/login", controller.Loginlogic);
 module.exports = router;
