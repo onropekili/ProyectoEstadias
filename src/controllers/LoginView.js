@@ -1,8 +1,12 @@
 const databaseInstance = require("../db");
 
+
+
 const loginView = (req, res) => {
   res.send("This is login view");
 };
+
+
 
 const Loginlogic = async (req, res) => {
   const { username, password } = req.body;
@@ -19,6 +23,9 @@ const Loginlogic = async (req, res) => {
   res.send(whereToRedirectUser);
 };
 
+
+
+
 function verifyIfUserExists(user) {
   const hasNumberOfUserRows = user.rows.length;
   const numberOfRowsUserExists = 1;
@@ -30,13 +37,22 @@ function verifyIfUserExists(user) {
   }
 }
 
+
+
+
 function userExists() {
   return "This user Exists";
 }
 
+
+
+
 function userDoesntExist() {
   return "This user doesnt exist";
 }
+
+
+
 
 module.exports = {
   loginView,
