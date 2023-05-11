@@ -4,10 +4,10 @@ const loginView = (req, res) => {
   res.send("This is login view");
 };
 
+
+
 const Loginlogic = async (req, res) => {
   const { username, password } = req.body;
-
-  console.log(req.body);
 
   const user = await databaseInstance.query(
     "SELECT * from usuario where username = $1 and password = $2",
@@ -19,24 +19,45 @@ const Loginlogic = async (req, res) => {
   res.send(whereToRedirectUser);
 };
 
+
+
 function verifyIfUserExists(user) {
-  const hasNumberOfUserRows = user.rows.length;
+  const hasNumberOfUserRows = user.rowCount;
   const numberOfRowsUserExists = 1;
 
-  if (hasNumberOfUserRows === numberOfRowsUserExists) {
-    return userExists();
+
+  if (hasNumberOfUserRows ===  numberOfRowsUserExists) {
+    return verifyIfIsAdmin(user);
   } else {
     return userDoesntExist();
   }
 }
 
-function userExists() {
-  return "This user Exists";
+
+
+function verifyIfIsAdmin(user) {
+  const userType = user.rows[0].tipo_usuario
+
+  if(userType == true) {
+    return 'admin View';
+  }else {
+    return userExists();
+  }
 }
 
-function userDoesntExist() {
-  return "This user doesnt exist";
+
+
+function userExists() {
+  return "dashboard";
 }
+
+
+
+function userDoesntExist() {
+  return "login";
+}
+
+
 
 module.exports = {
   loginView,
