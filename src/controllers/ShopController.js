@@ -7,9 +7,7 @@ const getCommerceOwnerInfo = async (req, res) => {
   let formatedCommerceInfo = "";
 
   const rawCommerceInfo = await databaseInstance.query(
-    "select * from comercios where comerciante_id_comerciante =" +
-      commerceOwnerId +
-      ";"
+    "select * from comercios where comerciante_id_comerciante = $1;", [commerceOwnerId]
   );
 
   try {
