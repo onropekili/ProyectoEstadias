@@ -24,6 +24,6 @@ router.get('/dashboard', DashBoardController.getShops);
 
 router.get("/shop/:id", ShopController.getCommerceOwnerInfo);
 
-router.post("/create_new_costumer", costumerController.cre)
+router.post("/create_new_costumer", costumerController.createNewCostumer)
 
 module.exports = router;
