@@ -8,77 +8,36 @@ const loginView = (req, res) => {
 const Loginlogic = async (req, res) => {
   const { username, password } = req.body;
   let user = await databaseInstance.query(
-    "SELECT username, password, tipo_usuario from usuario where username = $1;",
-    [username]
+    "SELECT username, password, tipo_usuario from usuario where username = $1 and password = $2;",
+    [username, password]
   );
 
-  user.decodedPassword = password;
+  const userPath = whereToRedirectUser(user)
 
-  const whereToRedirectUser = verifyIfUserExists(user);
-
-  res.send(whereToRedirectUser);
+  res.send(user);
 };
 
-function verifyIfUserExists(user) {
-  const hasNumberOfUserRows = user.rowCount;
-  const numberOfRowsUserExists = 1;
+function whereToRedirectUser(user) {
 
-  if (hasNumberOfUserRows === numberOfRowsUserExists) {
-    return verifyIfIsAdmin(user);
-  } else {
-    return userDoesntExist();
+  const userExists = evalIfUserExists(user);
+  if(userExists) {
+    
+    return 
+
   }
+  
+
 }
 
-function verifyIfIsAdmin(user) {
-  const userType = user.rows[0].tipo_usuario;
-  const encodedPassword = user.rows[0].password;
-  const decodedPassword = user.decodedPassword;
-
-  console.log(encodedPassword);
-  const admin = true;
-
-  let isCorrectPassword = false;
-
-  if (userType == admin) {
-    isCorrectPassword = verifyPassword(encodedPassword, decodedPassword);
-    console.log("si entra");
-
-    if (isCorrectPassword) {
-      return "login View";
-    } else {
-      return "admin view";
-    }
-  } else {
-    isCorrectPassword = verifyPassword(encodedPassword, decodedPassword);
-
-    return redirectUser(isCorrectPassword);
-  }
-}
-
-function verifyPassword(encodedPassword, decodedPassword) {
-  if (bcrypt.compareSync(encodedPassword, decodedPassword)) {
+function evalIfUserExists(user) {
+  const userExist = 1;
+  if(user.rowCount >= userExists){
     return true;
-  } else {
+  }else {
     return false;
   }
 }
 
-function redirectUser(isCorrectPassword) {
-  if (isCorrectPassword) {
-    return userExists();
-  } else {
-    return userDoesntExist();
-  }
-}
-
-function userExists() {
-  return "dashboard";
-}
-
-function userDoesntExist() {
-  return "login";
-}
 
 module.exports = {
   loginView,
