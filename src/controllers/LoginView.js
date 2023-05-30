@@ -7,37 +7,40 @@ const loginView = (req, res) => {
 
 const Loginlogic = async (req, res) => {
   const { username, password } = req.body;
-  let user = await databaseInstance.query(
-    "SELECT username, password, tipo_usuario from usuario where username = $1 and password = $2;",
-    [username, password]
-  );
 
-  const userPath = whereToRedirectUser(user)
+  try {
+    let user = await databaseInstance.query(
+      "SELECT username, password, tipo_usuario from usuario where username = $1 and password = $2;",
+      [username, password]
+    );
 
-  res.send(user);
+    const userPath = returnPathIfUserExist(user);
+
+    console.log(userPath);
+
+    res.status(200).json({ Usuario: user });
+  } catch (error) {
+    res.status(204).json({ Error: error });
+  }
 };
 
-function whereToRedirectUser(user) {
-
+function returnPathIfUserExist(user) {
   const userExists = evalIfUserExists(user);
-  if(userExists) {
-    
-    return 
-
+  if (userExists) {
+    return user.rows[0].tipo_usuario;
+  } else {
+    throw new Error("User does not exist");
   }
-  
-
 }
 
 function evalIfUserExists(user) {
-  const userExist = 1;
-  if(user.rowCount >= userExists){
+  const notExist = 0;
+  if (user.rowCount > notExist) {
     return true;
-  }else {
+  } else {
     return false;
   }
 }
-
 
 module.exports = {
   loginView,
