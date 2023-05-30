@@ -7,77 +7,39 @@ const loginView = (req, res) => {
 
 const Loginlogic = async (req, res) => {
   const { username, password } = req.body;
-  let user = await databaseInstance.query(
-    "SELECT username, password, tipo_usuario from usuario where username = $1;",
-    [username]
-  );
 
-  user.decodedPassword = password;
+  try {
+    let user = await databaseInstance.query(
+      "SELECT username, password, tipo_usuario from usuario where username = $1 and password = $2;",
+      [username, password]
+    );
 
-  const whereToRedirectUser = verifyIfUserExists(user);
+    const userPath = returnPathIfUserExist(user);
 
-  res.send(whereToRedirectUser);
+    console.log(userPath);
+
+    res.status(200).json({ Usuario: user });
+  } catch (error) {
+    res.status(204).json({ Error: error });
+  }
 };
 
-function verifyIfUserExists(user) {
-  const hasNumberOfUserRows = user.rowCount;
-  const numberOfRowsUserExists = 1;
-
-  if (hasNumberOfUserRows === numberOfRowsUserExists) {
-    return verifyIfIsAdmin(user);
+function returnPathIfUserExist(user) {
+  const userExists = evalIfUserExists(user);
+  if (userExists) {
+    return user.rows[0].tipo_usuario;
   } else {
-    return userDoesntExist();
+    throw new Error("User does not exist");
   }
 }
 
-function verifyIfIsAdmin(user) {
-  const userType = user.rows[0].tipo_usuario;
-  const encodedPassword = user.rows[0].password;
-  const decodedPassword = user.decodedPassword;
-
-  console.log(encodedPassword);
-  const admin = true;
-
-  let isCorrectPassword = false;
-
-  if (userType == admin) {
-    isCorrectPassword = verifyPassword(encodedPassword, decodedPassword);
-    console.log("si entra");
-
-    if (isCorrectPassword) {
-      return "login View";
-    } else {
-      return "admin view";
-    }
-  } else {
-    isCorrectPassword = verifyPassword(encodedPassword, decodedPassword);
-
-    return redirectUser(isCorrectPassword);
-  }
-}
-
-function verifyPassword(encodedPassword, decodedPassword) {
-  if (bcrypt.compareSync(encodedPassword, decodedPassword)) {
+function evalIfUserExists(user) {
+  const notExist = 0;
+  if (user.rowCount > notExist) {
     return true;
   } else {
     return false;
   }
-}
-
-function redirectUser(isCorrectPassword) {
-  if (isCorrectPassword) {
-    return userExists();
-  } else {
-    return userDoesntExist();
-  }
-}
-
-function userExists() {
-  return "dashboard";
-}
-
-function userDoesntExist() {
-  return "login";
 }
 
 module.exports = {

@@ -7,6 +7,7 @@ const LoginController = require("../controllers/LoginView");
 const DashBoardController = require("../controllers/DashBoardController");
 const ShopController = require('../controllers/ShopController');
 const costumerController = require('../controllers/costumerController');
+const dashboardController = require('../controllers/userController/dashboardController')
 
 
 const router = Router();
@@ -24,6 +25,10 @@ router.get('/dashboard', DashBoardController.getShops);
 
 router.get("/shop/:id", ShopController.getCommerceOwnerInfo);
 
-router.post("/create_new_costumer", costumerController.createNewCostumer)
+router.post("/create_new_costumer", costumerController.createNewCostumer);
+
+router.get('/dashboard/find_by_name_or_id/', dashboardController.findByNameOrId)
+
+router.get('/dashboard', dashboardController.getDashboardInformation)
 
 module.exports = router;
