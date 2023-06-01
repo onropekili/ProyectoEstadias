@@ -1,9 +1,10 @@
-import React from 'react'
+import '../src/App.css';
+import Login from '../src/views/Login';
 
-function App() {
+const App = () => {
   return (
-    <div>App</div>
-  )
+    <Login />
+  );
 }
 
-export default App
+export default App;
