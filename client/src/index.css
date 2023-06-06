@@ -1,13 +1,36 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+@font-face {
+    font-family: 'Foco-Corp';
+    src: url('../src/assets/fonts/Foco-Corp.ttf');
+}
+@font-face {
+    font-family: 'Foco-Corp-Bold';
+    src: url('../src/assets/fonts/Foco-Corp-Bold.ttf');
+}
+@font-face {
+    font-family: 'Foco-Corp-Light';
+    src: url('../src/assets/fonts/Foco-Corp-Light.ttf');
+}
+@font-face {
+    font-family: 'Foco-Corp-Black';
+    src: url('../src/assets/fonts/Foco-Corp-Black.ttf');
+}
+@font-face {
+    font-family: 'Foco-Corp-Italic';
+    src: url('../src/assets/fonts/Foco-Corp-Italic.ttf');
+}
+@font-face {
+    font-family: 'Foco-Corp-Bold-Italic';
+    src: url('../src/assets/fonts/Foco-Corp-Bold-Italic.ttf');
+}
+@font-face {
+    font-family: 'Foco-Corp-Light-Italic';
+    src: url('../src/assets/fonts/Foco-Corp-Light-Italic.ttf');
+}
+@font-face {
+    font-family: 'Foco-Corp-Black-Italic';
+    src: url('../src/assets/fonts/Foco-Corp-Black-Italic.ttf');
 }

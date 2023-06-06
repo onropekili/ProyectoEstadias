@@ -18,7 +18,7 @@ const Loginlogic = async (req, res) => {
 
     console.log(userPath);
 
-    res.status(200).json({ Usuario: user });
+    res.status(200).json({ user: user.rows[0] });
   } catch (error) {
     res.status(204).json({ Error: error });
   }
