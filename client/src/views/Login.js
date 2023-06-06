@@ -1,18 +1,53 @@
-/*
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
+import React, { useState } from 'react';
+import axios from 'axios'
+import { showInfoAlert, showErrorAlert } from '../components/SwAlerts';
+import { Link, Navigate, useNavigate } from "react-router-dom";
+
+export default function Login({onLogin}) {
+
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+
+  const navigate = useNavigate();
+
+  const onChangeUsername = (event) => {
+    setUsername(event.target.value)
   }
-  ```
-*/
-export default function Login() {
+
+  const onChangePassword = (event) => {
+    setPassword(event.target.value)
+  }
+
+  const handleBoton = () => {
+    let data = { username, password };
+    if ([username, password].includes('')) {
+      showInfoAlert('Algo anda mal', 'Por favor ingrese usuario y contraseña');
+    } else {
+      axios.post('http://localhost:4000/login', data)
+        .then((response) => {
+          if (response.status === 200) {
+            const user = response.data.user;
+            onLogin(response.user)
+              if (user.tipo_usuario === true) {
+                navigate("/DashBoard_A");
+              } else {
+                navigate("/DashBoard_E");
+              }
+            
+            console.log(200);
+          } else {
+            showErrorAlert('Algo anda mal', 'El usuario y/o contraseña son incorrectos, inténtelo de nuevo');
+            console.log(204, 'Missing data');
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+
+  //la api retorna codigo 200 y data de usuario que el usuario si existe y no retorna data si el usuario no existe codigo 204
+
   return (
     <>
       {/*
@@ -51,46 +86,51 @@ export default function Login() {
             Inicia Sesión
           </h2>
         </div>
-        
+
         <div className='mt-5 sm:mx-auto sm:w-full sm:max-w-sm'>
-          <form className='space-y-5 ' action='#' method='POST'>
-            <div>
-              <div className='mt-5'>
-                <input
-                  id='username'
-                  name='username'
-                  type='username'
-                  autoComplete='username'
-                  placeholder='Usuario'
-                  required
-                  className='block mx-auto w-60 p-4 rounded-md drop-shadow-lg font-Foco-Corp border-1 py-2 text-gris ring-2 ring-inset ring-gris placeholder:text-gris placeholder:text-opacity-70 shadow-sm focus:ring-2 focus:ring-gris focus:ring-opacity-75 focus:outline-none sm:text-sm sm:leading-6'
-                />
-              </div>
-            </div>
 
-            <div>
-              <div className='mt-5'>
-                <input
-                  id='password'
-                  name='password'
-                  type='password'
-                  placeholder='Contraseña'
-                  autoComplete='current-password'
-                  required
-                  className='block mx-auto w-60 p-4 rounded-md drop-shadow-lg font-Foco-Corp border-1 py-2 text-gris ring-2 ring-inset ring-gris placeholder:text-gris placeholder:text-opacity-70 shadow-sm focus:ring-2 focus:ring-gris focus:ring-opacity-75 focus:outline-none sm:text-sm sm:leading-6'
-                /> 
-              </div>
+          <div>
+            <div className='mt-5'>
+              <input
+                id='username'
+                name='username'
+                type='text'
+                autoComplete='username'
+                placeholder='Usuario'
+                value={username}
+                onChange={onChangeUsername}
+                required
+                className='block mx-auto w-60 p-4 rounded-md font-Foco-Corp border-1 py-2 text-gris  placeholder:text-gris placeholder:text-opacity-70 shadow-sm ring-2 ring-inset ring-gris focus:ring-2 focus:drop-shadow-lg focus:ring-gris focus:ring-opacity-75 focus:outline-none sm:text-sm sm:leading-6'
+              />
             </div>
+          </div>
 
-            <div>
-              <button
-                type='submit'
-                className='flex mx-auto w-60 justify-center rounded-md bg-naranja px-3 py-1.5 text-sm font-Foco-Corp-Bold leading-6 text-white shadow-sm hover:bg-naranja hover:opacity-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-naranja'
-              >
-                Iniciar
-              </button>
+          <div>
+            <div className='mt-5'>
+              <input
+                id='password'
+                name='password'
+                type='password'
+                placeholder='Contraseña'
+                autoComplete='current-password'
+                value={password}
+                onChange={onChangePassword}
+                required
+                className='block mx-auto w-60 p-4 rounded-md font-Foco-Corp border-1 py-2 text-gris placeholder:text-gris placeholder:text-opacity-70 shadow-sm ring-2 ring-inset ring-gris focus:drop-shadow-lg focus:ring-2 focus:ring-gris focus:ring-opacity-75 focus:outline-none sm:text-sm sm:leading-6'
+              />
             </div>
-          </form>
+          </div>
+
+          <div>
+            <button
+              type='submit'
+              onClick={handleBoton}
+              className='mt-5 flex mx-auto w-60 justify-center rounded-md bg-naranja px-3 py-1.5 text-sm font-Foco-Corp-Bold leading-6 text-white shadow-sm hover:bg-naranja hover:opacity-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-naranja'
+            >
+              Iniciar
+            </button>
+          </div>
+
         </div>
       </div>
     </>
