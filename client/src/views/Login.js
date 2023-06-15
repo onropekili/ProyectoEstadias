@@ -47,6 +47,7 @@ export default function Login() {
         .then((response) => {
           const admin = true;
           let isCorrect = 200;
+          console.log(response.status)
 
           if (response.status === isCorrect) {
             const user = response.data.user;

@@ -5,6 +5,7 @@ import DashBoard_Executive from "./views/executiveViews/DashBoard_Executive";
 import DashBoard_Admin from "./views/adminViews/DashBoard_Admin";
 import NewComercianteView from "./views/executiveViews/NewComercianteView";
 import NewComercioView from "./views/executiveViews/NewCommerce";
+import { InfoComponent } from "./components/InfoComponent";
 export default function App() {
 
 
@@ -16,6 +17,7 @@ export default function App() {
           <Route path="/DashBoard_A" element={<DashBoard_Admin />} />
           <Route path="/Registrar-comerciante" element= {<NewComercianteView/>}/>
           <Route path="/Registrar-comercio" element={<NewComercioView/>}/>
+          <Route path="/component" element={<InfoComponent/>}/>
         </Routes>
     </BrowserRouter>
   );

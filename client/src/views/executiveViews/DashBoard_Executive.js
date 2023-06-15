@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { AuthMiddleware } from '../../middleware/ProtectedMiddleware';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { InfoComponent } from '../../components/InfoComponent';
+import {format} from 'date-fns'
 
 function DashBoard_Ejecutivo() {
   const location = useLocation();
@@ -13,7 +15,7 @@ function DashBoard_Ejecutivo() {
 
 
   return (
-    <div>hola ejecutivirijillo</div>
+    <InfoComponent folio={1} nombre={"Brau el menso"} giroActivo={"tacos"} observaciones={false} fecha_termino={"12/12/2022"} tercera_edad={true} />
   )
 }
 
