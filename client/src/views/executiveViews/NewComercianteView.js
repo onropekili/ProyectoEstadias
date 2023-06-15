@@ -27,7 +27,7 @@ const NewComercianteView = () => {
   };
   return (
     <>
-      <Header />
+      <Header useButton={true} currentPage={NewComercianteView} />
 
       {/* Contenido */}
       <div className="text-center lg:text-start md:text-start md:ms-3.5">
@@ -271,14 +271,15 @@ const NewComercianteView = () => {
         </div>
 
         <footer className="lg:grid lg:grid-cols-3 md:grid md:grid-cols-2 gap-4">
-          <div className="flex flex-col ml-16 text-white text-xl font-Foco-Corp-Bold">
+          <div className="flex flex-col ml-16 text-white text-xl font-Foco-Corp-Bold hover:opacity-75">
             <input
               type="button"
               value="Volver"
+              onClick={() => navigate("/DashBoard_E")}
               className="self-start text-center bg-verde w-40 h-11 rounded-lg"
             />
           </div>
-          <div className="flex flex-col text-white text-xl font-Foco-Corp-Bold">
+          <div className="flex flex-col text-white text-xl font-Foco-Corp-Bold ">
             <input
               type="submit"
               value={"Siguiente"}

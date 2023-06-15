@@ -7,7 +7,7 @@ const loginView = (req, res) => {
 
 const Loginlogic = async (req, res) => {
   const { username, password } = req.body;
-
+  console.log(req.body);
   try {
     let user = await databaseInstance.query(
       "SELECT username, password, tipo_usuario from usuario where username = $1 and password = $2;",
