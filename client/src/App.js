@@ -4,7 +4,9 @@ import Login from "./views/Login";
 import DashBoard_Executive from "./views/executiveViews/DashBoard_Executive";
 import DashBoard_Admin from "./views/adminViews/DashBoard_Admin";
 import NewComercianteView from "./views/executiveViews/NewComercianteView";
+import NewComercianteEventView from "./views/executiveViews/NewComercianteEventView";
 import NewComercioView from "./views/executiveViews/NewCommerce";
+import NewComercioEventView from "./views/executiveViews/NewCommerceEvent";
 import { InfoComponent } from "./components/InfoComponent";
 export default function App() {
 
@@ -16,7 +18,9 @@ export default function App() {
           <Route path="/DashBoard_E" element={<DashBoard_Executive/>} />
           <Route path="/DashBoard_A" element={<DashBoard_Admin />} />
           <Route path="/Registrar-comerciante" element= {<NewComercianteView/>}/>
+          <Route path="/Registrar-comerciante-evento" element={<NewComercianteEventView/>}/>
           <Route path="/Registrar-comercio" element={<NewComercioView/>}/>
+          <Route path="/Registrar-comercio-evento" element={<NewComercioEventView/>}/>
           <Route path="/component" element={<InfoComponent/>}/>
         </Routes>
     </BrowserRouter>
