@@ -19,7 +19,7 @@ const NewComercioView = () => {
       {/* Contenido */}
       <div className="text-center lg:text-start md:text-start md:ms-3.5">
         <h3 className="text-3xl font-Foco-Corp-Bold text-naranja opacity-80 mt-9 lg:ms-12">
-          Datos del comerciante
+          Datos del comercio
         </h3>
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -28,8 +28,65 @@ const NewComercioView = () => {
             {/* seccion datos personales start */}
             <div className="lg:mt-2 m-0 text-center lg:text-start md:text-start">
               <h4 className="text-2xl text-gris font-Foco-Corp-Bold mb-6">
-                Datos personales:
+                Información
               </h4>
+            </div>
+            <div className="lg:grid lg:grid-cols-4 md:grid md:grid-cols-2 gap-4">
+              <div className="flex flex-col mb-4 col-span-2">
+                <label
+                  htmlFor="apellidoPaterno"
+                  className="font-Foco-Corp-Bold text-gris text-base mb-1"
+                >
+                  Clasificación
+                </label>
+                <select
+                  type=""
+                  id="apellidoPaterno"
+                  className="bg-gris bg-opacity-10 text-gris rounded-lg border-gray-500 border p-2 h-9"
+                  {...register("apellidoPaterno", { required: true })}
+                  placeholder="Escribe algo"
+                >
+                  <option value={""} hidden className="text-gris">Selecciona una opcion</option>
+                  <option value={"option1"} className="text-gris">Comercio ambulante</option>
+                  <option value={"option1"} className="text-gris">Comercio en puesto fijo</option>
+                  <option value={"option1"} className="text-gris">Comercio en puesto semifijo</option>
+                  <option value={"option1"} className="text-gris">Comercios en festividades</option>
+                </select>
+              </div>
+              <div className="flex flex-col mb-4 col-span-1">
+                <label
+                  htmlFor="apellidoMaterno"
+                  className="font-Foco-Corp-Bold text-gris text-base mb-1"
+                >
+                  Tipo
+                </label>
+                <select
+                  type=""
+                  id="apellidoPaterno"
+                  className="bg-gris bg-opacity-10 text-gris rounded-lg border-gray-500 border p-2 h-9"
+                  {...register("apellidoPaterno", { required: true })}
+                  placeholder="Escribe algo"
+                >
+                  <option value={""} hidden className="text-gris">Seleccionar</option>
+                  <option value={"option1"} className="text-gris">Eventual</option>
+                  <option value={"option1"} className="text-gris">Especial</option>
+                  <option value={"option1"} className="text-gris">Permanente</option>
+                </select>
+              </div>
+              <div className="flex flex-col mb-4 col-span-1">
+                <label
+                  htmlFor="apellidoMaterno"
+                  className="font-Foco-Corp-Bold text-gris text-base mb-1"
+                >
+                  Metros
+                </label>
+                <input
+                  id="apellidoMaterno"
+                  className="bg-gris bg-opacity-10 text-black rounded-lg border-gray-500 border p-2 h-9"
+                  {...register("apellidoMaterno")}
+                  placeholder="Escribe algo"
+                />
+              </div>
             </div>
             <div className="lg:grid lg:grid-cols-2 md:grid md:grid-cols-2 gap-4">
               <div className="flex flex-col mb-4">
@@ -37,7 +94,7 @@ const NewComercioView = () => {
                   htmlFor="apellidoPaterno"
                   className="font-Foco-Corp-Bold text-gris text-base mb-1"
                 >
-                  Apellido Paterno:
+                  Tipo de Giro/Actividad
                 </label>
                 <input
                   id="apellidoPaterno"
@@ -51,58 +108,24 @@ const NewComercioView = () => {
                   htmlFor="apellidoMaterno"
                   className="font-Foco-Corp-Bold text-gris text-base mb-1"
                 >
-                  Apellido Materno:
+                  Horario
                 </label>
-                <input
-                  id="apellidoMaterno"
-                  className="bg-gris bg-opacity-10 text-black rounded-lg border-gray-500 border p-2 h-9"
-                  {...register("apellidoMaterno")}
+                <select
+                  type=""
+                  id="apellidoPaterno"
+                  className="bg-gris bg-opacity-10 text-gris rounded-lg border-gray-500 border p-2 h-9"
+                  {...register("apellidoPaterno", { required: true })}
                   placeholder="Escribe algo"
-                />
-              </div>
-            </div>
-            <div className="flex flex-col mb-4">
-              <label
-                htmlFor="nombres"
-                className="font-Foco-Corp-Bold text-gris text-base mb-1"
-              >
-                Nombres:
-              </label>
-              <input
-                id="nombres"
-                className="bg-gris bg-opacity-10 text-black rounded-lg border-gray-500 border p-2 w-full h-9"
-                {...register("nombres", { required: true })}
-                placeholder="Escribe algo"
-              />
-            </div>
-            <div className="lg:grid lg:grid-cols-2 md:grid md:grid-cols-2 gap-4">
-              <div className="flex flex-col mb-4">
-                <label
-                  htmlFor="telefono1"
-                  className="font-Foco-Corp-Bold text-gris text-base mb-1"
                 >
-                  Teléfono 1:
-                </label>
-                <input
-                  id="telefono1"
-                  className="bg-gris bg-opacity-10 text-black rounded-lg border-gray-500 border p-2 h-9"
-                  {...register("telefono1", { required: true })}
-                  placeholder="Escribe algo"
-                />
-              </div>
-              <div className="flex flex-col mb-4">
-                <label
-                  htmlFor="telefono2"
-                  className="font-Foco-Corp-Bold text-gris text-base mb-1"
-                >
-                  Teléfono 2:
-                </label>
-                <input
-                  id="telefono2"
-                  className="bg-gris bg-opacity-10 text-black rounded-lg border-gray-500 border p-2 h-9"
-                  {...register("telefono2")}
-                  placeholder="Escribe algo"
-                />
+                  <option value={""} hidden className="text-gris">Seleccionar</option>
+                  <option value={"option1"} className="text-gris">Mat: 07:00 a 18:00</option>
+                  <option value={"option1"} className="text-gris">Vesp: 18:00 a 22:00</option>
+                  <option value={"option1"} className="text-gris">Vesp: 18:01 a 23:00</option>
+                  <option value={"option1"} className="text-gris">Mixto variable</option>
+                  <option value={"option1"} className="text-gris">Otro horario</option>
+
+
+                </select>
               </div>
             </div>
             <div className="flex flex-col mb-4">
@@ -110,7 +133,7 @@ const NewComercioView = () => {
                 htmlFor="email"
                 className="font-Foco-Corp-Bold text-gris text-base mb-1"
               >
-                Correo Electrónico:
+                Observaciones
               </label>
               <input
                 id="email"
@@ -118,29 +141,6 @@ const NewComercioView = () => {
                 {...register("email", { required: true })}
                 placeholder="Escribe algo"
               />
-            </div>
-            <div className="flex flex-col mb-4">
-              <label
-                htmlFor="terceraEdad"
-                className="font-Foco-Corp-Bold text-gris text-base mb-1"
-              >
-                Comerciante de la tercera edad o discapacitado
-              </label>
-              <div className="flex items-center mb-4">
-                <input
-                  id="terceraEdad"
-                  type="checkbox"
-                  {...register("terceraEdad")}
-                  className="h-4 w-4 rounded-full focus:bg-verde bg-verde"
-                />
-                <label
-                  htmlFor="terceraEdad"
-                  className="text-sm ml-2 font-Foco-Corp-Italic text-gris mt-1"
-                >
-                  Selecciona la casilla solo si el comerciante es de la tercera
-                  edad o tiene capacidades diferentes
-                </label>
-              </div>
             </div>
           </section>
           {/* seccion datos personales end */}
@@ -152,49 +152,19 @@ const NewComercioView = () => {
                 Domicilio
               </h4>
             </div>
-            <div className="lg:grid lg:grid-cols-3 md:grid md:grid-cols-3 gap-4">
-              <div className="flex flex-col mb-4">
-                <label
-                  htmlFor="calle"
-                  className="font-Foco-Corp-Bold text-gris text-base mb-1"
-                >
-                  Calle:
-                </label>
-                <input
-                  id="calle"
-                  className="bg-gris bg-opacity-10 text-black rounded-lg border-gray-500 border p-2 h-9 "
-                  {...register("calle", { required: true })}
-                  placeholder="Escribe algo"
-                />
-              </div>
-              <div className="flex flex-col mb-4 w-auto">
-                <label
-                  htmlFor="nExterior"
-                  className="font-Foco-Corp-Bold text-gris text-base mb-1"
-                >
-                  No. exterior:
-                </label>
-                <input
-                  id="nExterior"
-                  className="bg-gris bg-opacity-10 text-black rounded-lg border-gray-500 border p-2 h-9"
-                  {...register("nExterior", { required: true })}
-                  placeholder="Escribe algo"
-                />
-              </div>
-              <div className="flex flex-col mb-4">
-                <label
-                  htmlFor="nInterior"
-                  className="font-Foco-Corp-Bold text-gris text-base mb-1"
-                >
-                  No. interior:
-                </label>
-                <input
-                  id="nInterior"
-                  className="bg-gris bg-opacity-10 text-black rounded-lg border-gray-500 border p-2 h-9 "
-                  {...register("nInterior", { required: false })}
-                  placeholder="Escribe algo"
-                />
-              </div>
+            <div className="flex flex-col mb-4">
+              <label
+                htmlFor="email"
+                className="font-Foco-Corp-Bold text-gris text-base mb-1"
+              >
+                Calle
+              </label>
+              <input
+                id="email"
+                className="bg-gris bg-opacity-10 text-black rounded-lg border-gray-500 border p-2 h-9"
+                {...register("email", { required: true })}
+                placeholder="Escribe algo"
+              />
             </div>
             <div className="lg:grid lg:grid-cols-2 md:grid md:grid-cols-2 gap-4">
               <div className="flex flex-col mb-4">
@@ -202,7 +172,7 @@ const NewComercioView = () => {
                   htmlFor="colonia"
                   className="font-Foco-Corp-Bold text-gris text-base mb-1"
                 >
-                  Colonia
+                  Entre
                 </label>
                 <input
                   id="colonia"
@@ -216,7 +186,7 @@ const NewComercioView = () => {
                   htmlFor="cp"
                   className="font-Foco-Corp-Bold text-gris text-base mb-1"
                 >
-                  C.P
+                  Y
                 </label>
                 <input
                   id="cp"
@@ -226,40 +196,47 @@ const NewComercioView = () => {
                 />
               </div>
             </div>
-            <div className="flex flex-col mb-4">
-              <label
-                htmlFor="municipio"
-                className="font-Foco-Corp-Bold text-gris text-base mb-1"
-              >
-                Municipio
-              </label>
-              <input
-                id="municipio"
-                className="bg-gris bg-opacity-10 text-black rounded-lg border-gray-500 border p-2 h-9"
-                {...register("telefono1", { required: true })}
-                placeholder="Escribe algo"
-              />
+            <div className="lg:grid lg:grid-cols-3 md:grid md:grid-cols-2 gap-4">
+              <div className="flex flex-col mb-4 col-span-2">
+                <label
+                  htmlFor="colonia"
+                  className="font-Foco-Corp-Bold text-gris text-base mb-1"
+                >
+                  Localidad
+                </label>
+                <input
+                  id="colonia"
+                  className="bg-gris bg-opacity-10 text-black rounded-lg border-gray-500 border p-2 h-9 "
+                  {...register("apellidoPaterno", { required: true })}
+                  placeholder="Escribe algo"
+                />
+              </div>
+              <div className="flex flex-col mb-4 col-span-1">
+                <label
+                  htmlFor="cp"
+                  className="font-Foco-Corp-Bold text-gris text-base mb-1"
+                >
+                  Zona
+                </label>
+                <input
+                  id="cp"
+                  className="bg-gris bg-opacity-10 text-black rounded-lg border-gray-500 border p-2 h-9"
+                  {...register("apellidoMaterno")}
+                  placeholder="Escribe algo"
+                />
+              </div>
             </div>
-            <div className="flex flex-col mb-4">
-              <label
-                htmlFor="observaciones"
-                className="font-Foco-Corp-Bold text-gris text-base mb-1"
-              >
-                Observaciones al comerciante
-              </label>
-              <input
-                id="observaciones"
-                className="bg-gris bg-opacity-10 text-black rounded-lg border-gray-500 border p-2 h-9"
-                {...register("email")}
-                placeholder="Escribe algo"
-              />
-            </div>
+            
           </section>
         </div>
 
-        <footer className="lg:grid lg:grid-cols-3 md:grid md:grid-cols-2 gap-4">
+        <footer className="lg:grid lg:grid-cols-3 md:grid md:grid-cols-2 gap-4 mt-48">
           <div className="flex flex-col ml-16 text-white text-xl font-Foco-Corp-Bold">
-            <input type="button" value="Volver" className="self-start text-center bg-verde w-40 h-11 rounded-lg" />
+            <input
+              type="button"
+              value="Volver"
+              className="self-start text-center bg-verde w-40 h-11 rounded-lg"
+            />
           </div>
           <div className="flex flex-col text-white text-xl font-Foco-Corp-Bold">
             <input

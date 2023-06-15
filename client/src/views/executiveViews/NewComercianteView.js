@@ -50,7 +50,7 @@ const NewComercianteView = () => {
                   htmlFor="apellidoPaterno"
                   className="font-Foco-Corp-Bold text-gris text-base mb-1"
                 >
-                  Apellido Paterno:
+                  Apellido Paterno
                 </label>
                 <input
                   id="apellidoPaterno"
@@ -64,7 +64,7 @@ const NewComercianteView = () => {
                   htmlFor="apellidoMaterno"
                   className="font-Foco-Corp-Bold text-gris text-base mb-1"
                 >
-                  Apellido Materno:
+                  Apellido Materno
                 </label>
                 <input
                   id="apellidoMaterno"
@@ -79,7 +79,7 @@ const NewComercianteView = () => {
                 htmlFor="nombres"
                 className="font-Foco-Corp-Bold text-gris text-base mb-1"
               >
-                Nombres:
+                Nombres
               </label>
               <input
                 id="nombres"
@@ -94,7 +94,7 @@ const NewComercianteView = () => {
                   htmlFor="telefono1"
                   className="font-Foco-Corp-Bold text-gris text-base mb-1"
                 >
-                  Teléfono 1:
+                  Teléfono 1
                 </label>
                 <input
                   id="telefono1"
@@ -108,7 +108,7 @@ const NewComercianteView = () => {
                   htmlFor="telefono2"
                   className="font-Foco-Corp-Bold text-gris text-base mb-1"
                 >
-                  Teléfono 2:
+                  Teléfono 2
                 </label>
                 <input
                   id="telefono2"
@@ -123,7 +123,7 @@ const NewComercianteView = () => {
                 htmlFor="email"
                 className="font-Foco-Corp-Bold text-gris text-base mb-1"
               >
-                Correo Electrónico:
+                Correo Electrónico
               </label>
               <input
                 id="email"
@@ -171,7 +171,7 @@ const NewComercianteView = () => {
                   htmlFor="calle"
                   className="font-Foco-Corp-Bold text-gris text-base mb-1"
                 >
-                  Calle:
+                  Calle
                 </label>
                 <input
                   id="calle"
@@ -185,7 +185,7 @@ const NewComercianteView = () => {
                   htmlFor="nExterior"
                   className="font-Foco-Corp-Bold text-gris text-base mb-1"
                 >
-                  No. exterior:
+                  No. exterior
                 </label>
                 <input
                   id="nExterior"
@@ -199,7 +199,7 @@ const NewComercianteView = () => {
                   htmlFor="nInterior"
                   className="font-Foco-Corp-Bold text-gris text-base mb-1"
                 >
-                  No. interior:
+                  No. interior
                 </label>
                 <input
                   id="nInterior"
