@@ -7,7 +7,7 @@ const loginView = (req, res) => {
 
 const Loginlogic = async (req, res) => {
   const { username, password } = req.body;
-
+  console.log(req.body);
   try {
     let user = await databaseInstance.query(
       "SELECT username, password, tipo_usuario from usuario where username = $1 and password = $2;",
@@ -16,9 +16,11 @@ const Loginlogic = async (req, res) => {
 
     const userPath = returnPathIfUserExist(user);
 
+    const CommerceInfo = await axios.get("http://localhost:4000/dashboard")
+
     console.log(userPath);
 
-    res.status(200).json({ user: user.rows[0] });
+    res.status(200).json({ user: user.rows[0], commerciante : CommerceInfo.data });
   } catch (error) {
     res.status(204).json({ Error: error });
   }

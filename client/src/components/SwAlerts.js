@@ -8,6 +8,14 @@ export const showInfoAlert = (title, text) => {
   });
 };
 
+export const showInfoAlertOp = (title, text) => {
+  Swal.fire({
+    icon: 'info',
+    title: title,
+    text: text
+  });
+};
+
 export const showErrorAlert = (title, text) => {
   Swal.fire({
     icon: 'error',
