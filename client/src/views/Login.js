@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { showInfoAlert, showErrorAlert } from "../components/SwAlerts";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import {useNavigate } from "react-router-dom";
 
 export default function Login() {
   useEffect(() => {
@@ -46,7 +46,6 @@ export default function Login() {
         .post("http://localhost:4000/login", data)
         .then((response) => {
           const admin = true;
-          const user = false;
           let isCorrect = 200;
 
           if (response.status === isCorrect) {
@@ -86,9 +85,9 @@ export default function Login() {
         />
       </div>
 
-      <div className="flex w-auto h-46 left-0 top-119">
+      <div className="flex w-auto left-0 top-119">
         <img
-          className="w-1280 h-142"
+          className=""
           src={require("../assets/images/banner.jpg")}
           alt="Logo de la empresa"
         />
