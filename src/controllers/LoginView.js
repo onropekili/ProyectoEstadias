@@ -1,3 +1,4 @@
+const axios = require("axios");
 const databaseInstance = require("../db");
 const bcrypt = require("bcrypt");
 
@@ -16,11 +17,9 @@ const Loginlogic = async (req, res) => {
 
     const userPath = returnPathIfUserExist(user);
 
-    const CommerceInfo = await axios.get("http://localhost:4000/dashboard")
+    
 
-    console.log(userPath);
-
-    res.status(200).json({ user: user.rows[0], commerciante : CommerceInfo.data });
+    res.status(200).json({ user: user.rows[0]});
   } catch (error) {
     res.status(204).json({ Error: error });
   }

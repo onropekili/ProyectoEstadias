@@ -47,14 +47,23 @@ export default function Login() {
         .then((response) => {
           const admin = true;
           let isCorrect = 200;
-          console.log(response.status)
+          console.log(response.status);
 
           if (response.status === isCorrect) {
             const user = response.data.user;
             if (user.tipo_usuario === admin) {
               navigate("/DashBoard_A", { state: { data: user } });
             } else {
-              navigate("/DashBoard_E", { state: { data: user } });
+              axios
+                .get("http://localhost:4000/dashboard")
+                .then((res) => {
+                  navigate("/DashBoard_E", {
+                    state: { data: user, comerciante: res.data },
+                  });
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
             }
 
             console.log(200);
@@ -65,7 +74,6 @@ export default function Login() {
               "Algo anda mal",
               "El usuario y/o contraseña son incorrectos, inténtelo de nuevo"
             );
-            console.log(204, "Missing data");
           }
         })
         .catch((err) => {
