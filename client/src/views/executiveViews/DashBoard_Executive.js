@@ -32,7 +32,7 @@ function DashBoard_Ejecutivo() {
         comerciante.nombres
       }
       giroActivo={comerciante.giro}
-      observaciones={comerciante.observaciones_comercio}
+      observaciones={comerciante.observaciones_comerciante}
       fecha_termino={comerciante.fecha_termino}
       tercera_edad={comerciante.tercera_edad}
     />
@@ -71,7 +71,7 @@ function DashBoard_Ejecutivo() {
   return (
     <>
       <Header useButton={true} currentPage={DashBoard_Ejecutivo} />
-      <div className="flex p-6">
+      <div className="flex px-8 pt-7">
         <div className="flex flex-col">
           <div className="mb-4 flex flex-wrap">
             <div className="relative flex items-center mr-4">
@@ -174,9 +174,7 @@ function DashBoard_Ejecutivo() {
         </div>
       </div>
 
-      {/**/}
-
-      <div className="p-6">{ComerciantesComponents}</div>
+      <div className="justify-center items-center flex flex-wrap">{ComerciantesComponents}</div>
     </>
   );
 }
