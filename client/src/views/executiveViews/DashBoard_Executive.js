@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { AuthMiddleware } from "../../middleware/ProtectedMiddleware";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -8,8 +8,9 @@ import Header from "../../components/Header";
 function DashBoard_Ejecutivo() {
   const location = useLocation();
   const user = location.state && location.state.data;
-  const comerciantes = location.state && location.state.comerciante;
+  let comerciantes = location.state && location.state.comerciante;
   const navigate = useNavigate();
+  let ComerciantesComponents
 
   const [nameOrId, setNameOrId] = useState("");
   const [Mostrar, setMostrar] = useState("");
@@ -20,52 +21,88 @@ function DashBoard_Ejecutivo() {
     AuthMiddleware(user, navigate);
   }, [user, navigate]);
 
-  const ComerciantesComponents = comerciantes.map((comerciante) => (
-    <InfoComponent
-      key={comerciante.id_comercio}
-      folio={comerciante.id_comercio}
-      nombre={
-        comerciante.apellido_paterno +
-        " " +
-        comerciante.apellido_materno +
-        " " +
-        comerciante.nombres
-      }
-      giroActivo={comerciante.giro}
-      observaciones={comerciante.observaciones_comerciante}
-      fecha_termino={comerciante.fecha_termino}
-      tercera_edad={comerciante.tercera_edad}
-    />
-  ));
+  const setInfoComponent = (comerciantes) => {
+    ComerciantesComponents = comerciantes.map((comerciante) => (
+      <InfoComponent
+        key={comerciante.id_comercio}
+        folio={comerciante.id_comercio}
+        nombre={
+          comerciante.apellido_paterno +
+          " " +
+          comerciante.apellido_materno +
+          " " +
+          comerciante.nombres
+        }
+        giroActivo={comerciante.giro}
+        observaciones={comerciante.observaciones_comerciante}
+        fecha_termino={comerciante.fecha_termino}
+        tercera_edad={comerciante.tercera_edad}
+      />
+    ));
+  }
+
+  setInfoComponent(comerciantes);
+
+  
 
   const HandleInputChanges = (event) => {
-    switch (event.target.id) {
+    const inputId = event.target.id
+    const newValue = event.target.value
+    switch (inputId) {
       case "mostrar":
-        setColonia("");
-        setMostrar(event.target.value)
+        onChangeMostrar(newValue);
         break;
 
       case "colonia":
-        setNameOrId("");
-        setMostrar("");
-        setFiltrarPor("");
-        setColonia(event.target.value)
+        onChangeColonia(newValue);
         break;
 
       case "nameOrId":
-        setColonia("");
-        setNameOrId(event.target.value)
+        onChangeNameOrId(newValue);
 
         break;
 
       case "filtrar":
-        setColonia("");
-       setFiltrarPor(event.target.value)
+        onChangeFiltrar(newValue);
         break;
 
       default:
         break;
     }
+    const data = {
+      isNameOrId : nameOrId,
+      filtrarPor : filtrarPor,
+      mostrar: Mostrar,
+      colonia: colonia
+    };
+
+   axios.get('http://localhost:4000/dashboard/find_by_name_or_id/', {params : data} )
+   .then((res) => {
+    console.log(res.data.result.rows);
+    // setInfoComponent(res.data)
+   })
+  };
+
+  const onChangeMostrar = (newValue) => {
+    setColonia("");
+    setMostrar(newValue);
+  };
+
+  const onChangeColonia = (newValue) => {
+    setNameOrId("");
+    setMostrar("");
+    setFiltrarPor("");
+    setColonia(newValue);
+  };
+
+  const onChangeNameOrId = (newValue) => {
+    setColonia("");
+    setNameOrId(newValue);
+  };
+
+  const onChangeFiltrar = (newValue) => {
+    setColonia("");
+    setFiltrarPor(newValue);
   };
 
   return (
@@ -95,12 +132,9 @@ function DashBoard_Ejecutivo() {
               className=" px-4 py-3.5 w-64 rounded-lg font-Foco-Corp text-gris placeholder:text-gris placeholder:text-opacity-70 shadow-sm ring-2 ring-inset ring-gris focus:drop-shadow-lg focus:ring-2 focus:ring-gris focus:ring-opacity-75 focus:outline-none sm:text-sm sm:leading-6"
               onChange={HandleInputChanges}
             >
-              <option hidden value="default">
-                Mostrar
-              </option>
-              <option value="option1">Todos</option>
-              <option value="option2">Permanentes</option>
-              <option value="option3">Eventuales</option>
+              <option value="">Todos</option>
+              <option value="permanentes">Permanentes</option>
+              <option value="eventuales">Eventuales</option>
             </select>
           </div>
 
@@ -127,13 +161,13 @@ function DashBoard_Ejecutivo() {
               className="px-4 py-3.5 w-64 rounded-lg font-Foco-Corp text-gris placeholder:text-gris placeholder:text-opacity-70 shadow-sm ring-2 ring-inset ring-gris focus:drop-shadow-lg focus:ring-2 focus:ring-gris focus:ring-opacity-75 focus:outline-none sm:text-sm sm:leading-6"
               onChange={HandleInputChanges}
             >
-              <option hidden>Filtrar por</option>
-              <option value="default">
+              <option hidden value={""}>Filtrar por</option>
+              <option value="terceraEdad">
                 Tercera edad/Capacidades diferentes
               </option>
-              <option value="option2">Refrendados</option>
-              <option value="option3">No Refrendados</option>
-              <option value="option4">Con Observaciones</option>
+              <option value="refrendados">Refrendados</option>
+              <option value="noRefrendados">No Refrendados</option>
+              <option value="conObservacion">Con Observaciones</option>
             </select>
           </div>
         </div>
@@ -174,10 +208,11 @@ function DashBoard_Ejecutivo() {
         </div>
       </div>
 
-      <div className="justify-center items-center flex flex-wrap">{ComerciantesComponents}</div>
+      <div className="justify-center items-center flex flex-wrap">
+        {ComerciantesComponents}
+      </div>
     </>
   );
 }
-
 
 export default DashBoard_Ejecutivo;
