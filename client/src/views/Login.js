@@ -55,10 +55,11 @@ export default function Login() {
               navigate("/DashBoard_A", { state: { data: user } });
             } else {
               axios
-                .get("http://localhost:4000/dashboard")
+                .get("http://localhost:4000/dashboard/find_by_name_or_id/")
                 .then((res) => {
+                  console.log(res.data);
                   navigate("/DashBoard_E", {
-                    state: { data: user, comerciante: res.data },
+                    state: { data: user, comerciante: res.data.result.rows },
                   });
                 })
                 .catch((err) => {
