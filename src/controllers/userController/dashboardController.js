@@ -14,17 +14,22 @@ const getDashboardInformation = async (req, res) => {
 };
 
 const findByNameOrId = async (req, res) => {
-  console.log(req.query);
-  let filters =  req.query ? req.query : {}; 
-  let parametersArray = {};
+  let limitedConsult;
+  let resultOfConsult;
+  let filters = req.query ? req.query : {};
   try {
-    let unlimitedConsult = getConsult(filters, parametersArray);
-    const limitedConsult = unlimitedConsult + " limit 9";
-    const resultOfConsult = await queryToDatabase(
-      limitedConsult,
-      parametersArray
-    );
+    if (Object.keys(filters).length !== 0) {
+      let parametersArray = {};
 
+      let limitedConsult = getConsult(filters, parametersArray) + " limit 9";
+      resultOfConsult = await queryToDatabaseWithFilters(
+        limitedConsult,
+        parametersArray
+      );
+    } else {
+      limitedConsult = "select * from dashboard where 1=1 limit 9";
+      resultOfConsult = await queryToDatabaseWithOutFilters(limitedConsult);
+    }
     res
       .status(200)
       .json({ message: "Busqueda exitosa", result: resultOfConsult });
@@ -44,7 +49,7 @@ function getConsult(filters, parametersArray) {
 }
 
 function isNameOrId(filters, parametersArray) {
-  if (filters.isNameOrId !== '') {
+  if (filters.isNameOrId !== "") {
     parametersArray.nameOrId = filters.isNameOrId;
     if (!isNaN(filters.isNameOrId)) {
       return "select * from dashboard where id_comerciante = $1";
@@ -53,44 +58,49 @@ function isNameOrId(filters, parametersArray) {
       parametersArray.nameOrId = "%" + parametersArray.nameOrId + "%";
       return "select * from dashboard where unaccent(nombre_completo)  ilike unaccent($1)";
     }
-  } else {
-    return "select * from dashboard where 1=1";
+  }else {
+    return "select * from dashboard where 1=1 "
   }
 }
 
 function consultWithFilters(filters) {
   let aditionalConsult = "";
-    if (filters.mostrar === 'permanentes') {
-      aditionalConsult = aditionalConsult + " and tipo_permiso = 'PERMANENTE'";
-    } else if (filters.mostrar === 'eventuales') {
-      aditionalConsult = aditionalConsult + " and tipo_permiso = 'EVENTUAL'";
-    }
-    return aditionalConsult;
+  if (filters.mostrar === "permanentes") {
+    aditionalConsult = aditionalConsult + " and tipo_permiso = 'PERMANENTE'";
+  } else if (filters.mostrar === "eventuales") {
+    aditionalConsult = aditionalConsult + " and tipo_permiso = 'EVENTUAL'";
+  }
+  return aditionalConsult;
 }
 function getOptions(filters) {
   let aditionalConsult = "";
-    if (filters.filtrarPor === 'terceraEdad') {
-      aditionalConsult += " and tercera edad = true";
-    } else if (filters.filtrarPor === 'refrendados') {
-      aditionalConsult += " and fecha_termino >= current_date";
-    } else if (filters.filtrarPor === 'noRefrendados') {
-      aditionalConsult += "and fecha_termino < current_date";
-    } else if (filters.filtrarPor === 'conObservacion') {
-      aditionalConsult +=
-        " and observaciones_comerciante != '' or observaciones_comercio != ''";
-    }
+  if (filters.filtrarPor === "terceraEdad") {
+    aditionalConsult += " and tercera_edad = true";
+  } else if (filters.filtrarPor === "refrendados") {
+    aditionalConsult += " and fecha_termino >= current_date";
+  } else if (filters.filtrarPor === "noRefrendados") {
+    aditionalConsult += "and fecha_termino < current_date";
+  } else if (filters.filtrarPor === "conObservacion") {
+    aditionalConsult +=
+      " and observaciones_comerciante != '' or observaciones_comercio != ''";
+  }
 
   return aditionalConsult;
 }
 
-const queryToDatabase = async (limitedConsult, parametersArray) => {
-  if (parametersArray.nameOrId !== undefined) {
+const queryToDatabaseWithFilters = async (limitedConsult, parametersArray) => {
+  if(Object.keys(parametersArray).length > 0){
     return await databaseInstance.query(limitedConsult, [
       parametersArray.nameOrId,
     ]);
-  } else {
+  }else {
     return await databaseInstance.query(limitedConsult);
   }
+
+};
+
+const queryToDatabaseWithOutFilters = async (limitedConsult) => {
+  return await databaseInstance.query(limitedConsult);
 };
 
 module.exports = {
