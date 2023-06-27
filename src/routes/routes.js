@@ -8,6 +8,7 @@ const DashBoardController = require("../controllers/DashBoardController");
 const ShopController = require('../controllers/ShopController');
 const costumerController = require('../controllers/costumerController');
 const dashboardController = require('../controllers/userController/dashboardController')
+const CostumerController = require('../controllers/userController/Costumer');
 
 
 const router = Router();
@@ -21,8 +22,6 @@ router.get("/", LoginController.loginView);
 
 router.post("/login", LoginController.Loginlogic);
 
-router.get('/dashboard', DashBoardController.getShops);
-
 router.get("/shop/:id", ShopController.getCommerceOwnerInfo);
 
 router.post("/create_new_costumer", costumerController.createNewCostumer);
@@ -30,5 +29,11 @@ router.post("/create_new_costumer", costumerController.createNewCostumer);
 router.get('/dashboard/find_by_name_or_id/', dashboardController.findByNameOrId)
 
 router.get('/dashboard', dashboardController.getDashboardInformation)
+
+router.put("/edit/costumer", CostumerController.editCostumer)
+
+router.delete("/delete/costumer/comerciante", CostumerController.deleteCostumer)
+
+router.delete("/delete/costumer/comercio", CostumerController.deleteComercio)
 
 module.exports = router;
