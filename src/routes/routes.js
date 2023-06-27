@@ -32,6 +32,10 @@ router.get('/dashboard/find_by_name_or_id/', dashboardController.findByNameOrId)
 
 router.get('/dashboard', dashboardController.getDashboardInformation)
 
-router.get("/Costumer", CostumerController.getCostumer)
+router.put("/edit/costumer", CostumerController.editCostumer)
+
+router.delete("/delete/costumer/comerciante", CostumerController.deleteCostumer)
+
+router.delete("/delete/costumer/comercio", CostumerController.deleteComercio)
 
 module.exports = router;
