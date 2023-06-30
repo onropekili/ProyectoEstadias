@@ -7,8 +7,12 @@ import { AuthMiddleware } from "../../middleware/ProtectedMiddleware";
 const NewComercianteView = () => {
   const location = useLocation();
   const data = location.state && location.state.data;
-  const user = data ? data.user ? data.user : null : null;
-  const comerciante = data ? data.comerciante ? data.comerciante : null : null;
+  const user = data ? (data.user ? data.user : null) : null;
+  const comerciante = data
+    ? data.comerciante
+      ? data.comerciante
+      : null
+    : null;
   const navigate = useNavigate();
   const {
     register,
@@ -17,13 +21,13 @@ const NewComercianteView = () => {
     formState: { errors },
   } = useForm();
 
+
   // useEffect(() => {
   //   AuthMiddleware(user, navigate);
   // }, [user, navigate]);
 
   const onSubmit = (data) => {
-    console.log(data);
-    navigate("/Registrar-comercio", { comerciante: data });
+     navigate("/Registrar-comercio", {state : { comerciante: data }});
   };
   return (
     <>
@@ -69,7 +73,7 @@ const NewComercianteView = () => {
                 <input
                   id="apellidoMaterno"
                   className="bg-gris bg-opacity-10 text-black rounded-lg border-gray-500 border p-2 h-9"
-                  {...register("apellidoMaterno")}
+                  {...register("apellidoMaterno", {})}
                   placeholder="Escribe algo"
                 />
               </div>
@@ -182,29 +186,29 @@ const NewComercianteView = () => {
               </div>
               <div className="flex flex-col mb-4 w-auto">
                 <label
-                  htmlFor="nExterior"
+                  htmlFor="numeroExterior"
                   className="font-Foco-Corp-Bold text-gris text-base mb-1"
                 >
                   No. exterior
                 </label>
                 <input
-                  id="nExterior"
+                  id="numeroExterior"
                   className="bg-gris bg-opacity-10 text-black rounded-lg border-gray-500 border p-2 h-9"
-                  {...register("nExterior", { required: true })}
+                  {...register("numeroExterior", { required: true })}
                   placeholder="Escribe algo"
                 />
               </div>
               <div className="flex flex-col mb-4">
                 <label
-                  htmlFor="nInterior"
+                  htmlFor="numeroInterior"
                   className="font-Foco-Corp-Bold text-gris text-base mb-1"
                 >
                   No. interior
                 </label>
                 <input
-                  id="nInterior"
+                  id="numeroInterior"
                   className="bg-gris bg-opacity-10 text-black rounded-lg border-gray-500 border p-2 h-9 "
-                  {...register("nInterior", { required: false })}
+                  {...register("numeroInterior", { required: false })}
                   placeholder="Escribe algo"
                 />
               </div>
@@ -220,21 +224,21 @@ const NewComercianteView = () => {
                 <input
                   id="colonia"
                   className="bg-gris bg-opacity-10 text-black rounded-lg border-gray-500 border p-2 h-9 "
-                  {...register("apellidoPaterno", { required: true })}
+                  {...register("colonia", { required: true })}
                   placeholder="Escribe algo"
                 />
               </div>
               <div className="flex flex-col mb-4">
                 <label
-                  htmlFor="cp"
+                  htmlFor="np"
                   className="font-Foco-Corp-Bold text-gris text-base mb-1"
                 >
                   C.P
                 </label>
                 <input
-                  id="cp"
+                  id="np"
                   className="bg-gris bg-opacity-10 text-black rounded-lg border-gray-500 border p-2 h-9"
-                  {...register("apellidoMaterno")}
+                  {...register("np", { required: true })}
                   placeholder="Escribe algo"
                 />
               </div>
@@ -249,7 +253,7 @@ const NewComercianteView = () => {
               <input
                 id="municipio"
                 className="bg-gris bg-opacity-10 text-black rounded-lg border-gray-500 border p-2 h-9"
-                {...register("telefono1", { required: true })}
+                {...register("municipio", { required: true })}
                 placeholder="Escribe algo"
               />
             </div>
@@ -263,7 +267,7 @@ const NewComercianteView = () => {
               <input
                 id="observaciones"
                 className="bg-gris bg-opacity-10 text-black rounded-lg border-gray-500 border p-2 h-9"
-                {...register("email")}
+                {...register("observaciones")}
                 placeholder="Escribe algo"
               />
             </div>
@@ -283,7 +287,7 @@ const NewComercianteView = () => {
             <input
               type="submit"
               value={"Siguiente"}
-              className="self-center text-center bg-naranja w-40 h-11 rounded-lg"
+              className="self-center text-center bg-naranja w-40 h-11 rounded-lg hover:opacity-75"
             />
           </div>
         </footer>
