@@ -22,8 +22,6 @@ router.get("/", LoginController.loginView);
 
 router.post("/login", LoginController.Loginlogic);
 
-router.get('/dashboard', DashBoardController.getShops);
-
 router.get("/shop/:id", ShopController.getCommerceOwnerInfo);
 
 router.post("/create_new_costumer", costumerController.createNewCostumer);
