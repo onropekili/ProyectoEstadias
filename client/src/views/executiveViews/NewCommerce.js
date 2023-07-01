@@ -1,12 +1,15 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import Header from "../../components/Header";
 import { useLocation, useNavigate } from "react-router-dom";
+import { showInfoAlert } from "../../components/SwAlerts";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 const NewComercioView = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   const comercianteData = location.state && location.state.comerciante;
-
 
   const {
     register,
@@ -14,8 +17,38 @@ const NewComercioView = () => {
     watch,
     formState: { errors },
   } = useForm();
+
   const onSubmit = (data) => {
-    console.log({datos : {data: data, comerciante : comercianteData}});
+    console.log({ datos: { data: data, comerciante: comercianteData } });
+    axios
+      .post("http://localhost:4000/createCostumer", {
+        comerciante: comercianteData,
+        comercio: data,
+      })
+      .then((res) => {
+        const tittle = "Registro exitoso";
+        const message = "La alta se ha completado exitosamente";
+        const uri = "/DashBoard_E";
+        Swal.fire({
+          icon: "success",
+          title: tittle,
+          text: message,
+        }).then((result) => {
+          if (result.isConfirmed) {
+            axios
+              .get("http://localhost:4000/dashboard/find_by_name_or_id/")
+              .then((res) => {
+                console.log(res.data);
+                navigate(uri, {
+                  state: { comerciante: res.data.result.rows },
+                });
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          }
+        });
+      });
   };
 
   return (
@@ -52,11 +85,30 @@ const NewComercioView = () => {
                   {...register("tipo", { required: true })}
                   placeholder="Escribe algo"
                 >
-                  <option value={""} hidden className="text-gris">Selecciona una opcion</option>
-                  <option value={"COMERCIO AMBULANTE"} className="text-gris">Comercio ambulante</option>
-                  <option value={"COMERCIO EN PUESTO FIJO"} className="text-gris">Comercio en puesto fijo</option>
-                  <option value={"COMERCIO EN PUESTO SEMESPEI-FIJO"} className="text-gris">Comercio en puesto semifijo</option>
-                  <option value={"COMERCIO EN FESTIVIDADES"} className="text-gris">Comercios en festividades</option>
+                  <option value={""} hidden className="text-gris">
+                    Selecciona una opcion
+                  </option>
+                  <option value={"COMERCIO AMBULANTE"} className="text-gris">
+                    Comercio ambulante
+                  </option>
+                  <option
+                    value={"COMERCIO EN PUESTO FIJO"}
+                    className="text-gris"
+                  >
+                    Comercio en puesto fijo
+                  </option>
+                  <option
+                    value={"COMERCIO EN PUESTO SEMI-FIJO"}
+                    className="text-gris"
+                  >
+                    Comercio en puesto semi-fijo
+                  </option>
+                  <option
+                    value={"COMERCIO EN FESTIVIDADES"}
+                    className="text-gris"
+                  >
+                    Comercios en festividades
+                  </option>
                 </select>
               </div>
               <div className="flex flex-col mb-4 col-span-1">
@@ -73,10 +125,18 @@ const NewComercioView = () => {
                   {...register("permiso", { required: true })}
                   placeholder="Escribe algo"
                 >
-                  <option value={""} hidden className="text-gris">Seleccionar</option>
-                  <option value={"EVENTUAL"} className="text-gris">Eventual</option>
-                  <option value={"ESPECIAL"} className="text-gris">Especial</option>
-                  <option value={"PERMANENTE"} className="text-gris">Permanente</option>
+                  <option value={""} hidden className="text-gris">
+                    Seleccionar
+                  </option>
+                  <option value={"EVENTUAL"} className="text-gris">
+                    Eventual
+                  </option>
+                  <option value={"ESPECIAL"} className="text-gris">
+                    Especial
+                  </option>
+                  <option value={"PERMANENTE"} className="text-gris">
+                    Permanente
+                  </option>
                 </select>
               </div>
               <div className="flex flex-col mb-4 col-span-1">
@@ -123,15 +183,24 @@ const NewComercioView = () => {
                   {...register("horario", { required: true })}
                   placeholder="Escribe algo"
                 >
-                  <option value={""} hidden className="text-gris">Seleccionar</option>
-                  <option value={"Mat: 07:00 a 18:00"} className="text-gris">Mat: 07:00 a 18:00</option>
-                  <option value={"Vesp: 18:00 a 22:00"} className="text-gris">Vesp: 18:00 a 22:00</option>
-                  <option value={"Vesp: 18:01 a 23:00"} className="text-gris">Vesp: 18:01 a 23:00</option>
-                  <option value={"Mixto variable"} className="text-gris">Mixto variable</option>
-                  <option value={"otro"} className="text-gris">Otro horario</option>
-                  
-
-
+                  <option value={""} hidden className="text-gris">
+                    Seleccionar
+                  </option>
+                  <option value={"Mat: 07:00 a 18:00"} className="text-gris">
+                    Mat: 07:00 a 18:00
+                  </option>
+                  <option value={"Vesp: 18:00 a 22:00"} className="text-gris">
+                    Vesp: 18:00 a 22:00
+                  </option>
+                  <option value={"Vesp: 18:01 a 23:00"} className="text-gris">
+                    Vesp: 18:01 a 23:00
+                  </option>
+                  <option value={"Mixto variable"} className="text-gris">
+                    Mixto variable
+                  </option>
+                  <option value={"otro"} className="text-gris">
+                    Otro horario
+                  </option>
                 </select>
               </div>
             </div>
@@ -233,7 +302,6 @@ const NewComercioView = () => {
                 />
               </div>
             </div>
-            
           </section>
         </div>
 

@@ -21,13 +21,13 @@ const findByNameOrId = async (req, res) => {
     if (Object.keys(filters).length !== 0) {
       let parametersArray = {};
 
-      let limitedConsult = getConsult(filters, parametersArray) + " limit 9";
+      let limitedConsult = getConsult(filters, parametersArray) + " order by fecha_alta desc limit 9";
       resultOfConsult = await queryToDatabaseWithFilters(
         limitedConsult,
         parametersArray
       );
     } else {
-      limitedConsult = "select * from dashboard where 1=1 limit 9";
+      limitedConsult = "select * from dashboard where 1=1 order by fecha_alta desc limit 9";
       resultOfConsult = await queryToDatabaseWithOutFilters(limitedConsult);
     }
     res
