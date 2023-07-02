@@ -19,9 +19,9 @@ function DashBoard_Ejecutivo() {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    AuthMiddleware(user, navigate);
-  }, [user, navigate]);
+  // useEffect(() => {
+  //   AuthMiddleware(user, navigate);
+  // }, [user, navigate]);
 
   useEffect(() => {
     if (location.state && location.state.comerciante) {
