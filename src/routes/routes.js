@@ -9,7 +9,7 @@ const ShopController = require('../controllers/ShopController');
 const costumerController = require('../controllers/costumerController');
 const dashboardController = require('../controllers/userController/dashboardController')
 const CostumerController = require('../controllers/userController/Costumer');
-
+const CreateCustomerController = require('../controllers/userController/CreateCustomerController')
 
 const router = Router();
 const bodyParser = require('body-parser');
@@ -35,5 +35,7 @@ router.put("/edit/costumer", CostumerController.editCostumer)
 router.delete("/delete/costumer/comerciante", CostumerController.deleteCostumer)
 
 router.delete("/delete/costumer/comercio", CostumerController.deleteComercio)
+
+router.post("/createCostumer", CreateCustomerController.createNewCostumer )
 
 module.exports = router;
