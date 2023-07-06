@@ -38,7 +38,7 @@ export default function App() {
         <Route
           path="/Registrar-comerciante"
           element={
-            <ExecutiveProtectedRoute>
+            <ExecutiveProtectedRoute user={userData}>
               <NewComercianteView />
             </ExecutiveProtectedRoute>
           }
@@ -46,7 +46,7 @@ export default function App() {
         <Route
           path="/Registrar-comerciante-evento"
           element={
-            <ExecutiveProtectedRoute>
+            <ExecutiveProtectedRoute user={userData}>
               <NewComercianteEventView />
             </ExecutiveProtectedRoute>
           }
@@ -54,7 +54,7 @@ export default function App() {
         <Route
           path="/Registrar-comercio"
           element={
-            <ExecutiveProtectedRoute>
+            <ExecutiveProtectedRoute user={userData}>
               <NewComercioView />
             </ExecutiveProtectedRoute>
           }
@@ -62,7 +62,7 @@ export default function App() {
         <Route
           path="/Registrar-comercio-evento"
           element={
-            <ExecutiveProtectedRoute>
+            <ExecutiveProtectedRoute user={userData}>
               <NewComercioEventView />
             </ExecutiveProtectedRoute>
           }
