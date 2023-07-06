@@ -3,12 +3,11 @@ import axios from "axios";
 import { showInfoAlert, showErrorAlert } from "../components/SwAlerts";
 import { useNavigate } from "react-router-dom";
 
-export default function Login() {
+export default function Login({ userData, setUserData }) {
   useEffect(() => {
     // Enfoque inicial en el campo de usuario cuando se renderiza el componente
     usernameRef.current.focus();
   }, []);
-
   const usernameRef = useRef(null);
   const passwordRef = useRef(null);
   const [username, setUsername] = useState("");
@@ -45,21 +44,27 @@ export default function Login() {
       axios
         .post("http://localhost:4000/login", data)
         .then((response) => {
+          const User = response.data.user;
           const admin = true;
           let isCorrect = 200;
           console.log(response.status);
 
           if (response.status === isCorrect) {
-            const user = response.data.user;
-            if (user.tipo_usuario === admin) {
-              navigate("/DashBoard_A", { state: { data: user } });
+            setUserData({
+              id_usuario: User.id_usuario,
+              tipo_usuario: User.tipo_usuario,
+            });
+            if (User.tipo_usuario === admin) {
+              navigate("/DashBoard_A", { state: { data: User } });
             } else {
               axios
                 .get("http://localhost:4000/dashboard/find_by_name_or_id/")
                 .then((res) => {
+                  const Data = res.data.result.rows;
+
                   console.log(res.data);
                   navigate("/DashBoard_E", {
-                    state: { data: user, comerciante: res.data.result.rows },
+                    state: { comerciante: Data },
                   });
                 })
                 .catch((err) => {

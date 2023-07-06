@@ -8,21 +8,66 @@ import NewComercianteEventView from "./views/executiveViews/NewComercianteEventV
 import NewComercioView from "./views/executiveViews/NewCommerce";
 import NewComercioEventView from "./views/executiveViews/NewCommerceEvent";
 import { InfoComponent } from "./components/InfoComponent";
+import { LogOut, ExecutiveProtectedRoute } from "./components/Middlewares";
+import { useState } from "react";
 export default function App() {
-
+  
+  const [userData, setuserData] = useState(null);
 
   return (
     <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Login/>}/>
-          <Route path="/DashBoard_E" element={<DashBoard_Executive/>} />
-          <Route path="/DashBoard_A" element={<DashBoard_Admin />} />
-          <Route path="/Registrar-comerciante" element= {<NewComercianteView/>}/>
-          <Route path="/Registrar-comerciante-evento" element={<NewComercianteEventView/>}/>
-          <Route path="/Registrar-comercio" element={<NewComercioView/>}/>
-          <Route path="/Registrar-comercio-evento" element={<NewComercioEventView/>}/>
-          <Route path="/component" element={<InfoComponent/>}/>
-        </Routes>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <LogOut setuserData={setuserData}>
+              <Login userData={userData} setUserData={setuserData} />
+            </LogOut>
+          }
+        />
+
+        <Route
+          path="/DashBoard_E"
+          element={
+            <ExecutiveProtectedRoute user={userData}>
+              <DashBoard_Executive />
+            </ExecutiveProtectedRoute>
+          }
+        />
+        <Route path="/DashBoard_A" element={<DashBoard_Admin />} />
+        <Route
+          path="/Registrar-comerciante"
+          element={
+            <ExecutiveProtectedRoute>
+              <NewComercianteView />
+            </ExecutiveProtectedRoute>
+          }
+        />
+        <Route
+          path="/Registrar-comerciante-evento"
+          element={
+            <ExecutiveProtectedRoute>
+              <NewComercianteEventView />
+            </ExecutiveProtectedRoute>
+          }
+        />
+        <Route
+          path="/Registrar-comercio"
+          element={
+            <ExecutiveProtectedRoute>
+              <NewComercioView />
+            </ExecutiveProtectedRoute>
+          }
+        />
+        <Route
+          path="/Registrar-comercio-evento"
+          element={
+            <ExecutiveProtectedRoute>
+              <NewComercioEventView />
+            </ExecutiveProtectedRoute>
+          }
+        />
+      </Routes>
     </BrowserRouter>
   );
 }
