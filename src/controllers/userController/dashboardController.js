@@ -54,7 +54,7 @@ function isNameOrId(filters, parametersArray) {
   if (filters.isNameOrId !== "") {
     parametersArray.nameOrId = filters.isNameOrId;
     if (!isNaN(filters.isNameOrId)) {
-      return "select * from dashboard where id_comerciante = $1";
+      return "select * from dashboard where id_comercio = $1";
     } else {
       //*This establish the ilike format for the string
       parametersArray.nameOrId = "%" + parametersArray.nameOrId + "%";
