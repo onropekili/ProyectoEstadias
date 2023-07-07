@@ -1,5 +1,7 @@
-const databaseInstance = require("../../db");
+const {pool} = require("../../db");
 const { param } = require("../../routes/routes");
+
+const databaseInstance = pool
 
 const getDashboardInformation = async (req, res) => {
   try {

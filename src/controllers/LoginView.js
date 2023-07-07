@@ -1,5 +1,5 @@
 const axios = require("axios");
-const databaseInstance = require("../db");
+const {pool} = require("../db");
 const bcrypt = require("bcrypt");
 
 const loginView = (req, res) => {
@@ -10,7 +10,7 @@ const Loginlogic = async (req, res) => {
   const { username, password } = req.body;
   console.log(req.body);
   try {
-    let user = await databaseInstance.query(
+    let user = await pool.query(
       "SELECT username, password, tipo_usuario from usuario where username = $1 and password = $2;",
       [username, password]
     );
