@@ -10,7 +10,7 @@ const costumerController = require('../controllers/costumerController');
 const dashboardController = require('../controllers/userController/dashboardController')
 const CostumerController = require('../controllers/userController/Costumer');
 const CreateCustomerController = require('../controllers/userController/CreateCustomerController')
-
+const CreatePayOrder = require('../controllers/userController/CreatePayOrder');
 const router = Router();
 const bodyParser = require('body-parser');
 router.use(bodyParser.json());
@@ -26,16 +26,18 @@ router.get("/shop/:id", ShopController.getCommerceOwnerInfo);
 
 router.post("/create_new_costumer", costumerController.createNewCostumer);
 
-router.get('/dashboard/find_by_name_or_id/', dashboardController.findByNameOrId)
+router.get('/dashboard/find_by_name_or_id/', dashboardController.findByNameOrId);
 
-router.get('/dashboard', dashboardController.getDashboardInformation)
+router.get('/dashboard', dashboardController.getDashboardInformation);
 
-router.put("/edit/costumer", CostumerController.editCostumer)
+router.put("/edit/costumer", CostumerController.editCostumer);
 
-router.delete("/delete/costumer/comerciante", CostumerController.deleteCostumer)
+router.delete("/delete/costumer/comerciante", CostumerController.deleteCostumer);
 
-router.delete("/delete/costumer/comercio", CostumerController.deleteComercio)
+router.delete("/delete/costumer/comercio", CostumerController.deleteComercio);
 
-router.post("/createCostumer", CreateCustomerController.createNewCostumer )
+router.post("/createCostumer", CreateCustomerController.createNewCostumer );
+
+router.post('/CreatePayOrder', CreatePayOrder.CrearNuevaOrdenDePago);
 
 module.exports = router;
