@@ -4,9 +4,17 @@ import Select from 'react-select';
 import selectStyles from '../../components/StyleSelect';
 import DatePickerInput from "../../components/DatePickerInput";
 import CheckboxInput from "../../components/CheckboxInput";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const OrdenPago = () => {
+
+  
+  const location = useLocation()
+  const shopData = location.data ? location.data : null
+  const [selectedDays, setSelectedDays] = useState([]);
+  const [selectBeginDate, setSelectBeginDate] = useState(null)
+  const [selectEndDate, setSelectEndDate] = useState(null);
+  const [selectedOption, setSelectedOption] = useState(null);
 
   const options = [
     { value: 'credencial', label: 'CREDENCIAL OFICIAL DE COMERCIANTE' },
@@ -45,7 +53,6 @@ const OrdenPago = () => {
     { value: 'excepciondepago', label: 'EXCEPCION DE PAGO PERSONAS DE LA 3RA EDAD Y/O CAPACIDADES DIFERENTES' },
   ];
 
-  const [selectedOption, setSelectedOption] = useState(null);
 
   const handleChange = (option) => {
     setSelectedOption(option);
@@ -145,7 +152,7 @@ const OrdenPago = () => {
                 <label className="font-Foco-Corp-Bold text-gris text-base mb-1">
                   Fecha Inicio
                 </label>
-                <DatePickerInput />
+                <DatePickerInput setSelectedDate={setSelectBeginDate} selectedDate={selectBeginDate} />
               </div>
             </div>
             <div className="w-full md:w-1/3">
@@ -153,7 +160,7 @@ const OrdenPago = () => {
                 <label className="font-Foco-Corp-Bold text-gris text-base mb-1">
                   Fecha Termino
                 </label>
-                <DatePickerInput/>
+                <DatePickerInput setSelectedDate={setSelectEndDate} selectedDate={selectEndDate}/>
               </div>
             </div>
             <div className="w-full md:w-1/3">
@@ -161,7 +168,7 @@ const OrdenPago = () => {
                 <label className="font-Foco-Corp-Bold text-gris text-base mb-1">
                   Días
                 </label>
-                <CheckboxInput/>
+                <CheckboxInput selectedDays={selectedDays} setSelectedDays={setSelectedDays}/>
               </div>
             </div>
           </div>

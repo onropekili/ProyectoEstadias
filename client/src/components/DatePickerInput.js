@@ -3,8 +3,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { FiCalendar } from 'react-icons/fi';
 
-const DatePickerInput = () => {
-  const [selectedDate, setSelectedDate] = useState(null);
+const DatePickerInput = ({setSelectedDate, selectedDate}) => {
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
