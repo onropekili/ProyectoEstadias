@@ -13,6 +13,7 @@ import OrdenPagoPDF from "./views/PDFViews/OrdenPagoPDF";
 import { InfoComponent } from "./components/InfoComponent";
 import { LogOut, ExecutiveProtectedRoute } from "./components/Middlewares";
 import { useState } from "react";
+import DataComerciante from "./views/executiveViews/DataComerciante";
 export default function App() {
   
   const [userData, setuserData] = useState(null);
@@ -91,6 +92,14 @@ export default function App() {
           element={
             // <ExecutiveProtectedRoute user={userData}>
               <OrdenPagoPDF />
+            // </ExecutiveProtectedRoute>
+          }
+        />
+        <Route
+          path="/Datos-Comerciante-Comercio"
+          element={
+            // <ExecutiveProtectedRoute user={userData}>
+              <DataComerciante />
             // </ExecutiveProtectedRoute>
           }
         />
