@@ -7,7 +7,13 @@ const getConceptosPago = async (req, res) => {
     );
     const formatedConceptosPago = rawConceptosPago.rows;
 
-    res.status(200).json({ conceptos: formatedConceptosPago });
+    let optionsForSelectInFrontEnd = []
+
+    formatedConceptosPago.forEach(concepto => {
+      optionsForSelectInFrontEnd.push({value : concepto, label : concepto.concepto})
+    });
+
+    res.status(200).json({ options: optionsForSelectInFrontEnd });
   } catch (error) {
     res.status(500).json({ error: error });
     console.log(error);
