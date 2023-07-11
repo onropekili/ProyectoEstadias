@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Header from '../../components/Header';
 import {RiUser3Fill, RiMenuFill} from 'react-icons/ri';
 import { MdStore} from 'react-icons/md';
-import { Link } from "react-router-dom";
 
 
 const DataComerciante = () => {
@@ -103,6 +102,17 @@ const DataComerciante = () => {
                   </div>
                 )}
               </div>
+              {/* Datos del comerciante */}
+              <form>
+                <div className='w-full grid grid-cols-1 md:grid-cols-2 gap-x-6'>
+                  <section className='col-span-1 px-4'>
+                    Contenido de la section 1
+                  </section>
+                  <section className='col-span-1 px-4'>
+                    Contenido de la seccion 2
+                  </section>
+                </div>
+              </form>
             </div>
           }
           {activeTab === 2 &&
