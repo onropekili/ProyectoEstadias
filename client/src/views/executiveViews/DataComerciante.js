@@ -215,7 +215,104 @@ const DataComerciante = () => {
                     </div>
                   </section>
                   <section className='col-span-1 px-4'>
-                    Contenido de la seccion 2
+                    <div className="text-start">
+                      <h4 className="text-2xl text-naranja font-Foco-Corp-Bold mb-4">
+                        Domicilio:
+                      </h4>
+                    </div>
+                    <div className="md:grid md:grid-cols-4 gap-x-4 gap-y-2">
+                      <div className="flex flex-col col-span-2 ">
+                      <label
+                        htmlFor="calle"
+                        className="font-Foco-Corp-Bold text-gris text-base mb-1"
+                      >
+                        Calle
+                      </label>
+                      <input
+                        id="calle"
+                        className="bg-gris bg-opacity-10 text-gris rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black"
+                        placeholder="Escribe algo"
+                      />
+                      </div>
+                      <div className="flex flex-col col-span-1">
+                      <label
+                        htmlFor="numeroExterior"
+                        className="font-Foco-Corp-Bold text-gris text-base mb-1"
+                      >
+                        No. exterior
+                      </label>
+                      <input
+                        id="numeroExterior"
+                        className="bg-gris bg-opacity-10 text-gris rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black"
+                        placeholder="Escribe algo"
+                      />
+                      </div>
+                      <div className="flex flex-col col-span-1">
+                      <label
+                        htmlFor="numeroInterior"
+                        className="font-Foco-Corp-Bold text-gris text-base mb-1"
+                      >
+                        No. interior
+                      </label>
+                      <input
+                        id="numeroInterior"
+                        className="bg-gris bg-opacity-10 text-gris rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black"
+                        placeholder="Escribe algo"
+                      />
+                      </div>
+                      <div className="flex flex-col col-span-3">
+                      <label
+                        htmlFor="colonia"
+                        className="font-Foco-Corp-Bold text-gris text-base mb-1"
+                      >
+                        Colonia
+                      </label>
+                      <input
+                        id="colonia"
+                        className="bg-gris bg-opacity-10 text-gris rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black"
+                        placeholder="Escribe algo"
+                      />
+                      </div>
+                      <div className="flex flex-col col-span-1">
+                      <label
+                        htmlFor="np"
+                        className="font-Foco-Corp-Bold text-gris text-base mb-1"
+                      >
+                        C.P
+                      </label>
+                      <input
+                        id="np"
+                        className="bg-gris bg-opacity-10 text-gris rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black"
+                        placeholder="Escribe algo"
+                      />
+                      </div>
+                      <div className="flex flex-col col-span-4">
+                      <label
+                        htmlFor="municipio"
+                        className="font-Foco-Corp-Bold text-gris text-base mb-1"
+                      >
+                        Municipio
+                      </label>
+                      <input
+                        id="municipio"
+                        className="bg-gris bg-opacity-10 text-gris rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black"
+                        placeholder="Escribe algo"
+                      />
+                      </div>
+                      <div className="flex flex-col col-span-4">
+                      <label
+                        htmlFor="observaciones"
+                        className="font-Foco-Corp-Bold text-gris text-base mb-1"
+                      >
+                        Observaciones al comerciante
+                      </label>
+                      <input
+                        id="observaciones"
+                        className="bg-gris bg-opacity-10 text-gris rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black"
+                        placeholder="Escribe algo"
+                      />
+                      </div>
+                    </div>
                   </section>
                 </div>
               </form>
