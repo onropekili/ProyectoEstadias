@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import Header from '../../components/Header';
-import {RiUser3Fill, RiMenuFill, RiMenu2Fill, RiMenu3Fill, RiMenu4Fill} from 'react-icons/ri';
+import {RiUser3Fill, RiMenuFill} from 'react-icons/ri';
 import { MdStore} from 'react-icons/md';
+import { Link } from "react-router-dom";
 
 
 const DataComerciante = () => {
@@ -61,48 +62,50 @@ const DataComerciante = () => {
             Datos del comercio
           </span>
         </button>
-        </div>
-        {/* Tabs*/}
-        <div className="p-4">
-          {/* Tab1 */}
+      </div>
+      {/* Tabs*/}
+      <div className="border-2 mt-3 md:mt-0">
+        {/* Tab1 */}
           {activeTab === 1 &&
-            <div className='w-full relative text-end'>
+            <div className='w-full'>
               {/* Botón del menú */}
-              <button
-                className="bg-gray-100 hover:bg-gray-200 text-naranja hover:text-verde border-2 border-gray-200 py-2 px-2 rounded-lg shadow-md"
-                onClick={toggleMenu}
-              >
-                <span className='flex row-auto gap-2 items-center font-bold text-base'>
-                  OPCIONES
-                  <RiMenuFill className="h-5 w-5 md:h-6 md:w-6 "/>
-                </span>
-              </button>
-              {/* Opciones del menú */}
-              {isMenuOpen && (
-                <div className="absolute right-0 mt-2 w-full sm:w-96 lg:w-80">
-                  <ul className="bg-white shadow-lg rounded-lg border border-gray-200">
-                    <li>
-                      <button
-                        className="block w-full text-left px-4 py-2 rounded-t-lg text-lg text-gris hover:bg-naranja hover:bg-opacity-80 hover:text-white"
-                        onClick={() => { /* Lógica para la opción 1 */ }}
-                      >
-                        Editar información
-                      </button>
-                    </li>
-                    <li>
-                      <button
-                        className="block w-full text-left px-4 py-2 rounded-b-lg text-lg text-gris hover:bg-naranja hover:bg-opacity-80 hover:text-white"
-                        onClick={() => { /* Lógica para la opción 2 */ }}
-                      >
-                        Eliminar comerciante
-                      </button>
-                    </li>
-                  </ul>
-                </div>
-              )}
+              <div className='w-full relative text-end py-4 px-4 md:pt-4 md:pb-0 2xl:py-4'>
+                <button
+                  className="bg-gray-100 hover:bg-gray-200 text-naranja hover:text-verde border-2 border-gray-200 py-2 px-2 rounded-lg shadow-md md:py-1 2xl:py-2"
+                  onClick={toggleMenu}
+                >
+                  <span className='flex row-auto gap-2 items-center font-bold text-base'>
+                    <p className='hidden md:block'>OPCIONES</p>
+                    <RiMenuFill className="h-6 w-6 md:h-5 md:w-5 "/>
+                  </span>
+                </button>
+                {/* Opciones del menú */}
+                {isMenuOpen && (
+                  <div className="absolute right-0 mt-2 w-full sm:w-96 lg:w-80">
+                    <ul className="bg-white shadow-lg rounded-lg border-2 border-gray-300">
+                      <li>
+                        <button
+                          className="block w-full text-left px-4 py-2 rounded-t-lg text-base md:text-lg font-medium text-gris hover:bg-naranja hover:bg-opacity-80 hover:text-white"
+                          onClick={() => { /* Lógica para la opción 1 */ }}
+                        >
+                          Editar información
+                        </button>
+                      </li>
+                      <li>
+                        <button
+                          className="block w-full text-left px-4 py-2 rounded-b-lg text-base md:text-lg font-medium text-gris hover:bg-naranja hover:bg-opacity-80 hover:text-white"
+                          onClick={() => { /* Lógica para la opción 2 */ }}
+                        >
+                          Eliminar comerciante
+                        </button>
+                      </li>
+                    </ul>
+                  </div>
+                )}
+              </div>
             </div>
           }
-          {activeTab === 2 && 
+          {activeTab === 2 &&
             <div>
               Contenido de la pestaña 2
             </div>
