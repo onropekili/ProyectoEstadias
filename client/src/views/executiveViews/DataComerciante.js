@@ -63,7 +63,7 @@ const DataComerciante = () => {
         </button>
       </div>
       {/* Tabs*/}
-      <div className="border-2 mt-3 md:mt-0">
+      <div className="border-2 mt-3 rounded-b-lg md:mt-0">
         {/* Tab1 */}
           {activeTab === 1 &&
             <div className='w-full'>
@@ -106,7 +106,113 @@ const DataComerciante = () => {
               <form>
                 <div className='w-full grid grid-cols-1 md:grid-cols-2 gap-x-6'>
                   <section className='col-span-1 px-4'>
-                    Contenido de la section 1
+                    <div className="text-start">
+                      <h4 className="text-2xl text-naranja font-Foco-Corp-Bold mb-4">
+                        Datos personales:
+                      </h4>
+                    </div>
+                    <div className="flex flex-col gap-x-4 gap-y-4 md:grid md:grid-cols-2 lg:grid lg:grid-cols-2 lg:gap-y-2">
+                      <div className="flex flex-col col-span-1 ">
+                        <label
+                          htmlFor="apellidoPaterno"
+                          className="font-Foco-Corp-Bold text-gris text-base mb-1"
+                        >
+                          Apellido Paterno
+                        </label>
+                        <input
+                          id="apellidoPaterno"
+                          className="bg-gris bg-opacity-10 text-gris rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black"
+                          placeholder="Escribe algo"
+                        />
+                      </div>
+                      <div className="flex flex-col col-span-1">
+                        <label
+                          htmlFor="apellidoMaterno"
+                          className="font-Foco-Corp-Bold text-gris text-base mb-1"
+                        >
+                          Apellido Materno
+                        </label>
+                        <input
+                          id="apellidoMaterno"
+                          className="bg-gris bg-opacity-10 text-gris rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black"
+                          placeholder="Escribe algo"
+                        />
+                      </div>
+                      <div className="flex flex-col col-span-2">
+                        <label
+                          htmlFor="nombres"
+                          className="font-Foco-Corp-Bold text-gris text-base mb-1"
+                        >
+                          Nombres
+                        </label>
+                        <input
+                          id="nombres"
+                          className="bg-gris bg-opacity-10 text-gris rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black"
+                          placeholder="Escribe algo"
+                        />
+                      </div>
+                      <div className="flex flex-col col-span-1">
+                        <label
+                          htmlFor="telefono1"
+                          className="font-Foco-Corp-Bold text-gris text-base mb-1"
+                        >
+                          Teléfono 1
+                        </label>
+                        <input
+                          id="telefono1"
+                          className="bg-gris bg-opacity-10 text-gris rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black"
+                          placeholder="Escribe algo"
+                        />
+                      </div>
+                      <div className="flex flex-col col-span-1">
+                        <label
+                          htmlFor="telefono2"
+                          className="font-Foco-Corp-Bold text-gris text-base mb-1"
+                        >
+                          Teléfono 2
+                        </label>
+                        <input
+                          id="telefono2"
+                          className="bg-gris bg-opacity-10 text-gris rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black"
+                          placeholder="Escribe algo"
+                        />
+                      </div>
+                      <div className="flex flex-col col-span-2">
+                        <label
+                          htmlFor="email"
+                          className="font-Foco-Corp-Bold text-gris text-base mb-1"
+                        >
+                          Correo Electrónico
+                        </label>
+                        <input
+                          id="email"
+                          className="bg-gris bg-opacity-10 text-gris rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black"
+                          placeholder="Escribe algo"
+                        />
+                      </div>
+                      <div className="flex flex-col col-span-2">
+                        <label
+                          htmlFor="terceraEdad"
+                          className="font-Foco-Corp-Bold text-gris text-base mb-1"
+                        >
+                          Comerciante de la tercera edad o discapacitado
+                        </label>
+                        <div className="flex items-center mb-4">
+                          <input
+                            id="terceraEdad"
+                            type="checkbox"
+                            className="h-4 w-4 rounded-full focus:bg-verde bg-verde"
+                          />
+                          <label
+                            htmlFor="terceraEdad"
+                            className="text-sm ml-2 font-Foco-Corp-Italic text-gris mt-1"
+                          >
+                            Selecciona la casilla solo si el comerciante es de la tercera
+                            edad o tiene capacidades diferentes
+                          </label>
+                        </div>
+                      </div>
+                    </div>
                   </section>
                   <section className='col-span-1 px-4'>
                     Contenido de la seccion 2
