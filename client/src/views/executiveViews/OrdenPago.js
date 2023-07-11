@@ -1,3 +1,4 @@
+//TODO: ESTE CODIGO SE TIENE QUE REFACTORIZAR URGENTEMENTE
 import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import Select from "react-select";
@@ -7,25 +8,28 @@ import CheckboxInput from "../../components/CheckboxInput";
 import { Link, useLocation } from "react-router-dom";
 import { tr } from "date-fns/locale";
 import axios from "axios";
+import { ConceptList } from "../../components/ConceptList";
+import { showErrorAlert, showInfoAlertOp } from "../../components/SwAlerts";
 const moment = require("moment");
 
 const OrdenPago = () => {
-  const getoptions = useEffect(() => {
+useEffect(() => {
     axios
       .get("http://localhost:4000/conceptos")
       .then((res) => {
-        options = res.data.options;
+        setOptions(res.data.options);
       })
       .catch((error) => {
         console.log(error);
       });
   }, []);
 
-  let options = null;
+  const [primerRender, setPrimerRender] = useState(true)
+  const [options, setOptions] = useState(null);
   const location = useLocation();
   const Data = location ? location.data : null;
   const merchant = Data ? Data.merchant : null;
-  const shop = Data ? Data.shop : null;
+  const shop = Data ? Data.shop : {};
   const phone = Data ? Data.phone : null;
   const [selectedDays, setSelectedDays] = useState([]);
   const [selectBeginDate, setSelectBeginDate] = useState(null);
@@ -33,6 +37,13 @@ const OrdenPago = () => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [conceptosPago, setconceptosPago] = useState([]);
   const [totalDaysWorked, setTotalDaysWorked] = useState(null);
+  const [ListaDeConceptos, setListaDeConceptos] = useState([]);
+  const [total, setTotal] = useState(0);
+  shop.metraje = "4x4";
+  const stringDeMetrajeSeparadaPorx = shop.metraje.split("x");
+  const metrosX = Number(stringDeMetrajeSeparadaPorx[0]);
+  const metrosY = Number(stringDeMetrajeSeparadaPorx[1]);
+  const totalMetraje = metrosX * metrosY;
 
   //obtener la direccion si es que hay la info, a demas, si no hay numero interior, se omite.
   const merchantAdress = merchant
@@ -61,7 +72,29 @@ const OrdenPago = () => {
   };
 
   const agregaConceptoPago = (e) => {
-    setconceptosPago([...conceptosPago, selectedOption.value]);
+    if (selectedOption) {
+      if (selectBeginDate && selectEndDate && selectedDays.length > 0) {
+      let flag = false;
+      conceptosPago.forEach((concepto) => {
+        if (concepto.idconcepto === selectedOption.value.idconcepto) {
+          flag = true;
+        }
+      });
+      if (!flag) {
+        setconceptosPago([...conceptosPago, selectedOption.value]);
+      } else {
+        showInfoAlertOp(
+          "Operacion invalida",
+          "Solamente puedes agregar un concepto de cada uno por orden de pago"
+        );
+      }
+    } else {
+      showErrorAlert(
+        "Datos invalidos",
+        "Ingresa fecha de inicio, de fin y los días que labura el comerciante"
+      );
+    }
+    }
   };
 
   const diccionarioDaysOfWeek = new Map();
@@ -72,30 +105,33 @@ const OrdenPago = () => {
   diccionarioDaysOfWeek.set("Vie", 5);
   diccionarioDaysOfWeek.set("Sab", 6);
   diccionarioDaysOfWeek.set("Dom", 0);
-  const contarDiasDeLaSemana = (fechaInicialSinFormato, fechaFinalSinFormato, diaDeLaSemana) => {
+  const contarDiasDeLaSemana = (
+    fechaInicialSinFormato,
+    fechaFinalSinFormato,
+    diaDeLaSemana
+  ) => {
     // Crear objetos moment a partir de las fechas
     const fechaInicialConFormato = formatearfechas(fechaInicialSinFormato);
-    const fechaFinalConFormato = formatearfechas(fechaFinalSinFormato)
+    const fechaFinalConFormato = formatearfechas(fechaFinalSinFormato);
     let inicio = moment(fechaInicialConFormato);
     const fin = moment(fechaFinalConFormato);
     // Contador de días
     let contador = 0;
 
-
     // Iterar sobre cada día entre las fechas
     while (inicio.isSameOrBefore(fin)) {
       // Verificar si el día es el que estamos buscando
-      if (inicio.day() === diccionarioDaysOfWeek.get(diaDeLaSemana) ) {
+      if (inicio.day() === diccionarioDaysOfWeek.get(diaDeLaSemana)) {
         contador++;
       }
 
       // Avanzar al siguiente día
-      inicio.add(1, 'day');
+      inicio.add(1, "day");
     }
     return contador;
   };
 
-  const calculateDays = useEffect(() => {
+  useEffect(() => {
     if (selectBeginDate && selectEndDate && selectedDays.length > 0) {
       let diasTotales = 0;
       for (let i = 0; i <= selectedDays.length; i++) {
@@ -105,7 +141,6 @@ const OrdenPago = () => {
           selectedDays[i]
         );
       }
-      console.log(diasTotales);
       setTotalDaysWorked(diasTotales);
     }
   }, [selectBeginDate, selectEndDate, selectedDays]);
@@ -118,7 +153,48 @@ const OrdenPago = () => {
 
     const fechaFormateada = `${anio}-${mes}-${dia}`;
 
-    return fechaFormateada
+    return fechaFormateada;
+  };
+  const setListaDeConceptosAgregados = (conceptosPago) => {
+    const ListaDeConceptosAgregados = conceptosPago.map((concepto) => (
+      <ConceptList
+        key={concepto.idconepto}
+        importe={concepto.importe}
+        unidad={concepto.unidad}
+        metraje={shop ? shop.metraje : ""}
+        totalDaysWorked={totalDaysWorked}
+      />
+    ));
+    setListaDeConceptos(ListaDeConceptosAgregados);
+  };
+
+  const pushConceptosPago = () => {
+    if(primerRender) {
+
+      setListaDeConceptosAgregados(conceptosPago);
+      conceptosPago.forEach((concepto) => {
+        let subtotal = 0;
+        if (concepto.unidad === "PESOS") {
+          subtotal = concepto.importe;
+          setTotal(subtotal + total);
+        } else {
+          subtotal = totalMetraje * concepto.importe * totalDaysWorked;
+          setTotal(subtotal + total);
+        }
+      });
+      // console.log(conceptosPago);
+
+  }else {
+    setPrimerRender(true)
+  }
+  }
+
+  useEffect(pushConceptosPago, [conceptosPago]);
+
+
+
+  const popConceptosPago = (conceptosPago) => {
+    
   }
 
   return (
@@ -266,30 +342,27 @@ const OrdenPago = () => {
               </div>
             </div>
           </div>
-          <div>
+
+
+
+          {conceptosPago.length > 0 ? (
+            <>
+            <div>
             <h3 className="font-Foco-Corp-Bold text-xl text-gris mb-1">
               Conceptos
             </h3>
           </div>
           <div className="flex flex-col h-20 overflow-y-auto md:h-16 lg:h-14">
-            <div className="flex items-center justify-between gap-x-2 mb-2">
+            {conceptosPago.map(concepto => (
+              <div className="flex items-center justify-between gap-x-2 mb-2">
               <label className="font-Foco-Corp-Bold text-xs text-gris md:text-sm lg:text-base antialiased">
-                USO DE PISO PARA ESPECTACULOS, DIVERSIONES PÚBLICAS Y JUEGOS
-                MECANICOS EN TLAJOMULCO CABECERA
+                {concepto.concepto}
               </label>
               <button className="text-gray-500 hover:text-naranja">
                 Eliminar
               </button>
             </div>
-            <div className="flex items-center justify-between gap-x-2 mb-2">
-              <label className="font-Foco-Corp-Bold text-xs text-gris md:text-sm lg:text-base antialiased">
-                USO DE PISO PARA ESPECTACULOS, DIVERSIONES PÚBLICAS Y JUEGOS
-                MECANICOS EN TLAJOMULCO CABECERA
-              </label>
-              <button className="text-gray-500 hover:text-naranja">
-                Eliminar
-              </button>
-            </div>
+            ))}
           </div>
           <div className="bg-white w-full h-40 overflow-auto md:h-36 mt-4">
             <table className="table-auto">
@@ -303,46 +376,7 @@ const OrdenPago = () => {
                   <th className="w-6/12 border px-2 py-1">UNIDAD</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr className="font-Foco-Corp text-sm text-black antialiased text-center">
-                  <td className="w-2/12 px-2 py-1">$76.00</td>
-                  <td className="w-1/12 px-2 py-1">1</td>
-                  <td className="w-1/12 px-2 py-1"></td>
-                  <td className="w-1/12 px-2 py-1"></td>
-                  <td className="w-1/12 px-2 py-1">$76.00</td>
-                  <td className="w-6/12 px-2 py-1 text-left">Pesos</td>
-                </tr>
-                <tr className="font-Foco-Corp text-sm text-black antialiased text-center">
-                  <td className="w-2/12 px-2 py-1">$12.00</td>
-                  <td className="w-1/12 px-2 py-1"></td>
-                  <td className="w-1/12 px-2 py-1">4</td>
-                  <td className="w-1/12 px-2 py-1">17</td>
-                  <td className="w-1/12 px-2 py-1">$816.00</td>
-                  <td className="w-6/12 px-2 py-1 text-left">
-                    Pesos por metro cuadrado por día
-                  </td>
-                </tr>
-                {conceptosPago.map((concepto) => {
-                  <tr>
-                    <td className="w-2/12 px-2 py-1">
-                      $ {concepto.importe}.00
-                    </td>
-                    <td className="w-1/12 px-2 py-1">1</td>
-                    <td className="w-1/12 px-2 py-1">
-                      {concepto.unidad !== "PESOS"
-                        ? shop
-                          ? shop.metraje
-                          : ""
-                        : ""}
-                    </td>
-                    <td className="w-1/12 px-2 py-1">{totalDaysWorked > 0 ? totalDaysWorked : 0}</td>
-                    <td className="w-1/12 px-2 py-1">${concepto.importe}</td>
-                    <td className="w-6/12 px-2 py-1 text-left">
-                      {concepto.unidad}
-                    </td>
-                  </tr>;
-                })}
-              </tbody>
+              <tbody>{ListaDeConceptos}</tbody>
             </table>
           </div>
           <div className="flex w-full gap-4 border-t-2">
@@ -353,10 +387,17 @@ const OrdenPago = () => {
             </div>
             <div className="flex w-3/4 justify-start">
               <span className="font-Foco-Corp-Bold text-lg antialiased">
-                $816.00
+                {total}
               </span>
             </div>
           </div>
+           </>
+          ) : null }
+
+
+
+          
+          
           <div className="w-full border-y-2 text-center">
             <p className="font-Foco-Corp text-xs antialiased">
               TRAMITE EN PROCESO DE AUTORIZACIÓN DE PERSMISO DE COMERCIO EN LA
