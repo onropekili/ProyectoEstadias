@@ -325,15 +325,64 @@ const DataComerciante = () => {
             {activeTab === 2 &&
               <div className='w-full'>
                 {/* Botón del menú */}
-                
-                {/* Datos del comerci0 */}
+                <div className='w-full relative text-end py-4 px-4 md:pt-4 md:pb-0 2xl:py-4'>
+                  <button
+                    className="bg-gray-100 hover:bg-gray-200 text-gris hover:text-naranja focus:text-verde border-2 border-gray-200 py-2 px-2 rounded-lg shadow-md md:py-1 2xl:py-2"
+                    onClick={toggleMenu}
+                  >
+                    <span className='flex row-auto gap-2 items-center font-bold text-base'>
+                      <p className='hidden md:block'>OPCIONES</p>
+                      <RiMenuFill className="h-6 w-6 md:h-5 md:w-5 "/>
+                    </span>
+                  </button>
+                  {/* Opciones del menú */}
+                  {isMenuOpen && (
+                    <div className="absolute right-0 mt-2 w-full sm:w-96 lg:w-80">
+                      <ul className="bg-white shadow-lg rounded-lg border-2 border-gray-300">
+                        <li>
+                          <button
+                            className="block w-full text-left px-4 py-2 rounded-t-lg text-base md:text-lg font-medium text-gris hover:bg-naranja hover:bg-opacity-80 hover:text-white"
+                            onClick={() => { /* Lógica para la opción 1 */ }}
+                          >
+                            Editar información
+                          </button>
+                        </li>
+                        <li>
+                          <button
+                            className="block w-full text-left px-4 py-2 text-base md:text-lg font-medium text-gris hover:bg-naranja hover:bg-opacity-80 hover:text-white"
+                            onClick={() => { /* Lógica para la opción 2 */ }}
+                          >
+                            Orden de pago
+                          </button>
+                        </li>
+                        <li>
+                          <button
+                            className="block w-full text-left px-4 py-2 text-base md:text-lg font-medium text-gris hover:bg-naranja hover:bg-opacity-80 hover:text-white"
+                            onClick={() => { /* Lógica para la opción 2 */ }}
+                          >
+                            Refrendar
+                          </button>
+                        </li>
+                        <li>
+                          <button
+                            className="block w-full text-left px-4 py-2 rounded-b-lg text-base md:text-lg font-medium text-gris hover:bg-naranja hover:bg-opacity-80 hover:text-white"
+                            onClick={() => { /* Lógica para la opción 2 */ }}
+                          >
+                            Dar de baja
+                          </button>
+                        </li>
+                      </ul>
+                    </div>
+                  )}
+                </div>
+                {/* Datos del comercio */}
                 <form>
                   <div className='w-full grid grid-cols-1 md:grid-cols-2 gap-x-6 pb-8 lg:pb-0'>
-                    {/* Seccion 1 Informacion de comercio */}
+                    {/* Seccion 1 Informaciòn de comercio */}
                     <section className='col-span-1 px-4 mb-6 md:mb-0'>
 
                     </section>
-                    {/*Seccion 2 Ubicacion del comercio*/}
+                    {/*Seccion 2 Ubicaciòn del comercio*/}
                     <section className='col-span-1 px-4'>
                     
                     </section>
