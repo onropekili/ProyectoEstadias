@@ -3,7 +3,7 @@ import Header from '../../components/Header';
 import {RiUser3Fill, RiMenuFill} from 'react-icons/ri';
 import { MdStore} from 'react-icons/md';
 import Select from 'react-select';
-import selectStyles from '../../components/StyleSelect';
+import selectStylesForm from '../../components/StyleSelectForm';
 
 
 const DataComerciante = () => {
@@ -27,9 +27,11 @@ const DataComerciante = () => {
   ];
 
   const optionsHorario = [
-    { value: 'eventuan', label: 'EVENTUAL' },
-    { value: 'especial', label: 'ESPECIAL' },
-    { value: 'permanente', label: 'PERMANENTE' },
+    { value: 'mat', label: 'Mat: 07:00 a 18:00' },
+    { value: 'vesp', label: 'Vesp: 18:00 a 22:00' },
+    { value: 'vesp2', label: 'Vesp: 18:01 a 23:00' },
+    { value: 'mixto', label: 'MIXTO VARIABLE' },
+    // { value: 'otro', label: 'OTRO' },
   ];
 
   const optionsTipo = [
@@ -151,7 +153,7 @@ const DataComerciante = () => {
                           Datos personales:
                         </h4>
                       </div>
-                      <div className="flex flex-col gap-x-4 gap-y-4 md:grid md:grid-cols-2 lg:gap-y-2 2xl:gap-y-3">
+                      <div className="flex flex-col gap-x-4 gap-y-4 xl:grid xl:grid-cols-2 lg:gap-y-2 2xl:gap-y-3">
                         <div className="flex flex-col col-span-1 ">
                           <label
                             htmlFor="apellidoPaterno"
@@ -261,7 +263,7 @@ const DataComerciante = () => {
                           Domicilio:
                         </h4>
                       </div>
-                      <div className="flex flex-col gap-x-4 gap-y-4 md:grid md:grid-cols-4 lg:gap-y-2">
+                      <div className="flex flex-col gap-x-4 gap-y-4 xl:grid xl:grid-cols-4 lg:gap-y-2">
                         <div className="flex flex-col col-span-2 ">
                           <label
                             htmlFor="calle"
@@ -280,7 +282,7 @@ const DataComerciante = () => {
                             htmlFor="numeroExterior"
                             className="font-Foco-Corp-Bold text-gris text-base mb-1"
                           >
-                            No. Ext
+                            No. Exterior
                           </label>
                           <input
                             id="numeroExterior"
@@ -293,7 +295,7 @@ const DataComerciante = () => {
                             htmlFor="numeroInterior"
                             className="font-Foco-Corp-Bold text-gris text-base mb-1"
                           >
-                            No. Int
+                            No. Interior
                           </label>
                           <input
                             id="numeroInterior"
@@ -423,7 +425,7 @@ const DataComerciante = () => {
                           Información:
                         </h4>
                       </div>
-                      <div className="flex flex-col gap-x-4 gap-y-4 md:grid md:grid-cols-4 lg:gap-y-2 2xl:gap-y-3">
+                      <div className="flex flex-col gap-x-4 gap-y-4 xl:grid xl:grid-cols-4 lg:gap-y-2 2xl:gap-y-3">
                         <div className="flex flex-col col-span-2 ">
                           <label
                             htmlFor="clasificacion"
@@ -434,8 +436,8 @@ const DataComerciante = () => {
                           <Select
                             value={selectedClasificacion}
                             id="clasificacion"
-                            styles={selectStyles}
-                            className=" antialiased text-sm h-9"
+                            styles={selectStylesForm}
+                            className=" antialiased text-gris h-9 md:text-sm"
                             placeholder="Seleccione una opción"
                             onChange={handleClasificacionChange}
                             options={optionsClasificacion}
@@ -451,7 +453,7 @@ const DataComerciante = () => {
                           </label>
                           <input
                             id="fechaInicio"
-                            className="bg-gris bg-opacity-10 text-gris rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black"
+                            className="bg-gris bg-opacity-10 text-sm text-gris rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black"
                             placeholder="Escribe algo"
                           />
                         </div>
@@ -504,8 +506,8 @@ const DataComerciante = () => {
                           <Select
                             value={selectedHorario}
                             id="horario"
-                            styles={selectStyles}
-                            className=" antialiased text-sm h-9"
+                            styles={selectStylesForm}
+                            className=" antialiased text-gris h-9 md:text-sm"
                             placeholder="Seleccione una opción"
                             onChange={handleHorarioChange}
                             options={optionsHorario}
@@ -522,9 +524,9 @@ const DataComerciante = () => {
                           <Select
                             value={selectedTipo}
                             id="tipo"
-                            styles={selectStyles}
-                            className=" antialiased text-sm h-9"
-                            placeholder="Seleccione"
+                            styles={selectStylesForm}
+                            className=" antialiased text-gris h-9 md:text-sm"
+                            placeholder="Seleccionar"
                             onChange={handleTipoChange}
                             options={optionsTipo}
                             >
