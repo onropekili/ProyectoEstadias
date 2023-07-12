@@ -321,9 +321,24 @@ const DataComerciante = () => {
                 </form>
               </div>
             }
+            {/* Tab 2 Datos del comercio */}
             {activeTab === 2 &&
-              <div>
-                Contenido de la pestaña 2
+              <div className='w-full'>
+                {/* Botón del menú */}
+                
+                {/* Datos del comerci0 */}
+                <form>
+                  <div className='w-full grid grid-cols-1 md:grid-cols-2 gap-x-6 pb-8 lg:pb-0'>
+                    {/* Seccion 1 Informacion de comercio */}
+                    <section className='col-span-1 px-4 mb-6 md:mb-0'>
+
+                    </section>
+                    {/*Seccion 2 Ubicacion del comercio*/}
+                    <section className='col-span-1 px-4'>
+                    
+                    </section>
+                  </div>
+                </form>
               </div>
             }
           </div>
