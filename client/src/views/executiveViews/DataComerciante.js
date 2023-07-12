@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import Header from '../../components/Header';
 import {RiUser3Fill, RiMenuFill} from 'react-icons/ri';
 import { MdStore} from 'react-icons/md';
+import Select from 'react-select';
+import selectStyles from '../../components/StyleSelect';
 
 
 const DataComerciante = () => {
@@ -16,6 +18,42 @@ const DataComerciante = () => {
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
+  const optionsClasificacion = [
+    { value: 'ambulante', label: 'COMERCIO AMBULANTE' },
+    { value: 'fijo', label: 'COMERCIO EN PUESTO FIJO' },
+    { value: 'semifijo', label: 'COMERCIO EN PUESTO SEMI-FIJO' },
+    { value: 'festividades', label: 'COMERCIO EN FESTIVIDADES' },
+  ];
+
+  const optionsHorario = [
+    { value: 'eventuan', label: 'EVENTUAL' },
+    { value: 'especial', label: 'ESPECIAL' },
+    { value: 'permanente', label: 'PERMANENTE' },
+  ];
+
+  const optionsTipo = [
+    { value: 'eventual', label: 'EVENTUAL' },
+    { value: 'especial', label: 'ESPECIAL' },
+    { value: 'permanente', label: 'PERMANENTE' },
+  ];
+
+  const [selectedClasificacion, setSelectedClasificacion] = useState(null);
+  const [selectedHorario, setSelectedHorario] = useState(null);
+  const [selectedTipo, setSelectedTipo] = useState(null);
+
+  const handleClasificacionChange = (selectedOption) => {
+    setSelectedClasificacion(selectedOption);
+  };
+
+  const handleHorarioChange = (selectedOption) => {
+    setSelectedHorario(selectedOption);
+  };
+
+  const handleTipoChange = (selectedOption) => {
+    setSelectedTipo(selectedOption);
+  };
+
 
   return (
   <>
@@ -380,7 +418,145 @@ const DataComerciante = () => {
                   <div className='w-full grid grid-cols-1 md:grid-cols-2 gap-x-6 pb-8 lg:pb-0'>
                     {/* Seccion 1 Informaciòn de comercio */}
                     <section className='col-span-1 px-4 mb-6 md:mb-0'>
-
+                      <div className="text-start">
+                        <h4 className="text-2xl text-naranja font-Foco-Corp-Bold mb-6 md:mb-4">
+                          Información:
+                        </h4>
+                      </div>
+                      <div className="flex flex-col gap-x-4 gap-y-4 md:grid md:grid-cols-4 lg:gap-y-2 2xl:gap-y-3">
+                        <div className="flex flex-col col-span-2 ">
+                          <label
+                            htmlFor="clasificacion"
+                            className="font-Foco-Corp-Bold text-gris text-base mb-1"
+                          >
+                            Clasificación
+                          </label>
+                          <Select
+                            value={selectedClasificacion}
+                            id="clasificacion"
+                            styles={selectStyles}
+                            className=" antialiased text-sm h-9"
+                            placeholder="Seleccione una opción"
+                            onChange={handleClasificacionChange}
+                            options={optionsClasificacion}
+                            >
+                          </Select>
+                        </div>
+                        <div className="flex flex-col col-span-1">
+                          <label
+                            htmlFor="fechaInicio"
+                            className="font-Foco-Corp-Bold text-gris text-base mb-1"
+                          >
+                            Fecha de inicio
+                          </label>
+                          <input
+                            id="fechaInicio"
+                            className="bg-gris bg-opacity-10 text-gris rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black"
+                            placeholder="Escribe algo"
+                          />
+                        </div>
+                        <div className="flex flex-col col-span-1">
+                          <label
+                            htmlFor="fechaTermino"
+                            className="font-Foco-Corp-Bold text-gris text-base mb-1"
+                          >
+                            Fecha de termino
+                          </label>
+                          <input
+                            id="fechaTermino"
+                            className="bg-gris bg-opacity-10 text-gris rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black"
+                            placeholder="Escribe algo"
+                          />
+                        </div>
+                        <div className="flex flex-col col-span-3">
+                          <label
+                            htmlFor="tipoGiro"
+                            className="font-Foco-Corp-Bold text-gris text-base mb-1"
+                          >
+                            Tipo de giro/Actividad
+                          </label>
+                          <input
+                            id="tipoGiro"
+                            className="bg-gris bg-opacity-10 text-gris rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black"
+                            placeholder="Escribe algo"
+                          />
+                        </div>
+                        <div className="flex flex-col col-span-1">
+                          <label
+                            htmlFor="metros"
+                            className="font-Foco-Corp-Bold text-gris text-base mb-1"
+                          >
+                            Metros
+                          </label>
+                          <input
+                            id="metros"
+                            className="bg-gris bg-opacity-10 text-gris rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black"
+                            placeholder="Escribe algo"
+                          />
+                        </div>
+                        <div className="flex flex-col col-span-2">
+                          <label
+                            htmlFor="email"
+                            className="font-Foco-Corp-Bold text-gris text-base mb-1"
+                          >
+                            Horario
+                          </label>
+                          <Select
+                            value={selectedHorario}
+                            id="horario"
+                            styles={selectStyles}
+                            className=" antialiased text-sm h-9"
+                            placeholder="Seleccione una opción"
+                            onChange={handleHorarioChange}
+                            options={optionsHorario}
+                            >
+                          </Select>
+                        </div>
+                        <div className="flex flex-col col-span-1">
+                          <label
+                            htmlFor="tipo"
+                            className="font-Foco-Corp-Bold text-gris text-base mb-1"
+                          >
+                            Tipo
+                          </label>
+                          <Select
+                            value={selectedTipo}
+                            id="tipo"
+                            styles={selectStyles}
+                            className=" antialiased text-sm h-9"
+                            placeholder="Seleccione"
+                            onChange={handleTipoChange}
+                            options={optionsTipo}
+                            >
+                          </Select>
+                        </div>
+                        <div className="flex flex-col col-span-1">
+                          <label
+                            htmlFor="dias"
+                            className="font-Foco-Corp-Bold text-gris text-base mb-1"
+                          >
+                            Días
+                          </label>
+                          <input
+                            id="dias"
+                            className="bg-gris bg-opacity-10 text-gris rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black"
+                            placeholder="Escribe algo"
+                          />
+                        </div>
+                        <div className="flex flex-col col-span-4 mb-20">
+                          <label
+                            htmlFor="email"
+                            className="font-Foco-Corp-Bold text-gris text-base mb-1"
+                          >
+                            Observaciones del comercio
+                          </label>
+                          <input
+                            id="email"
+                            className="bg-gris bg-opacity-10 text-gris rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black"
+                            placeholder="Escribe algo"
+                          />
+                        </div>
+                      </div>
                     </section>
                     {/*Seccion 2 Ubicaciòn del comercio*/}
                     <section className='col-span-1 px-4'>
