@@ -5,43 +5,73 @@ import { MdStore} from 'react-icons/md';
 import Select from 'react-select';
 import selectStylesForm from '../../components/StyleSelectForm';
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 
 
 const DataComerciante = () => {
-  const [activeTab, setActiveTab] = useState(1);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [showButtons, setShowButtons] = useState(false);
-  const [fieldsEditable, setFieldsEditable] = useState(false);
 
+  const navigate = useNavigate();
+
+  const [activeTab, setActiveTab] = useState(1);
+
+  const [isMenuOpenTab1, setIsMenuOpenTab1] = useState(false);
+  const [showButtonsTab1, setShowButtonsTab1] = useState(false);
+  const [fieldsEditableTab1, setFieldsEditableTab1] = useState(false);
+  
+  const [isMenuOpenTab2, setIsMenuOpenTab2] = useState(false);
+  const [showButtonsTab2, setShowButtonsTab2] = useState(false);
+  const [fieldsEditableTab2, setFieldsEditableTab2] = useState(false);
 
   const handleTabClick = (tabId) => {
     setActiveTab(tabId);
   };
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-    setShowButtons(false); // Reiniciar la visibilidad de los botones al cerrar el menú
+  const toggleMenuTab1 = () => {
+    setIsMenuOpenTab1(!isMenuOpenTab1);
+    setShowButtonsTab1(false); // Reiniciar la visibilidad de los botones al cerrar el menú
   };
-
-  const handleOptionClick = () => {
-    setIsMenuOpen(false); // Cerrar el menú de opciones
-    setShowButtons(true); // Mostrar los botones
-    setFieldsEditable(true); // Habilitar la edición de los campos
-
+  
+  const toggleMenuTab2 = () => {
+    setIsMenuOpenTab2(!isMenuOpenTab2);
+    setShowButtonsTab2(false); // Reiniciar la visibilidad de los botones al cerrar el menú
   };
-
-  const handleSaveClick = () => {
-    // Lógica para guardar
-    setFieldsEditable(false); // Deshabilitar la edición de los campos
-    setShowButtons(false);
+  
+  const handleOptionClickTab1 = () => {
+    setIsMenuOpenTab1(false); // Cerrar el menú de opciones
+    setShowButtonsTab1(true); // Mostrar los botones
+    setFieldsEditableTab1(true); // Habilitar la edición de los campos
   };
-
-  const handleCancelClick = () => {
-    setShowButtons(false);
-    setFieldsEditable(false); // Deshabilitar la edición de los campos
+  
+  const handleOptionClickTab2 = () => {
+    setIsMenuOpenTab2(false); // Cerrar el menú de opciones
+    setShowButtonsTab2(true); // Mostrar los botones
+    setFieldsEditableTab2(true); // Habilitar la edición de los campos
+  };
+  
+  const handleSaveClickTab1 = () => {
+    // Lógica para guardar en la Tab 1
+    setFieldsEditableTab1(false); // Deshabilitar la edición de los campos
+    setShowButtonsTab1(false);
+  };
+  
+  const handleSaveClickTab2 = () => {
+    // Lógica para guardar en la Tab 2
+    setFieldsEditableTab2(false); // Deshabilitar la edición de los campos
+    setShowButtonsTab2(false);
+  };
+  
+  const handleCancelClickTab1 = () => {
+    setShowButtonsTab1(false);
+    setFieldsEditableTab1(false); // Deshabilitar la edición de los campos
+  };
+  
+  const handleCancelClickTab2 = () => {
+    setShowButtonsTab2(false);
+    setFieldsEditableTab2(false); // Deshabilitar la edición de los campos
   };
 
   const handleDeleteClick = () => {
+    setIsMenuOpenTab1(false); // Cerrar el menú de opciones
     Swal.fire({
       title: 'Eliminar',
       text: '¿Quieres eliminar este comerciante?',
@@ -97,7 +127,7 @@ const DataComerciante = () => {
   const handleTipoChange = (selectedOption) => {
     setSelectedTipo(selectedOption);
   };
-  
+
   return (
   <>
     <Header/>
@@ -145,7 +175,7 @@ const DataComerciante = () => {
             </button>
           </div>
           {/* Tabs*/}
-          <div className={`border-2 mt-3 rounded-b-lg md:mt-0 ${showButtons ? '2xl:pb-0' : '2xl:pb-14'}`}>
+          <div className={`border-2 mt-3 rounded-b-lg md:mt-0 ${showButtonsTab1 || showButtonsTab2 ? '2xl:pb-0' : '2xl:pb-14'}`}>
             {/* Tab 1 Datos del comerciante */}
             {activeTab === 1 &&
               <div className='w-full'>
@@ -153,7 +183,7 @@ const DataComerciante = () => {
                 <div className='w-full relative text-end py-4 px-4 md:pt-4 md:pb-0 2xl:py-4'>
                   <button
                     className="bg-gray-100 hover:bg-gray-200 text-gris hover:text-naranja focus:text-verde border-2 border-gray-200 py-2 px-2 rounded-lg shadow-md md:py-1 2xl:py-2"
-                    onClick={toggleMenu}
+                    onClick={toggleMenuTab1}
                   >
                     <span className='flex row-auto gap-2 items-center font-bold text-base'>
                       <p className='hidden md:block'>OPCIONES</p>
@@ -161,13 +191,13 @@ const DataComerciante = () => {
                     </span>
                   </button>
                   {/* Opciones del menú */}
-                  {isMenuOpen && (
+                  {isMenuOpenTab1 && (
                     <div className="absolute right-0 mt-2 w-full sm:w-96 lg:w-80">
                       <ul className="bg-white shadow-lg rounded-lg border-2 border-gray-300">
                         <li>
                           <button
                             className="block w-full text-left px-4 py-2 rounded-t-lg text-base md:text-lg font-medium text-gris hover:bg-naranja hover:bg-opacity-80 hover:text-white"
-                            onClick={handleOptionClick}
+                            onClick={handleOptionClickTab1}
                           >
                             Editar información
                           </button>
@@ -189,10 +219,11 @@ const DataComerciante = () => {
                   <div className='w-full grid grid-cols-1 md:grid-cols-2 gap-x-6 pb-8 lg:pb-0'>
                     {/* Seccion 1 Datos Personales */}
                     <section className='col-span-1 px-4 mb-6 md:mb-0'>
-                      <div className="text-start">
+                      <div className="text-start flex justify-between items-center">
                         <h4 className="text-2xl text-naranja font-Foco-Corp-Bold mb-6 md:mb-4">
                           Datos personales:
                         </h4>
+                        <span className='text-lg font-Foco-Corp font-semibold text-gris mb-6 md:mb-4'>Folio: <span>00000</span></span>
                       </div>
                       <div className="flex flex-col gap-x-4 gap-y-4 xl:grid xl:grid-cols-2 lg:gap-y-2 2xl:gap-y-3">
                         <div className="flex flex-col col-span-1 ">
@@ -206,7 +237,7 @@ const DataComerciante = () => {
                             id="apellidoPaterno"
                             className="bg-gris bg-opacity-10 text-gris text-sm rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black uppercase"
                             placeholder="Escribe algo"
-                            disabled={!fieldsEditable}
+                            disabled={!fieldsEditableTab1}
                           />
                         </div>
                         <div className="flex flex-col col-span-1">
@@ -220,7 +251,7 @@ const DataComerciante = () => {
                             id="apellidoMaterno"
                             className="bg-gris bg-opacity-10 text-gris text-sm rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black uppercase"
                             placeholder="Escribe algo"
-                            disabled={!fieldsEditable}
+                            disabled={!fieldsEditableTab1}
                           />
                         </div>
                         <div className="flex flex-col col-span-2">
@@ -234,7 +265,7 @@ const DataComerciante = () => {
                             id="nombres"
                             className="bg-gris bg-opacity-10 text-gris text-sm rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black uppercase"
                             placeholder="Escribe algo"
-                            disabled={!fieldsEditable}
+                            disabled={!fieldsEditableTab1}
                           />
                         </div>
                         <div className="flex flex-col col-span-1">
@@ -248,7 +279,7 @@ const DataComerciante = () => {
                             id="telefono1"
                             className="bg-gris bg-opacity-10 text-gris text-sm rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black uppercase"
                             placeholder="Escribe algo"
-                            disabled={!fieldsEditable}
+                            disabled={!fieldsEditableTab1}
                           />
                         </div>
                         <div className="flex flex-col col-span-1">
@@ -262,7 +293,7 @@ const DataComerciante = () => {
                             id="telefono2"
                             className="bg-gris bg-opacity-10 text-gris text-sm rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black uppercase"
                             placeholder="Escribe algo"
-                            disabled={!fieldsEditable}
+                            disabled={!fieldsEditableTab1}
                           />
                         </div>
                         <div className="flex flex-col col-span-2">
@@ -276,7 +307,7 @@ const DataComerciante = () => {
                             id="email"
                             className="bg-gris bg-opacity-10 text-gris text-sm rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black uppercase"
                             placeholder="Escribe algo"
-                            disabled={!fieldsEditable}
+                            disabled={!fieldsEditableTab1}
                           />
                         </div>
                         <div className="flex flex-col col-span-2 mb-2">
@@ -291,7 +322,7 @@ const DataComerciante = () => {
                               id="terceraEdad"
                               type="checkbox"
                               className="h-4 w-4 rounded-lg focus:bg-verde bg-verde focus:outline-none focus:bg-none focus:border-violet-600"
-                              disabled={!fieldsEditable}
+                              disabled={!fieldsEditableTab1}
                             />
                             <label
                               htmlFor="terceraEdad"
@@ -323,7 +354,7 @@ const DataComerciante = () => {
                             id="calle"
                             className="bg-gris bg-opacity-10 text-gris text-sm rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black uppercase"
                             placeholder="Escribe algo"
-                            disabled={!fieldsEditable}
+                            disabled={!fieldsEditableTab1}
                           />
                         </div>
                         <div className="flex flex-col col-span-1">
@@ -337,7 +368,7 @@ const DataComerciante = () => {
                             id="numeroExterior"
                             className="bg-gris bg-opacity-10 text-gris text-sm rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black uppercase"
                             placeholder="Escribe algo"
-                            disabled={!fieldsEditable}
+                            disabled={!fieldsEditableTab1}
                           />
                         </div>
                         <div className="flex flex-col col-span-1">
@@ -351,7 +382,7 @@ const DataComerciante = () => {
                             id="numeroInterior"
                             className="bg-gris bg-opacity-10 text-gris text-sm rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black uppercase"
                             placeholder="Escribe algo"
-                            disabled={!fieldsEditable}
+                            disabled={!fieldsEditableTab1}
                           />
                         </div>
                         <div className="flex flex-col col-span-3">
@@ -365,7 +396,7 @@ const DataComerciante = () => {
                             id="colonia"
                             className="bg-gris bg-opacity-10 text-gris text-sm rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black uppercase"
                             placeholder="Escribe algo"
-                            disabled={!fieldsEditable}
+                            disabled={!fieldsEditableTab1}
                           />
                         </div>
                         <div className="flex flex-col col-span-1">
@@ -379,7 +410,7 @@ const DataComerciante = () => {
                             id="np"
                             className="bg-gris bg-opacity-10 text-gris text-sm rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black uppercase"
                             placeholder="Escribe algo"
-                            disabled={!fieldsEditable}
+                            disabled={!fieldsEditableTab1}
                           />
                         </div>
                         <div className="flex flex-col col-span-4">
@@ -393,7 +424,7 @@ const DataComerciante = () => {
                             id="municipio"
                             className="bg-gris bg-opacity-10 text-gris text-sm rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black uppercase"
                             placeholder="Escribe algo"
-                            disabled={!fieldsEditable}
+                            disabled={!fieldsEditableTab1}
                           />
                         </div>
                         <div className="flex flex-col col-span-4">
@@ -407,25 +438,25 @@ const DataComerciante = () => {
                             id="observaciones"
                             className="bg-gris bg-opacity-10 text-gris text-sm rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black uppercase"
                             placeholder="Escribe algo"
-                            disabled={!fieldsEditable}
+                            disabled={!fieldsEditableTab1}
                           />
                         </div>
                       </div>
                     </section>
                   </div>
                   {/* Botones Guardar y Cancelar */}
-                  {showButtons && (
+                  {showButtonsTab1 && (
                     <div>
                       <div className='w-full flex flex-col md:flex-row py-8 md:py-4 2xl:py-8 px-4 rounded-b-lg gap-4 lg:gap-10 bg-gray-50 justify-end'>
                         <button 
                           className="text-center text-lg w-full md:w-72  h-9 2xl:h-12 font-Foco-Corp-Bold border-2 bg-verde border-verde hover:bg-verde hover:opacity-80 rounded-lg text-white"
-                          onClick={handleSaveClick}
+                          onClick={handleSaveClickTab1}
                         >
                           Guardar
                         </button>
                         <button
                           className="text-center text-lg w-full md:w-72 h-9 2xl:h-12 font-Foco-Corp-Bold border-2 bg-rojo border-rojo hover:bg-rojo hover:opacity-80 rounded-lg text-white"
-                          onClick={handleCancelClick}>Cancelar</button>
+                          onClick={handleCancelClickTab1}>Cancelar</button>
                       </div>
                     </div>
                   )}
@@ -439,7 +470,7 @@ const DataComerciante = () => {
                 <div className='w-full relative text-end py-4 px-4 md:pt-4 md:pb-0 2xl:py-4'>
                   <button
                     className="bg-gray-100 hover:bg-gray-200 text-gris hover:text-naranja focus:text-verde border-2 border-gray-200 py-2 px-2 rounded-lg shadow-md md:py-1 2xl:py-2"
-                    onClick={toggleMenu}
+                    onClick={toggleMenuTab2}
                   >
                     <span className='flex row-auto gap-2 items-center font-bold text-base'>
                       <p className='hidden md:block'>OPCIONES</p>
@@ -447,13 +478,13 @@ const DataComerciante = () => {
                     </span>
                   </button>
                   {/* Opciones del menú */}
-                  {isMenuOpen && (
+                  {isMenuOpenTab2 && (
                     <div className="absolute right-0 mt-2 w-full sm:w-96 lg:w-80">
                       <ul className="bg-white shadow-lg rounded-lg border-2 border-gray-300">
                         <li>
                           <button
                             className="block w-full text-left px-4 py-2 rounded-t-lg text-base md:text-lg font-medium text-gris hover:bg-naranja hover:bg-opacity-80 hover:text-white"
-                            onClick={() => { /* Lógica para la opción 1 */ }}
+                            onClick={handleOptionClickTab2}
                           >
                             Editar información
                           </button>
@@ -461,7 +492,7 @@ const DataComerciante = () => {
                         <li>
                           <button
                             className="block w-full text-left px-4 py-2 text-base md:text-lg font-medium text-gris hover:bg-naranja hover:bg-opacity-80 hover:text-white"
-                            onClick={() => { /* Lógica para la opción 2 */ }}
+                            onClick={() => navigate("/Orden-de-pago")}
                           >
                             Orden de pago
                           </button>
@@ -469,7 +500,7 @@ const DataComerciante = () => {
                         <li>
                           <button
                             className="block w-full text-left px-4 py-2 text-base md:text-lg font-medium text-gris hover:bg-naranja hover:bg-opacity-80 hover:text-white"
-                            onClick={() => { /* Lógica para la opción 2 */ }}
+                            onClick={''}
                           >
                             Refrendar
                           </button>
@@ -479,7 +510,15 @@ const DataComerciante = () => {
                             className="block w-full text-left px-4 py-2 rounded-b-lg text-base md:text-lg font-medium text-gris hover:bg-naranja hover:bg-opacity-80 hover:text-white"
                             onClick={() => { /* Lógica para la opción 2 */ }}
                           >
-                            Dar de baja
+                            Solicitud de baja
+                          </button>
+                        </li>
+                        <li>
+                          <button
+                            className="block w-full text-left px-4 py-2 rounded-b-lg text-base md:text-lg font-medium text-gris hover:bg-naranja hover:bg-opacity-80 hover:text-white"
+                            onClick={() => { /* Lógica para la opción 2 */ }}
+                          >
+                            Eliminar comercio
                           </button>
                         </li>
                       </ul>
@@ -491,10 +530,11 @@ const DataComerciante = () => {
                   <div className='w-full grid grid-cols-1 md:grid-cols-2 gap-x-6 pb-8 lg:pb-1 2xl:pb-2'>
                     {/* Seccion 1 Informaciòn de comercio */}
                     <section className='col-span-1 px-4 mb-6 md:mb-0'>
-                      <div className="text-start">
+                      <div className="text-start flex justify-between items-center">
                         <h4 className="text-2xl text-naranja font-Foco-Corp-Bold mb-6 md:mb-4">
                           Información:
                         </h4>
+                        <span className='text-lg font-Foco-Corp font-semibold text-gris mb-6 md:mb-4'>Folio: <span>00000</span></span>
                       </div>
                       <div className="flex flex-col gap-x-4 gap-y-4 xl:grid xl:grid-cols-4 lg:gap-y-2 2xl:gap-y-3">
                         <div className="flex flex-col col-span-2 ">
@@ -508,10 +548,11 @@ const DataComerciante = () => {
                             value={selectedClasificacion}
                             id="clasificacion"
                             styles={selectStylesForm}
-                            className=" antialiased text-gris h-9 md:text-sm"
+                            className=" antialiased text-gris h-9 text-sm uppercase"
                             placeholder="Seleccione una opción"
                             onChange={handleClasificacionChange}
                             options={optionsClasificacion}
+                            disabled={!fieldsEditableTab2}
                             >
                           </Select>
                         </div>
@@ -524,8 +565,9 @@ const DataComerciante = () => {
                           </label>
                           <input
                             id="fechaInicio"
-                            className="bg-gris bg-opacity-10 text-sm text-gris rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black"
+                            className="bg-gris bg-opacity-10 text-sm text-gris rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black uppercase"
                             placeholder="Escribe algo"
+                            disabled
                           />
                         </div>
                         <div className="flex flex-col col-span-1">
@@ -537,8 +579,9 @@ const DataComerciante = () => {
                           </label>
                           <input
                             id="fechaTermino"
-                            className="bg-gris bg-opacity-10 text-gris rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black"
+                            className="bg-gris bg-opacity-10 text-sm text-gris rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black uppercase"
                             placeholder="Escribe algo"
+                            disabled
                           />
                         </div>
                         <div className="flex flex-col col-span-3">
@@ -550,8 +593,9 @@ const DataComerciante = () => {
                           </label>
                           <input
                             id="tipoGiro"
-                            className="bg-gris bg-opacity-10 text-gris rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black"
+                            className="bg-gris bg-opacity-10 text-gris text-sm rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black uppercase"
                             placeholder="Escribe algo"
+                            disabled={!fieldsEditableTab2}
                           />
                         </div>
                         <div className="flex flex-col col-span-1">
@@ -563,8 +607,9 @@ const DataComerciante = () => {
                           </label>
                           <input
                             id="metros"
-                            className="bg-gris bg-opacity-10 text-gris rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black"
+                            className="bg-gris bg-opacity-10 text-gris text-sm rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black uppercase"
                             placeholder="Escribe algo"
+                            disabled={!fieldsEditableTab2}
                           />
                         </div>
                         <div className="flex flex-col col-span-2">
@@ -578,10 +623,11 @@ const DataComerciante = () => {
                             value={selectedHorario}
                             id="horario"
                             styles={selectStylesForm}
-                            className=" antialiased text-gris h-9 md:text-sm"
+                            className=" antialiased text-gris h-9 text-sm uppercase"
                             placeholder="Seleccione una opción"
                             onChange={handleHorarioChange}
                             options={optionsHorario}
+                            disabled={!fieldsEditableTab2}
                             >
                           </Select>
                         </div>
@@ -596,10 +642,11 @@ const DataComerciante = () => {
                             value={selectedTipo}
                             id="tipo"
                             styles={selectStylesForm}
-                            className=" antialiased text-gris h-9 md:text-sm"
+                            className=" antialiased text-gris h-9 text-sm uppercase"
                             placeholder="Seleccionar"
                             onChange={handleTipoChange}
                             options={optionsTipo}
+                            disabled={!fieldsEditableTab2}
                             >
                           </Select>
                         </div>
@@ -612,8 +659,9 @@ const DataComerciante = () => {
                           </label>
                           <input
                             id="dias"
-                            className="bg-gris bg-opacity-10 text-gris rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black"
+                            className="bg-gris bg-opacity-10 text-gris text-sm rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black uppercase"
                             placeholder="Escribe algo"
+                            disabled={!fieldsEditableTab2}
                           />
                         </div>
                         <div className="flex flex-col col-span-4 mb-20">
@@ -648,8 +696,9 @@ const DataComerciante = () => {
                           </label>
                           <input
                             id="calle"
-                            className="bg-gris bg-opacity-10 text-gris rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black"
+                            className="bg-gris bg-opacity-10 text-gris text-sm rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black uppercase"
                             placeholder="Escribe algo"
+                            disabled={!fieldsEditableTab2}
                           />
                         </div>
                         <div className="flex flex-col col-span-2">
@@ -661,8 +710,9 @@ const DataComerciante = () => {
                           </label>
                           <input
                             id="cruce1"
-                            className="bg-gris bg-opacity-10 text-gris rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black"
+                            className="bg-gris bg-opacity-10 text-gris text-sm rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black uppercase"
                             placeholder="Escribe algo"
+                            disabled={!fieldsEditableTab2}
                           />
                         </div>
                         <div className="flex flex-col col-span-2">
@@ -674,8 +724,9 @@ const DataComerciante = () => {
                           </label>
                           <input
                             id="cruce2"
-                            className="bg-gris bg-opacity-10 text-gris rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black"
+                            className="bg-gris bg-opacity-10 text-gris text-sm rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black uppercase"
                             placeholder="Escribe algo"
+                            disabled={!fieldsEditableTab2}
                           />
                         </div>
                         <div className="flex flex-col col-span-3">
@@ -687,8 +738,9 @@ const DataComerciante = () => {
                           </label>
                           <input
                             id="localidad"
-                            className="bg-gris bg-opacity-10 text-gris rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black"
+                            className="bg-gris bg-opacity-10 text-gris text-sm rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black uppercase"
                             placeholder="Escribe algo"
+                            disabled={!fieldsEditableTab2}
                           />
                         </div>
                         <div className="flex flex-col col-span-1">
@@ -700,18 +752,35 @@ const DataComerciante = () => {
                           </label>
                           <input
                             id="zona"
-                            className="bg-gris bg-opacity-10 text-gris rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black"
+                            className="bg-gris bg-opacity-10 text-gris text-sm rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black uppercase"
                             placeholder="Escribe algo"
+                            disabled={!fieldsEditableTab2}
                           />
                         </div>
                       </div>
                     </section>
                   </div>
+                  {/* Botones Guardar y Cancelar */}
+                  {showButtonsTab2 && (
+                    <div>
+                      <div className='w-full flex flex-col md:flex-row py-8 md:py-4 2xl:py-8 px-4 rounded-b-lg gap-4 lg:gap-10 bg-gray-50 justify-end'>
+                        <button 
+                          className="text-center text-lg w-full md:w-72  h-9 2xl:h-12 font-Foco-Corp-Bold border-2 bg-verde border-verde hover:bg-verde hover:opacity-80 rounded-lg text-white"
+                          onClick={handleSaveClickTab2}
+                        >
+                          Guardar
+                        </button>
+                        <button
+                          className="text-center text-lg w-full md:w-72 h-9 2xl:h-12 font-Foco-Corp-Bold border-2 bg-rojo border-rojo hover:bg-rojo hover:opacity-80 rounded-lg text-white"
+                          onClick={handleCancelClickTab2}>Cancelar</button>
+                      </div>
+                    </div>
+                  )}
                 </form>
               </div>
             }
           </div>
-          {!showButtons && (
+          {!showButtonsTab1 && !showButtonsTab2 && (
             <footer className="flex flex-col md:grid md:grid-cols-2 md:gap-4 mt-6">
               <div className="text-white text-xl font-Foco-Corp-Bold lg:m-0">
                 <input
