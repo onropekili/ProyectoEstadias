@@ -8,15 +8,29 @@ import selectStylesForm from '../../components/StyleSelectForm';
 
 const DataComerciante = () => {
   const [activeTab, setActiveTab] = useState(1);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [showButtons, setShowButtons] = useState(false);
 
   const handleTabClick = (tabId) => {
     setActiveTab(tabId);
   };
 
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+    setShowButtons(false); // Reiniciar la visibilidad de los botones al cerrar el menú
+  };
+
+  const handleOptionClick = () => {
+    setIsMenuOpen(false); // Cerrar el menú de opciones
+    setShowButtons(true); // Mostrar los botones
+  };
+
+  const handleSaveClick = () => {
+    // Lógica para guardar
+  };
+
+  const handleCancelClick = () => {
+    setShowButtons(false);
   };
 
   const optionsClasificacion = [
@@ -55,8 +69,7 @@ const DataComerciante = () => {
   const handleTipoChange = (selectedOption) => {
     setSelectedTipo(selectedOption);
   };
-
-
+  
   return (
   <>
     <Header/>
@@ -104,7 +117,7 @@ const DataComerciante = () => {
             </button>
           </div>
           {/* Tabs*/}
-          <div className="border-2 mt-3 rounded-b-lg md:mt-0 ">
+          <div className="border-2 mt-3 rounded-b-lg md:mt-0 2xl:pb-14">
             {/* Tab 1 Datos del comerciante */}
             {activeTab === 1 &&
               <div className='w-full'>
@@ -126,7 +139,7 @@ const DataComerciante = () => {
                         <li>
                           <button
                             className="block w-full text-left px-4 py-2 rounded-t-lg text-base md:text-lg font-medium text-gris hover:bg-naranja hover:bg-opacity-80 hover:text-white"
-                            onClick={() => { /* Lógica para la opción 1 */ }}
+                            onClick={handleOptionClick}
                           >
                             Editar información
                           </button>
@@ -417,7 +430,7 @@ const DataComerciante = () => {
                 </div>
                 {/* Datos del comercio */}
                 <form>
-                  <div className='w-full grid grid-cols-1 md:grid-cols-2 gap-x-6 pb-8 lg:pb-1'>
+                  <div className='w-full grid grid-cols-1 md:grid-cols-2 gap-x-6 pb-8 lg:pb-1 2xl:pb-2'>
                     {/* Seccion 1 Informaciòn de comercio */}
                     <section className='col-span-1 px-4 mb-6 md:mb-0'>
                       <div className="text-start">
@@ -640,6 +653,15 @@ const DataComerciante = () => {
               </div>
             }
           </div>
+          <footer className="flex flex-col md:grid md:grid-cols-2 md:gap-4 mt-6">
+            <div className="text-white text-xl font-Foco-Corp-Bold lg:m-0">
+              <input
+                type="button"
+                value="Volver"
+                className="self-start text-center bg-verde w-full h-11 rounded-lg lg:w-40"
+              />
+            </div>
+          </footer>
         </div>
       </div>
     </>
