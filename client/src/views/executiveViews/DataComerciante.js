@@ -10,6 +10,8 @@ const DataComerciante = () => {
   const [activeTab, setActiveTab] = useState(1);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showButtons, setShowButtons] = useState(false);
+  const [fieldsEditable, setFieldsEditable] = useState(false);
+
 
   const handleTabClick = (tabId) => {
     setActiveTab(tabId);
@@ -23,14 +25,19 @@ const DataComerciante = () => {
   const handleOptionClick = () => {
     setIsMenuOpen(false); // Cerrar el menú de opciones
     setShowButtons(true); // Mostrar los botones
+    setFieldsEditable(true); // Habilitar la edición de los campos
+
   };
 
   const handleSaveClick = () => {
     // Lógica para guardar
+    setFieldsEditable(false); // Deshabilitar la edición de los campos
+    setShowButtons(false);
   };
 
   const handleCancelClick = () => {
     setShowButtons(false);
+    setFieldsEditable(false); // Deshabilitar la edición de los campos
   };
 
   const optionsClasificacion = [
@@ -176,8 +183,9 @@ const DataComerciante = () => {
                           </label>
                           <input
                             id="apellidoPaterno"
-                              className="bg-gris bg-opacity-10 text-gris rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black"
-                              placeholder="Escribe algo"
+                            className="bg-gris bg-opacity-10 text-gris text-sm rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black uppercase"
+                            placeholder="Escribe algo"
+                            disabled={!fieldsEditable}
                           />
                         </div>
                         <div className="flex flex-col col-span-1">
@@ -189,8 +197,9 @@ const DataComerciante = () => {
                           </label>
                           <input
                             id="apellidoMaterno"
-                            className="bg-gris bg-opacity-10 text-gris rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black"
+                            className="bg-gris bg-opacity-10 text-gris text-sm rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black uppercase"
                             placeholder="Escribe algo"
+                            disabled={!fieldsEditable}
                           />
                         </div>
                         <div className="flex flex-col col-span-2">
@@ -202,8 +211,9 @@ const DataComerciante = () => {
                           </label>
                           <input
                             id="nombres"
-                            className="bg-gris bg-opacity-10 text-gris rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black"
+                            className="bg-gris bg-opacity-10 text-gris text-sm rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black uppercase"
                             placeholder="Escribe algo"
+                            disabled={!fieldsEditable}
                           />
                         </div>
                         <div className="flex flex-col col-span-1">
@@ -215,8 +225,9 @@ const DataComerciante = () => {
                           </label>
                           <input
                             id="telefono1"
-                            className="bg-gris bg-opacity-10 text-gris rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black"
+                            className="bg-gris bg-opacity-10 text-gris text-sm rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black uppercase"
                             placeholder="Escribe algo"
+                            disabled={!fieldsEditable}
                           />
                         </div>
                         <div className="flex flex-col col-span-1">
@@ -228,8 +239,9 @@ const DataComerciante = () => {
                           </label>
                           <input
                             id="telefono2"
-                            className="bg-gris bg-opacity-10 text-gris rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black"
+                            className="bg-gris bg-opacity-10 text-gris text-sm rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black uppercase"
                             placeholder="Escribe algo"
+                            disabled={!fieldsEditable}
                           />
                         </div>
                         <div className="flex flex-col col-span-2">
@@ -241,8 +253,9 @@ const DataComerciante = () => {
                           </label>
                           <input
                             id="email"
-                            className="bg-gris bg-opacity-10 text-gris rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black"
+                            className="bg-gris bg-opacity-10 text-gris text-sm rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black uppercase"
                             placeholder="Escribe algo"
+                            disabled={!fieldsEditable}
                           />
                         </div>
                         <div className="flex flex-col col-span-2 mb-2">
@@ -257,6 +270,7 @@ const DataComerciante = () => {
                               id="terceraEdad"
                               type="checkbox"
                               className="h-4 w-4 rounded-lg focus:bg-verde bg-verde focus:outline-none focus:bg-none focus:border-violet-600"
+                              disabled={!fieldsEditable}
                             />
                             <label
                               htmlFor="terceraEdad"
@@ -286,8 +300,9 @@ const DataComerciante = () => {
                           </label>
                           <input
                             id="calle"
-                            className="bg-gris bg-opacity-10 text-gris rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black"
+                            className="bg-gris bg-opacity-10 text-gris text-sm rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black uppercase"
                             placeholder="Escribe algo"
+                            disabled={!fieldsEditable}
                           />
                         </div>
                         <div className="flex flex-col col-span-1">
@@ -299,8 +314,9 @@ const DataComerciante = () => {
                           </label>
                           <input
                             id="numeroExterior"
-                            className="bg-gris bg-opacity-10 text-gris rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black"
+                            className="bg-gris bg-opacity-10 text-gris text-sm rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black uppercase"
                             placeholder="Escribe algo"
+                            disabled={!fieldsEditable}
                           />
                         </div>
                         <div className="flex flex-col col-span-1">
@@ -312,8 +328,9 @@ const DataComerciante = () => {
                           </label>
                           <input
                             id="numeroInterior"
-                            className="bg-gris bg-opacity-10 text-gris rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black"
+                            className="bg-gris bg-opacity-10 text-gris text-sm rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black uppercase"
                             placeholder="Escribe algo"
+                            disabled={!fieldsEditable}
                           />
                         </div>
                         <div className="flex flex-col col-span-3">
@@ -325,8 +342,9 @@ const DataComerciante = () => {
                           </label>
                           <input
                             id="colonia"
-                            className="bg-gris bg-opacity-10 text-gris rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black"
+                            className="bg-gris bg-opacity-10 text-gris text-sm rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black uppercase"
                             placeholder="Escribe algo"
+                            disabled={!fieldsEditable}
                           />
                         </div>
                         <div className="flex flex-col col-span-1">
@@ -338,8 +356,9 @@ const DataComerciante = () => {
                           </label>
                           <input
                             id="np"
-                            className="bg-gris bg-opacity-10 text-gris rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black"
+                            className="bg-gris bg-opacity-10 text-gris text-sm rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black uppercase"
                             placeholder="Escribe algo"
+                            disabled={!fieldsEditable}
                           />
                         </div>
                         <div className="flex flex-col col-span-4">
@@ -351,8 +370,9 @@ const DataComerciante = () => {
                           </label>
                           <input
                             id="municipio"
-                            className="bg-gris bg-opacity-10 text-gris rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black"
+                            className="bg-gris bg-opacity-10 text-gris text-sm rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black uppercase"
                             placeholder="Escribe algo"
+                            disabled={!fieldsEditable}
                           />
                         </div>
                         <div className="flex flex-col col-span-4">
@@ -364,8 +384,9 @@ const DataComerciante = () => {
                           </label>
                           <input
                             id="observaciones"
-                            className="bg-gris bg-opacity-10 text-gris rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black"
+                            className="bg-gris bg-opacity-10 text-gris text-sm rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black uppercase"
                             placeholder="Escribe algo"
+                            disabled={!fieldsEditable}
                           />
                         </div>
                       </div>
