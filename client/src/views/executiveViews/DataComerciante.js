@@ -417,7 +417,7 @@ const DataComerciante = () => {
                 </div>
                 {/* Datos del comercio */}
                 <form>
-                  <div className='w-full grid grid-cols-1 md:grid-cols-2 gap-x-6 pb-8 lg:pb-0'>
+                  <div className='w-full grid grid-cols-1 md:grid-cols-2 gap-x-6 pb-8 lg:pb-1'>
                     {/* Seccion 1 Informaciòn de comercio */}
                     <section className='col-span-1 px-4 mb-6 md:mb-0'>
                       <div className="text-start">
@@ -562,7 +562,78 @@ const DataComerciante = () => {
                     </section>
                     {/*Seccion 2 Ubicaciòn del comercio*/}
                     <section className='col-span-1 px-4'>
-                    
+                      <div className="text-start">
+                        <h4 className="text-2xl text-naranja font-Foco-Corp-Bold mb-6 md:mb-4">
+                          Ubicación del comercio:
+                        </h4>
+                      </div>
+                      <div className="flex flex-col gap-x-4 gap-y-4 xl:grid xl:grid-cols-4 lg:gap-y-2">
+                        <div className="flex flex-col col-span-4">
+                          <label
+                            htmlFor="calle"
+                            className="font-Foco-Corp-Bold text-gris text-base mb-1"
+                          >
+                            Calle
+                          </label>
+                          <input
+                            id="calle"
+                            className="bg-gris bg-opacity-10 text-gris rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black"
+                            placeholder="Escribe algo"
+                          />
+                        </div>
+                        <div className="flex flex-col col-span-2">
+                          <label
+                            htmlFor="cruce1"
+                            className="font-Foco-Corp-Bold text-gris text-base mb-1"
+                          >
+                            Entre 
+                          </label>
+                          <input
+                            id="cruce1"
+                            className="bg-gris bg-opacity-10 text-gris rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black"
+                            placeholder="Escribe algo"
+                          />
+                        </div>
+                        <div className="flex flex-col col-span-2">
+                          <label
+                            htmlFor="cruce2"
+                            className="font-Foco-Corp-Bold text-gris text-base mb-1"
+                          >
+                           Y 
+                          </label>
+                          <input
+                            id="cruce2"
+                            className="bg-gris bg-opacity-10 text-gris rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black"
+                            placeholder="Escribe algo"
+                          />
+                        </div>
+                        <div className="flex flex-col col-span-3">
+                          <label
+                            htmlFor="localidad"
+                            className="font-Foco-Corp-Bold text-gris text-base mb-1"
+                          >
+                            Localidad
+                          </label>
+                          <input
+                            id="localidad"
+                            className="bg-gris bg-opacity-10 text-gris rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black"
+                            placeholder="Escribe algo"
+                          />
+                        </div>
+                        <div className="flex flex-col col-span-1">
+                          <label
+                            htmlFor="zona"
+                            className="font-Foco-Corp-Bold text-gris text-base mb-1"
+                          >
+                            Zona
+                          </label>
+                          <input
+                            id="zona"
+                            className="bg-gris bg-opacity-10 text-gris rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black"
+                            placeholder="Escribe algo"
+                          />
+                        </div>
+                      </div>
                     </section>
                   </div>
                 </form>
