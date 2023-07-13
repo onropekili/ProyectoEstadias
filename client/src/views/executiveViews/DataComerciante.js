@@ -4,6 +4,7 @@ import {RiUser3Fill, RiMenuFill} from 'react-icons/ri';
 import { MdStore} from 'react-icons/md';
 import Select from 'react-select';
 import selectStylesForm from '../../components/StyleSelectForm';
+import Swal from 'sweetalert2';
 
 
 const DataComerciante = () => {
@@ -38,6 +39,26 @@ const DataComerciante = () => {
   const handleCancelClick = () => {
     setShowButtons(false);
     setFieldsEditable(false); // Deshabilitar la edición de los campos
+  };
+
+  const handleDeleteClick = () => {
+    Swal.fire({
+      title: 'Eliminar',
+      text: '¿Quieres eliminar este comerciante?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'No, cancelar',
+      buttonsStyling: false,
+      customClass: {
+        confirmButton: 'bg-naranja hover:bg-naranja hover:opacity-80 text-white m-4 p-2 px-4 rounded-lg font-semibold',
+        cancelButton: 'bg-rojo hover:bg-rojo hover:opacity-80 text-white m-4 py-2 px-4 rounded-lg font-semibold',
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Lógica para eliminar el comerciante
+      }
+    });
   };
 
   const optionsClasificacion = [
@@ -154,7 +175,7 @@ const DataComerciante = () => {
                         <li>
                           <button
                             className="block w-full text-left px-4 py-2 rounded-b-lg text-base md:text-lg font-medium text-gris hover:bg-naranja hover:bg-opacity-80 hover:text-white"
-                            onClick={() => { /* Lógica para la opción 2 */ }}
+                            onClick={handleDeleteClick}
                           >
                             Eliminar comerciante
                           </button>
