@@ -117,7 +117,7 @@ const DataComerciante = () => {
             </button>
           </div>
           {/* Tabs*/}
-          <div className="border-2 mt-3 rounded-b-lg md:mt-0 2xl:pb-14">
+          <div className={`border-2 mt-3 rounded-b-lg md:mt-0 ${showButtons ? '2xl:pb-0' : '2xl:pb-14'}`}>
             {/* Tab 1 Datos del comerciante */}
             {activeTab === 1 &&
               <div className='w-full'>
@@ -371,6 +371,22 @@ const DataComerciante = () => {
                       </div>
                     </section>
                   </div>
+                  {/* Botones Guardar y Cancelar */}
+                  {showButtons && (
+                    <div>
+                      <div className='w-full flex flex-col md:flex-row py-8 md:py-4 2xl:py-8 px-4 rounded-b-lg gap-4 lg:gap-10 bg-gray-50 justify-end'>
+                        <button 
+                          className="text-center text-lg w-full md:w-72  h-9 2xl:h-12 font-Foco-Corp-Bold border-2 bg-verde border-verde hover:bg-verde hover:opacity-80 rounded-lg text-white"
+                          onClick={handleSaveClick}
+                        >
+                          Guardar
+                        </button>
+                        <button
+                          className="text-center text-lg w-full md:w-72 h-9 2xl:h-12 font-Foco-Corp-Bold border-2 bg-rojo border-rojo hover:bg-rojo hover:opacity-80 rounded-lg text-white"
+                          onClick={handleCancelClick}>Cancelar</button>
+                      </div>
+                    </div>
+                  )}
                 </form>
               </div>
             }
@@ -653,15 +669,17 @@ const DataComerciante = () => {
               </div>
             }
           </div>
-          <footer className="flex flex-col md:grid md:grid-cols-2 md:gap-4 mt-6">
-            <div className="text-white text-xl font-Foco-Corp-Bold lg:m-0">
-              <input
-                type="button"
-                value="Volver"
-                className="self-start text-center bg-verde w-full h-11 rounded-lg lg:w-40"
-              />
-            </div>
-          </footer>
+          {!showButtons && (
+            <footer className="flex flex-col md:grid md:grid-cols-2 md:gap-4 mt-6">
+              <div className="text-white text-xl font-Foco-Corp-Bold lg:m-0">
+                <input
+                  type="button"
+                  value="Volver"
+                  className="self-start text-center bg-verde w-full h-11 rounded-lg lg:w-40"
+                />
+              </div>
+            </footer>
+          )}
         </div>
       </div>
     </>
