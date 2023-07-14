@@ -14,6 +14,7 @@ import { InfoComponent } from "./components/InfoComponent";
 import { LogOut, ExecutiveProtectedRoute } from "./components/Middlewares";
 import { useState } from "react";
 import DataComerciante from "./views/executiveViews/DataComerciante";
+import Cedulacommerce from "./views/PDFViews/CedulaCommerce";
 export default function App() {
   
   const [userData, setuserData] = useState(null);
@@ -100,6 +101,14 @@ export default function App() {
           element={
             // <ExecutiveProtectedRoute user={userData}>
               <DataComerciante />
+            // </ExecutiveProtectedRoute>
+          }
+        />
+        <Route
+          path="/Cédula-de-comercio"
+          element={
+            // <ExecutiveProtectedRoute user={userData}>
+              <Cedulacommerce/>
             // </ExecutiveProtectedRoute>
           }
         />

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Header from '../components/Header';
 import DatePickerInput from "../components/DatePickerInput";
 import CheckboxInput from "../components/CheckboxInput";
@@ -6,7 +6,10 @@ import Swal from 'sweetalert2';
 
 const Modal = ({ closeModal }) => {
   
-  const handleRefrendarClick = () => {
+  const handleRefrendarClick = (event) => {
+
+    event.preventDefault();// Evitar el envío del formulario y la recarga de la página
+
     // Obtener el elemento del input
     const inputNumeroReferencia = document.getElementById('NoReferencia');
 
@@ -26,7 +29,7 @@ const Modal = ({ closeModal }) => {
           confirmButton: 'w-40 bg-verde hover:bg-verde hover:opacity-80 text-white m-4 p-2 px-4 rounded-lg font-semibold shadow-lg',
         },
       }).then(() => {
-        window.open('/Cedula-de-comercio', '_blank'); // Abrir la nueva vista
+        window.open('/Cédula-de-comercio', '_blank'); // Abrir la nueva vista
       });
     } else {
       // Mostrar SweetAlert de error

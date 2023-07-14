@@ -137,7 +137,7 @@ const DataComerciante = () => {
   const closeModal = () => {
     setShowModal(false);
   };
-
+  
   return (
   <>
     <Header/>
