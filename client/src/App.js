@@ -15,6 +15,7 @@ import { LogOut, ExecutiveProtectedRoute } from "./components/Middlewares";
 import { useState } from "react";
 import DataComerciante from "./views/executiveViews/DataComerciante";
 import Cedulacommerce from "./views/PDFViews/CedulaCommerce";
+import BajaCommerce from "./views/PDFViews/BajaCommerce";
 export default function App() {
   
   const [userData, setuserData] = useState(null);
@@ -109,6 +110,14 @@ export default function App() {
           element={
             // <ExecutiveProtectedRoute user={userData}>
               <Cedulacommerce/>
+            // </ExecutiveProtectedRoute>
+          }
+        />
+        <Route
+          path="/Formato-baja-comercio"
+          element={
+            // <ExecutiveProtectedRoute user={userData}>
+              <BajaCommerce/>
             // </ExecutiveProtectedRoute>
           }
         />

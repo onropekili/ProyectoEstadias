@@ -520,8 +520,8 @@ const DataComerciante = () => {
                         </li>
                         <li>
                           <button
-                            className="block w-full text-left px-4 py-2 rounded-b-lg text-base md:text-lg font-medium text-gris hover:bg-naranja hover:bg-opacity-80 hover:text-white"
-                            onClick={() => { /* Lógica para la opción 2 */ }}
+                            className="block w-full text-left px-4 py-2 text-base md:text-lg font-medium text-gris hover:bg-naranja hover:bg-opacity-80 hover:text-white"
+                            onClick={() => navigate("/Formato-baja-comercio")}
                           >
                             Solicitud de baja
                           </button>
