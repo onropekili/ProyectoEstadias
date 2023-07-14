@@ -6,7 +6,7 @@ import Select from 'react-select';
 import selectStylesForm from '../../components/StyleSelectForm';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
-
+import Modal from '../../components/Modal'; // Importa el componente Modal
 
 const DataComerciante = () => {
 
@@ -126,6 +126,16 @@ const DataComerciante = () => {
 
   const handleTipoChange = (selectedOption) => {
     setSelectedTipo(selectedOption);
+  };
+
+  const [showModal, setShowModal] = useState(false);
+
+  const openModal = () => {
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
   };
 
   return (
@@ -479,7 +489,7 @@ const DataComerciante = () => {
                   </button>
                   {/* Opciones del menú */}
                   {isMenuOpenTab2 && (
-                    <div className="absolute right-0 mt-2 w-full sm:w-96 lg:w-80">
+                    <div className="absolute right-0 mt-2 w-full sm:w-96 lg:w-80 z-10">
                       <ul className="bg-white shadow-lg rounded-lg border-2 border-gray-300">
                         <li>
                           <button
@@ -500,10 +510,13 @@ const DataComerciante = () => {
                         <li>
                           <button
                             className="block w-full text-left px-4 py-2 text-base md:text-lg font-medium text-gris hover:bg-naranja hover:bg-opacity-80 hover:text-white"
-                            onClick={''}
+                            onClick={openModal}
                           >
                             Refrendar
                           </button>
+                          {showModal && (
+                            <Modal closeModal={closeModal}></Modal>
+                          )}
                         </li>
                         <li>
                           <button
