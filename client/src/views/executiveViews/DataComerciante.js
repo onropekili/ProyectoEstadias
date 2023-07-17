@@ -15,8 +15,7 @@ const DataComerciante = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
-  console.log(location.state.folio);
-  const folio = location && location.state && location.state.folio
+  const folio = location ? location.folio : null
   const [activeTab, setActiveTab] = useState(1);
 
   const [isMenuOpenTab1, setIsMenuOpenTab1] = useState(false);
@@ -29,7 +28,7 @@ const DataComerciante = () => {
   const [data, setData] = useState(null)
 
   useEffect(() => {
-    const uri = 'http://localhost:4000/getVerTodoInfo'
+    const uri = 'http://localhost:4000/infoComerciante'
     axios.get(uri, folio)
     .then((data) => {
       setData(data)
