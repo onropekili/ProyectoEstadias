@@ -29,7 +29,7 @@ const DataComerciante = () => {
   const [data, setData] = useState(null)
 
   useEffect(() => {
-    const uri = 'http://localhost:4000/infoComerciante'
+    const uri = 'http://localhost:4000/getVerTodoInfo'
     axios.get(uri, folio)
     .then((data) => {
       setData(data)
