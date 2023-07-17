@@ -1,9 +1,13 @@
 import React from 'react';
 import { format } from 'date-fns';
+import { useNavigate } from 'react-router-dom';
 
 const currentDate = new Date();
 
 export const InfoComponent = ({ folio, nombre, giroActivo, observaciones, fecha_termino, tercera_edad }) => {
+
+    const navigate = useNavigate();
+
     let colorAll = "";
 
     if (observaciones) {
@@ -19,6 +23,10 @@ export const InfoComponent = ({ folio, nombre, giroActivo, observaciones, fecha_
     const observacionesText = observaciones ? observaciones : 'Sin observaciones';
 
     const formattedFechaTermino = format(new Date(fecha_termino), 'dd/MM/yyyy');
+
+    const verTodo = () => {
+        navigate('/Datos-Comerciante-Comercio', {state : {folio : folio}} )
+    }
 
     return (
         <div className={`mx-5 my-3 rounded-md shadow-lg w-96 ring-1 ${colorAll}`}>
@@ -48,7 +56,7 @@ export const InfoComponent = ({ folio, nombre, giroActivo, observaciones, fecha_
                 </p>
                 <p className="text-sm mt-0.5 font-Foco-Corp-Bold">{formattedFechaTermino}</p>
                 <div className="ml-auto">
-                    <button className="text-black font-Foco-Corp-Bold flex items-center hover:opacity-70">
+                    <button className="text-black font-Foco-Corp-Bold flex items-center hover:opacity-70" onClick={verTodo}>
                         VER TODO
                         <svg className={`ml-2 h-5 w-5`} version="1.1" id="Icons" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 32.00 32.00" xmlSpace="preserve" transform="matrix(1, 0, 0, -1, 0, 0) rotate(0)">
                             <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
