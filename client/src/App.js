@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import * as React from "react";
 import Login from "./views/Login";
 import DashBoard_Executive from "./views/executiveViews/DashBoard_Executive";
@@ -10,7 +10,6 @@ import NewComercioEventView from "./views/executiveViews/NewCommerceEvent";
 import OrdenPago from "./views/executiveViews/OrdenPago";
 import TerceraEdad from "./views/PDFViews/TerceraEdad";
 import OrdenPagoPDF from "./views/PDFViews/OrdenPagoPDF";
-import { InfoComponent } from "./components/InfoComponent";
 import { LogOut, ExecutiveProtectedRoute } from "./components/Middlewares";
 import { useState } from "react";
 import DataComerciante from "./views/executiveViews/DataComerciante";
