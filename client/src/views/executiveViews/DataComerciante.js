@@ -24,57 +24,123 @@ const DataComerciante = () => {
   const [fieldsEditableTab2, setFieldsEditableTab2] = useState(false);
   const [data, setData] = useState(null); // Almacena los datos modificados por el usuario
   const [originalData, setOriginalData] = useState(null); // Almacena los datos originales
-  const [telefonos, setTelefonos] = useState([]);
-  const [telefono1, setTelefono1] = useState("");
-  const [telefono2, setTelefono2] = useState("");
+  const [telefonos, setTelefonos] = useState([]); // Almacena el estado inicial de los telefonos
+  const [telefono1, setTelefono1] = useState(""); // Almacena el telefono que se muestra en el campo de telefono 1
+  const [telefono2, setTelefono2] = useState(""); // Almacena el telefono que se muestra en el campo de telefono 2
+  console.log(telefono1, telefono2);
 
-  
-const getTodoInfo = (folio) => {
-  // 1. Define the URI for the API call
-  const getTodoInfoUri = "http://localhost:4000/getVerTodoInfo";
+  const getTodoInfo = (folio) => {
+    // 1. Define the URI for the API call
+    const getTodoInfoUri = "http://localhost:4000/getVerTodoInfo";
 
-  // 2. Define the parameters that will be sent to the API
-  const getTodoInfoParams = {
-    folio: folio,
+    // 2. Define the parameters that will be sent to the API
+    const getTodoInfoParams = {
+      folio: folio,
+    };
+
+    // 3. Make the API call
+    axios
+      .get(getTodoInfoUri, { params: getTodoInfoParams })
+      .then((response) => {
+        // 4. Handle the response
+        const todoInfo = response.data.data;
+        setData(todoInfo);
+        setOriginalData(todoInfo);
+        const telefonos = todoInfo.telefonos;
+        setPhones(telefonos);
+        console.log(todoInfo);
+      })
+      .catch((error) => {
+        // 5. Handle any errors
+        console.log(error);
+      });
   };
 
-  // 3. Make the API call
-  axios
-    .get(getTodoInfoUri, { params: getTodoInfoParams })
-    .then((response) => {
-      // 4. Handle the response
-      const todoInfo = response.data.data;
-      setData(todoInfo);
-      setOriginalData(todoInfo);
-      const telefonos = todoInfo.telefonos.split(", ");
-      setTelefonos(telefonos);
-      setPhones(telefonos);
-      console.log(todoInfo);
-    })
-    .catch((error) => {
-      // 5. Handle any errors
-      console.log(error);
-    });
-}
+  // const OriginalDataChange = useEffect(
+  //   (todoInfo) => {
+  //     setData(todoInfo);
+  //     const telefonos = todoInfo.telefonos;
+  //     setPhones(telefonos);
+  //     console.log(todoInfo);
+  //   },
+  //   [originalData]
+  // );
+
+  const updateComerciante = () => {
+    const comerciante = {
+      id_comerciante : data.id_comerciante,
+      apellido_paterno : data.apellido_paterno,
+      apellido_materno : data.apellido_materno,
+      nombres : data.nombres,
+      observaciones_comerciante : data.observaciones_comerciante,
+      terrcera_edad : data.terrcera_edad,
+      colonia : data.colonia_comerciante,
+      calle : data.calle_comerciante,
+      numero_exterior : data.numero_exterior,
+      numero_interior : data.numero_interior,
+      codigo_postal : data.codigo_postal,
+      municipio : data.municipio,
+      telefonos : telefonos,
+    }
+
+    const comercio = {
+      comerciante_id_comerciante : data.id_comerciante,
+      fecha_inicio : data.fecha_inicio,
+      fecha_termino : data.fecha_termino,
+      fecha_alta: data.fecha_alta,
+      giro: data.giro,
+      metraje: data.metraje,
+      horario : data.horario,
+      cancelaciones_bajas : data.cancelaciones_bajas,
+      observaciones_comercio : data.observaciones_comercio,
+      tipo_comercio_id_tipo_comercio : data.tipo_comercio_id_tipo_comercio,
+      tipo_permiso : data.tipo_permiso,
+      dias_trabajados : data.dias_trabajados,
+
+    }
+    const updateComercianteUri = "http://"
+      .concat(process.env.HOST)
+      .concat(":4000/updateComerciante");
+    axios
+      .put(updateComercianteUri, data)
+      .then((response) => {
+        console.log(response);
+        getTodoInfo(folio);
+        Swal.fire({
+          title: "¡Datos actualizados!",
+          icon: "success",
+          confirmButtonText: "Aceptar",
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+        Swal.fire({
+          title: "¡Error al actualizar!",
+          icon: "error",
+          confirmButtonText: "Aceptar",
+        });
+      });
+  };
 
   const setPhones = (telefonos) => {
-    if(telefonos.length > 0){
-      setTelefono1(telefonos[0]);
-    }else{
-      setTelefono1("");
-    }
-    if(telefonos.length > 1){
-      setTelefono2(telefonos[1]);
-    }else{
+    const twoPhopnes = telefonos.length > 1;
+    const onePhone = telefonos.length > 0;
+    const temporaryTelefono1 = telefonos[0].numero_telefonico;
+    const temporaryTelefono2 = telefonos[1]
+      ? telefonos[1].numero_telefonico
+      : "";
+    setTelefonos(telefonos);
+    if (twoPhopnes) {
+      setTelefono1(temporaryTelefono1);
+      setTelefono2(temporaryTelefono2);
+    } else if (onePhone) {
+      setTelefono1(temporaryTelefono1);
       setTelefono2("");
     }
-  }
-
-
-
+  };
 
   useEffect(() => {
-    getTodoInfo(folio)
+    getTodoInfo(folio);
   }, []);
 
   const handleTabClick = (tabId) => {
@@ -122,15 +188,21 @@ const getTodoInfo = (folio) => {
   };
 
   const cancelarCambios = () => {
-    setData(data => originalData)
-    if (telefonos.length > 1) {
-      setTelefono1(telefonos[0])
-      setTelefono2(telefonos[1])
-    } else if(telefonos.length > 0) {
-      setTelefono1(telefonos[0])
-      setTelefono2('')
+    if (
+      data !== originalData ||
+      telefono1 !== telefonos[0].numero_telefonico ||
+      telefono2 !== telefonos[1].numero_telefonico
+    ) {
+      setData((data) => originalData);
+      if (telefonos.length > 1) {
+        setTelefono1(telefonos[0].numero_telefonico);
+        setTelefono2(telefonos[1].numero_telefonico);
+      } else if (telefonos.length > 0) {
+        setTelefono1(telefonos[0].numero_telefonico);
+        setTelefono2("");
+      }
     }
-  }
+  };
 
   const handleCancelClickTab2 = () => {
     setShowButtonsTab2(false);
@@ -231,26 +303,29 @@ const getTodoInfo = (folio) => {
   };
 
   const handleInputChange = (e) => {
-    const {name, value} = e.target
+    const { name, value } = e.target;
     setData({
       ...data,
       [name]: value,
-    })
+    });
     console.log(data);
-  }
+  };
 
   const handlePhoneOneChange = (e) => {
-    const {name, value} = e.target
-    setTelefono1(value)
-  }
+    const { name, value } = e.target;
+    const temporaryTelefonos = [...telefonos];
+    temporaryTelefonos[0].numero_telefonico = value;
+    setTelefono1(value);
+    setTelefonos(temporaryTelefonos);
+  };
 
   const handlePhoneTwoChange = (e) => {
-    const {name, value} = e.target
-    setTelefono2(value)
-  }
-
-
-  
+    const { name, value } = e.target;
+    const temporaryTelefonos = [...telefonos];
+    temporaryTelefonos[1].numero_telefonico = value;
+    setTelefono2(value);
+    setTelefonos(temporaryTelefonos);
+  };
 
   return (
     <>
@@ -679,9 +754,10 @@ const getTodoInfo = (folio) => {
                           Información:
                         </h4>
                         <span className="text-lg font-Foco-Corp font-semibold text-gris mb-6 md:mb-4">
-                          Folio: {data
-                              ? String(data.id_comercio).padStart(6, "0")
-                              : ""}
+                          Folio:{" "}
+                          {data
+                            ? String(data.id_comercio).padStart(6, "0")
+                            : ""}
                         </span>
                       </div>
                       <div className="flex flex-col gap-x-4 gap-y-4 xl:grid xl:grid-cols-4 lg:gap-y-2 2xl:gap-y-3">
