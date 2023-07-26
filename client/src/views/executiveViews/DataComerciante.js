@@ -10,6 +10,7 @@ import Modal from "../../components/Modal"; // Importa el componente Modal
 import axios from "axios";
 
 const DataComerciante = () => {
+  //*STARTS THE BLOCK FOR DECLARING STATES
   const navigate = useNavigate();
   const location = useLocation();
   const folio = location && location.state && location.state.folio;
@@ -27,101 +28,184 @@ const DataComerciante = () => {
   const [telefonos, setTelefonos] = useState([]); // Almacena el estado inicial de los telefonos
   const [telefono1, setTelefono1] = useState(""); // Almacena el telefono que se muestra en el campo de telefono 1
   const [telefono2, setTelefono2] = useState(""); // Almacena el telefono que se muestra en el campo de telefono 2
-  console.log(telefono1, telefono2);
+  const [fecha_inicio, setFecha_inicio] = useState(""); // Almacena la fecha de inicio del permiso
+  const [fecha_termino, setFecha_termino] = useState(""); // Almacena la fecha de termino del permiso
 
-  const getTodoInfo = (folio) => {
-    // 1. Define the URI for the API call
+  const [selectedClasificacion, setSelectedClasificacion] = useState(null);
+  const [selectedHorario, setSelectedHorario] = useState(null);
+  const [selectedTipo, setSelectedTipo] = useState(null);
+  //*ENDS THE BLOCK FOR DECLARING STATES
+
+  //*STARTS THE BLOCK OF OPTIONS FOR SELECTS INPUTS
+  const optionsClasificacion = [
+    { value: 1, label: "COMERCIO AMBULANTE" },
+    { value: 2, label: "COMERCIO EN PUESTO FIJO" },
+    { value: 3, label: "COMERCIO EN PUESTO SEMI-FIJO" },
+    { value: 4, label: "COMERCIO EN FESTIVIDADES" },
+  ];
+
+  const optionsHorario = [
+    { value: "Mat: 07:00 a 18:00", label: "Mat: 07:00 a 18:00" },
+    { value: "Vesp: 18:00 a 22:00", label: "Vesp: 18:00 a 22:00" },
+    { value: "Vesp: 18:01 a 23:00", label: "Vesp: 18:01 a 23:00" },
+    { value: "MIXTO VARIABLE", label: "MIXTO VARIABLE" },
+    // { value: 'otro', label: 'OTRO' },
+  ];
+
+  const optionsTipo = [
+    { value: 1, label: "EVENTUAL" },
+    { value: 2, label: "ESPECIAL" },
+    { value: 3, label: "PERMANENTE" },
+  ];
+  //*ENDS THE BLOCK OF OPTIONS FOR SELECTS INPUTS
+
+  //*STARTS THE BLOCK OF FUNCTIONS FOR HANDLING THE API GET CALL
+  const getTodoInfo = async (folio) => {
     const getTodoInfoUri = "http://localhost:4000/getVerTodoInfo";
-
-    // 2. Define the parameters that will be sent to the API
     const getTodoInfoParams = {
       folio: folio,
     };
 
-    // 3. Make the API call
-    axios
-      .get(getTodoInfoUri, { params: getTodoInfoParams })
-      .then((response) => {
-        // 4. Handle the response
-        const todoInfo = response.data.data;
-        setData(todoInfo);
-        setOriginalData(todoInfo);
-        const telefonos = todoInfo.telefonos;
-        setPhones(telefonos);
-        console.log(todoInfo);
-      })
-      .catch((error) => {
-        // 5. Handle any errors
-        console.log(error);
-      });
+    try {
+      const response = await makeGetApiCall(getTodoInfoUri, getTodoInfoParams);
+      handleApiResponse(response.data.data);
+    } catch (error) {
+      handleApiError(error);
+    }
   };
 
-  // const OriginalDataChange = useEffect(
-  //   (todoInfo) => {
-  //     setData(todoInfo);
-  //     const telefonos = todoInfo.telefonos;
-  //     setPhones(telefonos);
-  //     console.log(todoInfo);
-  //   },
-  //   [originalData]
-  // );
+  const makeGetApiCall = async (url, params) => {
+    return axios.get(url, { params });
+  };
 
+  const handleApiResponse = (todoInfo) => {
+    setDataAndPhones(todoInfo);
+    setSelectedValues(todoInfo);
+  };
+
+  const handleApiError = (error) => {
+    console.log(error);
+  };
+
+  const setDataAndPhones = (todoInfo) => {
+    setData(todoInfo);
+    setOriginalData(todoInfo);
+    setPhones(todoInfo.telefonos);
+    setFechas(todoInfo.fecha_inicio, todoInfo.fecha_termino);
+  };
+
+  const setSelectedValues = (todoInfo) => {
+    setSelectedClasificacion(
+      optionsClasificacion.find(
+        (option) => option.value === todoInfo.tipo_comercio_id_tipo_comercio
+      )
+    );
+    setSelectedTipo(
+      optionsTipo.find((option) => option.value === todoInfo.tipo_permiso)
+    );
+
+    const flag = optionsHorario.findIndex(
+      (option) => option.value === todoInfo.horario
+    );
+    setSelectedHorario(
+      flag !== -1
+        ? optionsHorario[flag]
+        : optionsHorario[optionsHorario.length - 1]
+    );
+  };
+
+  const setFechas = (fecha_inicio, fecha_termino) => {
+    if (!fecha_inicio && !fecha_termino) return;
+    const opciones = { year: "numeric", month: "long", day: "numeric" };
+    const fecha_inicio_formateada = new Date(fecha_inicio).toLocaleDateString(
+      "es-ES",
+      opciones
+    );
+    const fecha_termino_formateada = new Date(fecha_termino).toLocaleDateString(
+      "es-ES",
+      opciones
+    );
+    setFecha_inicio(fecha_inicio_formateada);
+    setFecha_termino(fecha_termino_formateada);
+  };
+
+  useEffect(() => {
+    getTodoInfo(folio);
+  }, []);
+
+  //*ENDS THE BLOCK OF FUNCTIONS FOR HANDLING THE API GET CALL
+
+  //*STARTS THE BLOCK OF FUNCTIONS FOR HANDLING THE API PUT CALL
   const updateComerciante = () => {
-    const comerciante = {
-      id_comerciante : data.id_comerciante,
-      apellido_paterno : data.apellido_paterno,
-      apellido_materno : data.apellido_materno,
-      nombres : data.nombres,
-      observaciones_comerciante : data.observaciones_comerciante,
-      terrcera_edad : data.terrcera_edad,
-      colonia : data.colonia_comerciante,
-      calle : data.calle_comerciante,
-      numero_exterior : data.numero_exterior,
-      numero_interior : data.numero_interior,
-      codigo_postal : data.codigo_postal,
-      municipio : data.municipio,
-      telefonos : telefonos,
-    }
+    const comerciante = createComercianteObject(data);
+    const comercio = createComercioObject(data);
 
-    const comercio = {
-      comerciante_id_comerciante : data.id_comerciante,
-      fecha_inicio : data.fecha_inicio,
-      fecha_termino : data.fecha_termino,
+    const updateComercianteUri = `http://${process.env.REACT_APP_HOST}:4000/edit/costumer`;
+
+    makePutApiCall(updateComercianteUri, { comerciante, comercio })
+      .then(handleUpdateSuccess)
+      .catch(handleUpdateError);
+  };
+
+  const createComercianteObject = (data) => {
+    return {
+      id_comerciante: data.id_comerciante,
+      apellido_paterno: data.apellido_paterno,
+      apellido_materno: data.apellido_materno,
+      nombres: data.nombres,
+      observaciones_comerciante: data.observaciones_comerciante,
+      tercera_edad: data.tercera_edad,
+      colonia: data.colonia_comerciante,
+      calle: data.calle_comerciante,
+      numero_exterior: data.numero_exterior,
+      numero_interior: data.numero_interior,
+      codigo_postal: data.codigo_postal,
+      municipio: data.municipio,
+      telefonos: telefonos,
+    };
+  };
+
+  const createComercioObject = (data) => {
+    return {
+      comerciante_id_comerciante: data.id_comerciante,
+      fecha_inicio: data.fecha_inicio,
+      fecha_termino: data.fecha_termino,
       fecha_alta: data.fecha_alta,
       giro: data.giro,
       metraje: data.metraje,
-      horario : data.horario,
-      cancelaciones_bajas : data.cancelaciones_bajas,
-      observaciones_comercio : data.observaciones_comercio,
-      tipo_comercio_id_tipo_comercio : data.tipo_comercio_id_tipo_comercio,
-      tipo_permiso : data.tipo_permiso,
-      dias_trabajados : data.dias_trabajados,
-
-    }
-    const updateComercianteUri = "http://"
-      .concat(process.env.HOST)
-      .concat(":4000/updateComerciante");
-    axios
-      .put(updateComercianteUri, data)
-      .then((response) => {
-        console.log(response);
-        getTodoInfo(folio);
-        Swal.fire({
-          title: "¡Datos actualizados!",
-          icon: "success",
-          confirmButtonText: "Aceptar",
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-        Swal.fire({
-          title: "¡Error al actualizar!",
-          icon: "error",
-          confirmButtonText: "Aceptar",
-        });
-      });
+      horario: data.horario,
+      cancelaciones_bajas: data.cancelaciones_bajas,
+      observaciones_comercio: data.observaciones_comercio,
+      tipo_comercio_id_tipo_comercio: data.tipo_comercio_id_tipo_comercio,
+      tipo_permiso: data.tipo_permiso,
+      dias_trabajados: data.dias_trabajados,
+    };
   };
 
+  const makePutApiCall = async (url, data) => {
+    return axios.put(url, data);
+  };
+
+  const handleUpdateSuccess = (response) => {
+    getTodoInfo(folio);
+    Swal.fire({
+      title: "¡Datos actualizados!",
+      icon: "success",
+      confirmButtonText: "Aceptar",
+    });
+  };
+
+  const handleUpdateError = (error) => {
+    console.log(error);
+    Swal.fire({
+      title: "¡Error al actualizar!",
+      icon: "error",
+      confirmButtonText: "Aceptar",
+    });
+  };
+  //*ENDS THE BLOCK OF FUNCTIONS FOR HANDLING THE API PUT CALL
+
+  //*FUNCTIONS FOR HANDLING THE PHONES INPUTS CHANGES
   const setPhones = (telefonos) => {
     const twoPhopnes = telefonos.length > 1;
     const onePhone = telefonos.length > 0;
@@ -139,10 +223,9 @@ const DataComerciante = () => {
     }
   };
 
-  useEffect(() => {
-    getTodoInfo(folio);
-  }, []);
+  //*USEEFFECT FOR HANDLING THE FIRST GET API CALL AT THE FIRST RENDER
 
+  //*FUNCTIONS FOR HANDLING THE TABS
   const handleTabClick = (tabId) => {
     setActiveTab(tabId);
   };
@@ -169,16 +252,31 @@ const DataComerciante = () => {
     setFieldsEditableTab2(true); // Habilitar la edición de los campos
   };
 
-  const handleSaveClickTab1 = () => {
-    // Lógica para guardar en la Tab 1
-    setFieldsEditableTab1(false); // Deshabilitar la edición de los campos
-    setShowButtonsTab1(false);
+  const handleSaveClickTab1 = (e) => {
+    try {
+      checkIfMetrajeIsValid(data.metraje);
+      updateComerciante();
+      setFieldsEditableTab1(false); // Deshabilitar la edición de los campos
+      setShowButtonsTab1(false);
+      setShowButtonsTab2(false);
+      setFieldsEditableTab2(false);
+    } catch (error) {
+      console.log(error);
+      setData({ ...data, metraje: originalData.metraje });
+      Swal.fire({
+        title: "¡Error!",
+        text: 'El metraje debe tener el siguiente formato: "14x20"',
+        icon: "warning",
+        confirmButtonText: "Aceptar",
+      });
+    }
   };
 
-  const handleSaveClickTab2 = () => {
-    // Lógica para guardar en la Tab 2
-    setFieldsEditableTab2(false); // Deshabilitar la edición de los campos
-    setShowButtonsTab2(false);
+  const checkIfMetrajeIsValid = (metraje) => {
+    const validFormat = /^\d+x\d+$/.test(metraje);
+    if (!validFormat) {
+      throw new Error("Formato inválido");
+    }
   };
 
   const handleCancelClickTab1 = () => {
@@ -187,6 +285,14 @@ const DataComerciante = () => {
     setFieldsEditableTab1(false); // Deshabilitar la edición de los campos
   };
 
+  const handleCancelClickTab2 = () => {
+    setShowButtonsTab2(false);
+    setFieldsEditableTab2(false); // Deshabilitar la edición de los campos
+  };
+
+  //*ENDS THE BLOCK OF FUNCTIONS FOR HANDLING THE TABS
+
+  //*FUNCTIONS FOR HANDLING THE CANCELAR CAMBIOS BUTTON
   const cancelarCambios = () => {
     if (
       data !== originalData ||
@@ -204,11 +310,7 @@ const DataComerciante = () => {
     }
   };
 
-  const handleCancelClickTab2 = () => {
-    setShowButtonsTab2(false);
-    setFieldsEditableTab2(false); // Deshabilitar la edición de los campos
-  };
-
+  //*FUNCTIONS FOR ALERTS AND CONFIRMATIONS
   const handleDeleteClick = () => {
     setIsMenuOpenTab1(false); // Cerrar el menú de opciones
     Swal.fire({
@@ -254,34 +356,14 @@ const DataComerciante = () => {
       }
     });
   };
-
-  const optionsClasificacion = [
-    { value: "ambulante", label: "COMERCIO AMBULANTE" },
-    { value: "fijo", label: "COMERCIO EN PUESTO FIJO" },
-    { value: "semifijo", label: "COMERCIO EN PUESTO SEMI-FIJO" },
-    { value: "festividades", label: "COMERCIO EN FESTIVIDADES" },
-  ];
-
-  const optionsHorario = [
-    { value: "mat", label: "Mat: 07:00 a 18:00" },
-    { value: "vesp", label: "Vesp: 18:00 a 22:00" },
-    { value: "vesp2", label: "Vesp: 18:01 a 23:00" },
-    { value: "mixto", label: "MIXTO VARIABLE" },
-    // { value: 'otro', label: 'OTRO' },
-  ];
-
-  const optionsTipo = [
-    { value: "eventual", label: "EVENTUAL" },
-    { value: "especial", label: "ESPECIAL" },
-    { value: "permanente", label: "PERMANENTE" },
-  ];
-
-  const [selectedClasificacion, setSelectedClasificacion] = useState(null);
-  const [selectedHorario, setSelectedHorario] = useState(null);
-  const [selectedTipo, setSelectedTipo] = useState(null);
+  //*ENDS THE BLOCK OF FUNCTIONS FOR ALERTS AND CONFIRMATIONS
 
   const handleClasificacionChange = (selectedOption) => {
-    setSelectedClasificacion(selectedOption);
+    setSelectedClasificacion((previous) => selectedOption);
+    setData({
+      ...data,
+      tipo_comercio_id_tipo_comercio: selectedOption.value,
+    });
   };
 
   const handleHorarioChange = (selectedOption) => {
@@ -325,6 +407,15 @@ const DataComerciante = () => {
     temporaryTelefonos[1].numero_telefonico = value;
     setTelefono2(value);
     setTelefonos(temporaryTelefonos);
+  };
+
+  const handleTerceraEdadChange = (e) => {
+    const terceraEdad = data.tercera_edad;
+    setData({
+      ...data,
+      tercera_edad: !terceraEdad,
+    });
+    console.log(data.tercera_edad);
   };
 
   return (
@@ -526,11 +617,12 @@ const DataComerciante = () => {
                           </label>
                           <div className="flex items-center mb-3">
                             <input
-                              id="terceraEdad"
+                              id="tercera_edad"
                               type="checkbox"
                               className="h-4 w-4 rounded-lg focus:bg-verde bg-verde focus:outline-none focus:bg-none focus:border-violet-600"
                               disabled={!fieldsEditableTab1}
-                              value={data ? data.tercera_edad : false}
+                              checked={data ? data.tercera_edad : false}
+                              onClick={handleTerceraEdadChange}
                             />
                             <label
                               htmlFor="terceraEdad"
@@ -791,6 +883,7 @@ const DataComerciante = () => {
                             className="bg-gris bg-opacity-10 text-sm text-gris rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black uppercase"
                             placeholder="Escribe algo"
                             disabled
+                            value={fecha_inicio || ""}
                           />
                         </div>
                         <div className="flex flex-col col-span-1">
@@ -805,20 +898,24 @@ const DataComerciante = () => {
                             className="bg-gris bg-opacity-10 text-sm text-gris rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black uppercase"
                             placeholder="Escribe algo"
                             disabled
+                            value={fecha_termino || ""}
                           />
                         </div>
                         <div className="flex flex-col col-span-3">
                           <label
-                            htmlFor="tipoGiro"
+                            htmlFor="giro"
                             className="font-Foco-Corp-Bold text-gris text-base mb-1"
                           >
                             Tipo de giro/Actividad
                           </label>
                           <input
-                            id="tipoGiro"
+                            name="giro"
+                            id="giro"
                             className="bg-gris bg-opacity-10 text-gris text-sm rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black uppercase"
                             placeholder="Escribe algo"
                             disabled={!fieldsEditableTab2}
+                            value={data ? data.giro : ""}
+                            onChange={handleInputChange}
                           />
                         </div>
                         <div className="flex flex-col col-span-1">
@@ -829,10 +926,13 @@ const DataComerciante = () => {
                             Metros
                           </label>
                           <input
-                            id="metros"
+                            name="metraje"
+                            id="metraje"
                             className="bg-gris bg-opacity-10 text-gris text-sm rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black uppercase"
                             placeholder="Escribe algo"
                             disabled={!fieldsEditableTab2}
+                            value={data ? data.metraje : ""}
+                            onChange={handleInputChange}
                           />
                         </div>
                         <div className="flex flex-col col-span-2">
@@ -873,29 +973,34 @@ const DataComerciante = () => {
                         </div>
                         <div className="flex flex-col col-span-1">
                           <label
-                            htmlFor="dias"
+                            htmlFor="dias_trabajados"
                             className="font-Foco-Corp-Bold text-gris text-base mb-1"
                           >
                             Días
                           </label>
                           <input
-                            id="dias"
+                            name="dias_trabajados"
+                            id="dias_trabajados"
                             className="bg-gris bg-opacity-10 text-gris text-sm rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black uppercase"
                             placeholder="Escribe algo"
-                            disabled={!fieldsEditableTab2}
+                            disabled
+                            value={data.dias_trabajados || ""}
                           />
                         </div>
                         <div className="flex flex-col col-span-4 mb-20">
                           <label
-                            htmlFor="email"
+                            htmlFor="observaciones_comercio"
                             className="font-Foco-Corp-Bold text-gris text-base mb-1"
                           >
                             Observaciones del comercio
                           </label>
                           <input
-                            id="email"
+                            name="observaciones_comercio"
+                            id="observaciones_comercio"
                             className="bg-gris bg-opacity-10 text-gris rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black"
                             placeholder="Escribe algo"
+                            disabled={!fieldsEditableTab2}
+                            value={data ? data.observaciones_comercio : ""}
                           />
                         </div>
                       </div>
@@ -916,52 +1021,60 @@ const DataComerciante = () => {
                             Calle
                           </label>
                           <input
-                            id="calle"
+                            name="calle_comercio"
+                            id="calle_comercio"
                             className="bg-gris bg-opacity-10 text-gris text-sm rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black uppercase"
                             placeholder="Escribe algo"
                             disabled={!fieldsEditableTab2}
+                            value={data ? data.calle_comercio : ""}
                           />
                         </div>
                         <div className="flex flex-col col-span-2">
                           <label
-                            htmlFor="cruce1"
+                            htmlFor="calle_colindante_uno"
                             className="font-Foco-Corp-Bold text-gris text-base mb-1"
                           >
                             Entre
                           </label>
                           <input
-                            id="cruce1"
+                            name="calle_colindante_uno"
+                            id="calle_colindante_uno"
                             className="bg-gris bg-opacity-10 text-gris text-sm rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black uppercase"
                             placeholder="Escribe algo"
                             disabled={!fieldsEditableTab2}
+                            value={data ? data.calle_colindante_uno : ""}
                           />
                         </div>
                         <div className="flex flex-col col-span-2">
                           <label
-                            htmlFor="cruce2"
+                            htmlFor="calle_colindante_dos"
                             className="font-Foco-Corp-Bold text-gris text-base mb-1"
                           >
                             Y
                           </label>
                           <input
-                            id="cruce2"
+                            name="calle_colindante_dos"
+                            id="calle_colindante_dos"
                             className="bg-gris bg-opacity-10 text-gris text-sm rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black uppercase"
                             placeholder="Escribe algo"
                             disabled={!fieldsEditableTab2}
+                            value={data ? data.calle_colindante_dos : ""}
                           />
                         </div>
                         <div className="flex flex-col col-span-3">
                           <label
-                            htmlFor="localidad"
+                            htmlFor="colonia_comercio"
                             className="font-Foco-Corp-Bold text-gris text-base mb-1"
                           >
                             Localidad
                           </label>
                           <input
-                            id="localidad"
+                            name="colonia_comercio"
+                            id="colonia"
                             className="bg-gris bg-opacity-10 text-gris text-sm rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black uppercase"
                             placeholder="Escribe algo"
                             disabled={!fieldsEditableTab2}
+                            value={data ? data.colonia_comercio : ""}
                           />
                         </div>
                         <div className="flex flex-col col-span-1">
@@ -972,10 +1085,12 @@ const DataComerciante = () => {
                             Zona
                           </label>
                           <input
+                            name="zona"
                             id="zona"
                             className="bg-gris bg-opacity-10 text-gris text-sm rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black uppercase"
                             placeholder="Escribe algo"
                             disabled={!fieldsEditableTab2}
+                            value={data ? data.zona : ""}
                           />
                         </div>
                       </div>
@@ -986,12 +1101,14 @@ const DataComerciante = () => {
                     <div>
                       <div className="w-full flex flex-col md:flex-row py-8 md:py-4 2xl:py-8 px-4 rounded-b-lg gap-4 lg:gap-10 bg-gray-50 justify-end">
                         <button
+                          type="button"
                           className="text-center text-lg w-full md:w-72  h-9 2xl:h-12 font-Foco-Corp-Bold border-2 bg-verde border-verde hover:bg-verde hover:opacity-80 rounded-lg text-white"
-                          onClick={handleSaveClickTab2}
+                          onClick={handleSaveClickTab1}
                         >
                           Guardar
                         </button>
                         <button
+                          type="button"
                           className="text-center text-lg w-full md:w-72 h-9 2xl:h-12 font-Foco-Corp-Bold border-2 bg-rojo border-rojo hover:bg-rojo hover:opacity-80 rounded-lg text-white"
                           onClick={handleCancelClickTab2}
                         >
