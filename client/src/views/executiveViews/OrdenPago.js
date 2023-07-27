@@ -6,14 +6,14 @@ import selectStyles from "../../components/StyleSelect";
 import DatePickerInput from "../../components/DatePickerInput";
 import CheckboxInput from "../../components/CheckboxInput";
 import { Link, useLocation } from "react-router-dom";
-import { tr } from "date-fns/locale";
 import axios from "axios";
 import { ConceptList } from "../../components/ConceptList";
 import { showErrorAlert, showInfoAlertOp } from "../../components/SwAlerts";
+import { setDateFormat } from "../../components/formatDates";
 const moment = require("moment");
 
 const OrdenPago = () => {
-useEffect(() => {
+  useEffect(() => {
     axios
       .get("http://localhost:4000/conceptos")
       .then((res) => {
@@ -24,13 +24,14 @@ useEffect(() => {
       });
   }, []);
 
-  const [primerRender, setPrimerRender] = useState(true)
+  const [primerRender, setPrimerRender] = useState(true);
   const [options, setOptions] = useState(null);
   const location = useLocation();
-  const Data = location ? location.data : null;
+  const Data = location && location.state && location.state.data;
   const merchant = Data ? Data.merchant : null;
   const shop = Data ? Data.shop : {};
   const phone = Data ? Data.phone : null;
+  console.log(Data);
   const [selectedDays, setSelectedDays] = useState([]);
   const [selectBeginDate, setSelectBeginDate] = useState(null);
   const [selectEndDate, setSelectEndDate] = useState(null);
@@ -39,11 +40,19 @@ useEffect(() => {
   const [totalDaysWorked, setTotalDaysWorked] = useState(null);
   const [ListaDeConceptos, setListaDeConceptos] = useState([]);
   const [total, setTotal] = useState(0);
-  shop.metraje = "4x4";
   const stringDeMetrajeSeparadaPorx = shop.metraje.split("x");
   const metrosX = Number(stringDeMetrajeSeparadaPorx[0]);
   const metrosY = Number(stringDeMetrajeSeparadaPorx[1]);
   const totalMetraje = metrosX * metrosY;
+  const vigencia = shop?.fecha_termino
+    ? setDateFormat(shop.fecha_termino)
+    : "sin refrendo";
+
+  const clasificacion = new Map();
+  clasificacion.set(1, "COMERCIO AMBULANTE");
+  clasificacion.set(2, "COMERCIO EN PUESTO FIJO");
+  clasificacion.set(3, "COMERCIO EN PUESTO SEMI-FIJO");
+  clasificacion.set(4, "COMERCIO EN PUESTO EN FESTIVIDADES");
 
   //obtener la direccion si es que hay la info, a demas, si no hay numero interior, se omite.
   const merchantAdress = merchant
@@ -51,7 +60,7 @@ useEffect(() => {
         ", ",
         merchant.numero_exterior,
         ", ",
-        merchant.numero_interior ? merchant.numero_interior : merchant.colonia,
+        merchant.numero_interior || merchant.colonia,
         ", C.P: ",
         merchant.codigo_postal,
         ", ",
@@ -72,29 +81,35 @@ useEffect(() => {
   };
 
   const agregaConceptoPago = (e) => {
-    if (selectedOption) {
-      if (selectBeginDate && selectEndDate && selectedDays.length > 0) {
-      let flag = false;
-      conceptosPago.forEach((concepto) => {
-        if (concepto.idconcepto === selectedOption.value.idconcepto) {
-          flag = true;
-        }
-      });
-      if (!flag) {
-        setconceptosPago([...conceptosPago, selectedOption.value]);
-      } else {
-        showInfoAlertOp(
-          "Operacion invalida",
-          "Solamente puedes agregar un concepto de cada uno por orden de pago"
-        );
-      }
-    } else {
+    if (!selectedOption) {
       showErrorAlert(
         "Datos invalidos",
         "Ingresa fecha de inicio, de fin y los días que labura el comerciante"
       );
+      return;
     }
+
+    if (!isValidConcepto()) {
+      showInfoAlertOp(
+        "Operacion invalida",
+        "Solamente puedes agregar un concepto de cada uno por orden de pago"
+      );
+      return;
     }
+
+    addConceptoPago();
+  };
+
+  // Function to check if the selected concept is already in conceptosPago
+  const isValidConcepto = () => {
+    return !conceptosPago.some(
+      (concepto) => concepto.idconcepto === selectedOption.value.idconcepto
+    );
+  };
+
+  // Function to add the selected concept to conceptosPago
+  const addConceptoPago = () => {
+    setconceptosPago([...conceptosPago, selectedOption.value]);
   };
 
   const diccionarioDaysOfWeek = new Map();
@@ -133,6 +148,7 @@ useEffect(() => {
 
   useEffect(() => {
     if (selectBeginDate && selectEndDate && selectedDays.length > 0) {
+      console.log(selectedDays.length);
       let diasTotales = 0;
       for (let i = 0; i <= selectedDays.length; i++) {
         diasTotales += contarDiasDeLaSemana(
@@ -169,8 +185,7 @@ useEffect(() => {
   };
 
   const pushConceptosPago = () => {
-    if(primerRender) {
-
+    if (primerRender) {
       setListaDeConceptosAgregados(conceptosPago);
       conceptosPago.forEach((concepto) => {
         let subtotal = 0;
@@ -183,19 +198,22 @@ useEffect(() => {
         }
       });
       // console.log(conceptosPago);
-
-  }else {
-    setPrimerRender(true)
-  }
-  }
+    } else {
+      setPrimerRender(true);
+    }
+    console.log('hola');
+  };
 
   useEffect(pushConceptosPago, [conceptosPago]);
 
-
-
-  const popConceptosPago = (conceptosPago) => {
-    
-  }
+  const popConceptosPago = (concepto) => {
+    const conceptosPagoActualizado = conceptosPago.filter(
+      (conceptoPago) => conceptoPago.idconcepto !== concepto.idconcepto
+    );
+    setconceptosPago(conceptosPagoActualizado);
+    setTotal(total - concepto.importe);
+    console.log('eliminar');
+  };
 
   return (
     <>
@@ -216,7 +234,7 @@ useEffect(() => {
               </p>
               <p className="text-lg text-black 2xl:text-xl">{merchantAdress}</p>
               <p className=" text-lg text-black 2xl:text-xl">
-                {phone ? phone[0] : ""}
+                {phone ? phone[0].numero_telefonico : ""}
               </p>
             </div>
             <div className="flex flex-col col-span-1 items-end">
@@ -224,7 +242,7 @@ useEffect(() => {
                 Folio
               </h3>
               <p className="font-Foco-Corp text-lg text-black 2xl:text-xl">
-                000000
+                {String(shop.id_comercio).padStart(6, "0")}
               </p>
             </div>
           </div>
@@ -236,26 +254,26 @@ useEffect(() => {
           <div className="flex flex-col antialiased font-Foco-Corp text-black mb-2 lg:flex-row lg:mb-0 2xl:text-lg">
             <label className="w-full lg:w-1/4">CLASIFICACIÓN:</label>
             <label className="w-full lg:w-3/4">
-              COMERCIO EN PUESTO SEMI-FIJO
+              {shop &&
+                shop.tipo_comercio_id_tipo_comercio &&
+                clasificacion.get(shop.tipo_comercio_id_tipo_comercio)}
             </label>
           </div>
           <div className="flex flex-col antialiased font-Foco-Corp text-black mb-2 lg:flex-row lg:mb-0 2xl:text-lg">
             <label className="w-full lg:w-1/4">GIRO/ACTIVIDAD:</label>
-            <label className="w-full lg:w-3/4">
-              ALIMENTOS (PAPAS Y SALCHIPULPOS)
-            </label>
+            <label className="w-full lg:w-3/4">{shop && shop.giro}</label>
           </div>
           <div className="flex flex-col antialiased font-Foco-Corp text-black mb-2 lg:flex-row lg:mb-0 2xl:text-lg">
             <label className="w-full lg:w-1/4">METROS:</label>
-            <label className="w-full lg:w-3/4">2x2:</label>
+            <label className="w-full lg:w-3/4">{shop.metraje}</label>
           </div>
           <div className="flex flex-col antialiased font-Foco-Corp text-black mb-2 lg:flex-row lg:mb-0 2xl:text-lg">
             <label className="w-full lg:w-1/4">HORARIO:</label>
-            <label className="w-full lg:w-3/4">MAT:07:00 A 18:00</label>
+            <label className="w-full lg:w-3/4">{shop.horario}</label>
           </div>
           <div className="flex flex-col antialiased font-Foco-Corp text-black mb-2 lg:flex-row lg:mb-0 2xl:text-lg">
             <label className="w-full lg:w-1/4">VIGENCIA:</label>
-            <label className="w-full lg:w-3/4">09/03/2023:</label>
+            <label className="w-full lg:w-3/4">{vigencia}</label>
           </div>
           <div className="flex flex-col antialiased font-Foco-Corp text-black mb-2 lg:flex-row lg:mb-0 2xl:text-lg">
             <label className="w-full lg:w-1/4">UBICACIÓN:</label>
@@ -265,20 +283,24 @@ useEffect(() => {
           </div>
           <div className="flex flex-col antialiased font-Foco-Corp text-black mb-2 lg:flex-row lg:mb-0 2xl:text-lg">
             <label className="w-full lg:w-1/4">LOCALIDAD:</label>
-            <label className="w-full lg:w-3/4">TLAJOMULCO DE ZUÑIGA</label>
-          </div>
-          <div className="flex flex-col mt-2 gap-2">
-            <label className="font-Foco-Corp-Bold text-xl text-gris 2xl:text-2xl">
-              Formato tercera edad/Discapacitados
+            <label className="w-full lg:w-3/4">
+              {shop?.colonia_comercio || ""}
             </label>
-            <Link to="/TerceraEdad">
-              <input
-                type="button"
-                value="GenerarPDF"
-                className="w-full h-10 font-Foco-Corp-Bold text-base text-white text-center bg-azul rounded-lg hover:bg-azul hover:opacity-80 lg:w-56 lg:text-lg 2xl:w-72 2xl:text-xl"
-              />
-            </Link>
           </div>
+          {merchant.tercera_edad ? (
+            <div className="flex flex-col mt-2 gap-2">
+              <label className="font-Foco-Corp-Bold text-xl text-gris 2xl:text-2xl">
+                Formato tercera edad/Discapacitados
+              </label>
+              <Link to={`/TerceraEdad/${merchant.id_comerciante}`} >
+                <input
+                  type="button"
+                  value="GenerarPDF"
+                  className="w-full h-10 font-Foco-Corp-Bold text-base text-white text-center bg-azul rounded-lg hover:bg-azul hover:opacity-80 lg:w-56 lg:text-lg 2xl:w-72 2xl:text-xl"
+                />
+              </Link>
+            </div>
+          ) : null}
         </div>
         <div className="w-full lg:w-1/2 text-start">
           <div className="mb-3">
@@ -343,61 +365,55 @@ useEffect(() => {
             </div>
           </div>
 
-
-
           {conceptosPago.length > 0 ? (
             <>
-            <div>
-            <h3 className="font-Foco-Corp-Bold text-xl text-gris mb-1">
-              Conceptos
-            </h3>
-          </div>
-          <div className="flex flex-col h-20 overflow-y-auto md:h-16 lg:h-14">
-            {conceptosPago.map(concepto => (
-              <div className="flex items-center justify-between gap-x-2 mb-2">
-              <label className="font-Foco-Corp-Bold text-xs text-gris md:text-sm lg:text-base antialiased">
-                {concepto.concepto}
-              </label>
-              <button className="text-gray-500 hover:text-naranja">
-                Eliminar
-              </button>
-            </div>
-            ))}
-          </div>
-          <div className="bg-white w-full h-40 overflow-auto md:h-36 mt-4">
-            <table className="table-auto">
-              <thead className="bg-gray-100 border">
-                <tr className="font-Foco-Corp text-sm text-black antialiased text-center">
-                  <th className="w-2/12 border px-2 py-1">COSTO</th>
-                  <th className="w-1/12 border px-2 py-1">CANTIDAD</th>
-                  <th className="w-1/12 border px-2 py-1">METROS</th>
-                  <th className="w-1/12 border px-2 py-1">DIA/MES</th>
-                  <th className="w-1/12 border px-2 py-1">SUBTOTAL</th>
-                  <th className="w-6/12 border px-2 py-1">UNIDAD</th>
-                </tr>
-              </thead>
-              <tbody>{ListaDeConceptos}</tbody>
-            </table>
-          </div>
-          <div className="flex w-full gap-4 border-t-2">
-            <div className="flex flex-col w-1/4 items-end gap-y-1">
-              <span className="font-Foco-Corp-Bold text-lg antialiased">
-                TOTAL
-              </span>
-            </div>
-            <div className="flex w-3/4 justify-start">
-              <span className="font-Foco-Corp-Bold text-lg antialiased">
-                {total}
-              </span>
-            </div>
-          </div>
-           </>
-          ) : null }
+              <div>
+                <h3 className="font-Foco-Corp-Bold text-xl text-gris mb-1">
+                  Conceptos
+                </h3>
+              </div>
+              <div className="flex flex-col h-20 overflow-y-auto md:h-16 lg:h-14">
+                {conceptosPago.map((concepto) => (
+                  <div className="flex items-center justify-between gap-x-2 mb-2">
+                    <label className="font-Foco-Corp-Bold text-xs text-gris md:text-sm lg:text-base antialiased">
+                      {concepto.concepto}
+                    </label>
+                    <button className="text-gray-500 hover:text-naranja" onClick={() => popConceptosPago(concepto)}>
+                      Eliminar
+                    </button>
+                  </div>
+                ))}
+              </div>
+              <div className="bg-white w-full h-40 overflow-auto md:h-36 mt-4">
+                <table className="table-auto">
+                  <thead className="bg-gray-100 border">
+                    <tr className="font-Foco-Corp text-sm text-black antialiased text-center">
+                      <th className="w-2/12 border px-2 py-1">COSTO</th>
+                      <th className="w-1/12 border px-2 py-1">CANTIDAD</th>
+                      <th className="w-1/12 border px-2 py-1">METROS</th>
+                      <th className="w-1/12 border px-2 py-1">DIA/MES</th>
+                      <th className="w-1/12 border px-2 py-1">SUBTOTAL</th>
+                      <th className="w-6/12 border px-2 py-1">UNIDAD</th>
+                    </tr>
+                  </thead>
+                  <tbody>{ListaDeConceptos}</tbody>
+                </table>
+              </div>
+              <div className="flex w-full gap-4 border-t-2">
+                <div className="flex flex-col w-1/4 items-end gap-y-1">
+                  <span className="font-Foco-Corp-Bold text-lg antialiased">
+                    TOTAL
+                  </span>
+                </div>
+                <div className="flex w-3/4 justify-start">
+                  <span className="font-Foco-Corp-Bold text-lg antialiased">
+                    {total}
+                  </span>
+                </div>
+              </div>
+            </>
+          ) : null}
 
-
-
-          
-          
           <div className="w-full border-y-2 text-center">
             <p className="font-Foco-Corp text-xs antialiased">
               TRAMITE EN PROCESO DE AUTORIZACIÓN DE PERSMISO DE COMERCIO EN LA

@@ -81,7 +81,7 @@ export default function App() {
           }
         />
         <Route
-          path="/TerceraEdad"
+          path="/TerceraEdad/:id_comerciante"
           element={
             // <ExecutiveProtectedRoute user={userData}>
               <TerceraEdad />

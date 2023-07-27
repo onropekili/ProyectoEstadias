@@ -8,6 +8,7 @@ import Swal from "sweetalert2";
 import { useLocation, useNavigate } from "react-router-dom";
 import Modal from "../../components/Modal"; // Importa el componente Modal
 import axios from "axios";
+import { setDateFormat } from "../../components/formatDates";
 
 const DataComerciante = () => {
   //*STARTS THE BLOCK FOR DECLARING STATES
@@ -116,15 +117,8 @@ const DataComerciante = () => {
 
   const setFechas = (fecha_inicio, fecha_termino) => {
     if (!fecha_inicio && !fecha_termino) return;
-    const opciones = { year: "numeric", month: "long", day: "numeric" };
-    const fecha_inicio_formateada = new Date(fecha_inicio).toLocaleDateString(
-      "es-ES",
-      opciones
-    );
-    const fecha_termino_formateada = new Date(fecha_termino).toLocaleDateString(
-      "es-ES",
-      opciones
-    );
+    const fecha_inicio_formateada = setDateFormat(fecha_inicio);
+    const fecha_termino_formateada = setDateFormat(fecha_termino);
     setFecha_inicio(fecha_inicio_formateada);
     setFecha_termino(fecha_termino_formateada);
   };
@@ -417,6 +411,16 @@ const DataComerciante = () => {
     });
     console.log(data.tercera_edad);
   };
+
+  const navigateToOrdenDePago = () => {
+    const data = {
+      merchant: { ...originalData },
+      shop : { ...originalData },
+      phone : { ...telefonos },
+      }
+    navigate("/Orden-de-pago", { state: { data: data } })
+  }
+
 
   return (
     <>
@@ -802,7 +806,7 @@ const DataComerciante = () => {
                         <li>
                           <button
                             className="block w-full text-left px-4 py-2 text-base md:text-lg font-medium text-gris hover:bg-naranja hover:bg-opacity-80 hover:text-white"
-                            onClick={() => navigate("/Orden-de-pago")}
+                            onClick={navigateToOrdenDePago}
                           >
                             Orden de pago
                           </button>
