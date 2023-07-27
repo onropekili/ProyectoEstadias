@@ -13,6 +13,7 @@ const CreateCustomerController = require('../controllers/userController/CreateCu
 const CreatePayOrder = require('../controllers/userController/CreatePayOrder');
 const getConceptosPago = require('../controllers/userController/getConceptosPago');
 const verTodoInfo = require('../controllers/userController/VerTodoInfo');
+const getTerceraEdadViewData = require('../controllers/userController/getTerceraEdadViewData')
 const router = Router();
 const bodyParser = require('body-parser');
 router.use(bodyParser.json());
@@ -44,6 +45,8 @@ router.post('/CreatePayOrder', CreatePayOrder.CrearNuevaOrdenDePago);
 
 router.get('/conceptos', getConceptosPago.getConceptosPago)
 
-router.get('/getVerTodoInfo', verTodoInfo.getComercianteAndcomercioInfo)
+router.get('/getVerTodoInfo', verTodoInfo.getComercianteAndcomercioInfo);
+
+router.get('/getTerceraEdadViewData', getTerceraEdadViewData.getTerceraEdadViewData );
 
 module.exports = router;
