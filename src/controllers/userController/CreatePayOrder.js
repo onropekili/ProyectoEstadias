@@ -7,7 +7,7 @@ const { format } = require("morgan");
 // Función para contar los días de la semana entre dos fechas
 const CrearNuevaOrdenDePago = async (req, res) => {
   try {
-    const { conceptoOrden, MontoOrdenTotal, idComercio } = req.body;
+    const { conceptoOrden, MontoOrdenTotal, idComercio, fechaInicio, fechaFinal, dias } = req.body;
 
     const internCreateNewPayOrder = await pool.query(
       "select crearNuevaOrdenPago($2, $3, $1)",
@@ -19,12 +19,8 @@ const CrearNuevaOrdenDePago = async (req, res) => {
       "SELECT  * from comerciantes inner join comercios on comerciantes.id_comerciante = comercios.comerciante_id_comerciante inner join direcciones_comerciantes on comerciantes.id_comerciante = direcciones_comerciantes.id_comerciante where comerciantes.id_comerciante = (select comerciante_id_comerciante from comercios where id_comercio = $1);",
       [idComercio]
     );
-    const obtainPaymentConceptId = await pool.query(
-      "select idconcepto from conceptos_pago where concepto = $1 ",
-      [conceptoOrden]
-    );
 
-    const idConceptoOrden = obtainPaymentConceptId.rows[0].idconcepto;
+    const idConceptoOrden = conceptoOrden.idconcepto
 
     const formatedMerchantData = rawMerchantData.rows[0];
     const nombres = formatedMerchantData.nombres;
@@ -162,6 +158,8 @@ const CrearNuevaOrdenDePago = async (req, res) => {
     console.log(error);
     res.status(500).json({ error: error });
   }
+  console.log(req.body);
+  res.send('recived')
 };
 
 module.exports = {
