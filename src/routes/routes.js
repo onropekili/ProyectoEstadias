@@ -11,6 +11,11 @@ const dashboardController = require('../controllers/userController/dashboardCont
 const CostumerController = require('../controllers/userController/Costumer');
 const CreateCustomerController = require('../controllers/userController/CreateCustomerController')
 const CreatePayOrder = require('../controllers/userController/CreatePayOrder');
+const getConceptosPago = require('../controllers/userController/getConceptosPago');
+const verTodoInfo = require('../controllers/userController/VerTodoInfo');
+const getTerceraEdadViewData = require('../controllers/userController/getTerceraEdadViewData')
+const getInfoOrdenPago = require('../controllers/userController/getInfoOrdenPago')
+const refrendarComercio = require('../controllers/userController/refrendarComercio')
 const router = Router();
 const bodyParser = require('body-parser');
 router.use(bodyParser.json());
@@ -39,5 +44,15 @@ router.delete("/delete/costumer/comercio", CostumerController.deleteComercio);
 router.post("/createCostumer", CreateCustomerController.createNewCostumer );
 
 router.post('/CreatePayOrder', CreatePayOrder.CrearNuevaOrdenDePago);
+
+router.get('/conceptos', getConceptosPago.getConceptosPago)
+
+router.get('/getVerTodoInfo', verTodoInfo.getComercianteAndcomercioInfo);
+
+router.get('/getTerceraEdadViewData', getTerceraEdadViewData.getTerceraEdadViewData );
+
+router.get('/getInfoOrdenPago', getInfoOrdenPago.getInfoOrdenPago);
+
+router.get('/refrendarComercio', refrendarComercio.refrendar)
 
 module.exports = router;
