@@ -1,4 +1,4 @@
-const databaseInstance = require("../../db");
+const {pool} = require("../../db");
 const { databaseInstanceError } = require("../Errors/Errors");
 
 const createNewCostumer = async (req, res) => {
@@ -18,7 +18,7 @@ const createNewCostumer = async (req, res) => {
 };
 
 const queryToDatabase = async (comerciante, comercio, telefonos) => {
-  await databaseInstance.query(
+  await pool.query(
     "SELECT insertarNuevoComercianteYComercio($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23);",
     [
       comerciante.apellidoPaterno,

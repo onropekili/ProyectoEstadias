@@ -3,9 +3,10 @@ import Header from '../components/Header';
 import DatePickerInput from "../components/DatePickerInput";
 import CheckboxInput from "../components/CheckboxInput";
 import Swal from 'sweetalert2';
+import axios from 'axios';
 
 const Modal = ({ closeModal }) => {
-  
+
   const handleRefrendarClick = (event) => {
 
     event.preventDefault();// Evitar el envío del formulario y la recarga de la página
@@ -15,41 +16,87 @@ const Modal = ({ closeModal }) => {
 
     // Obtener el valor del input
     const numeroReferencia = inputNumeroReferencia.value;
-    
-    // Comprobar si el número de referencia es correcto
-    if (numeroReferencia === '1234') {
-      // Mostrar SweetAlert de éxito y abrir en una nueva pestaña la vista de CedulaPDF
-      Swal.fire({
-        title: 'Refrendo exitoso',
-        text: 'El comercio se ha refrendado correctamente',
-        icon: 'success',
-        confirmButtonText: 'Imprimir cédula',
-        buttonsStyling: false,
-        customClass: {
-          confirmButton: 'w-40 bg-verde hover:bg-verde hover:opacity-80 text-white m-4 p-2 px-4 rounded-lg font-semibold shadow-lg',
-        },
-      }).then(() => {
-        window.open('/Cédula-de-comercio', '_blank'); // Abrir la nueva vista
+
+    axios.get(`http://${process.env.REACT_APP_HOST}:4000/refrendarComercio?numeroReferencia=${numeroReferencia}`)
+      .then((response) => {
+        switch (response.data) {
+          case "Se puede imprimir la cédula":
+
+            openCedula();
+            closeModal();
+            break;
+
+          case "Comerciante refrendado":
+            reloadWindow();
+            closeModal();
+
+            break;
+
+          case "Orden de pago pagada":
+            otherCases();
+            closeModal();
+            break;
+          default:
+            break;
+        }
+      })
+      .catch((error) => {
+        showErrorAlert(error);
       });
-    } else {
-      // Mostrar SweetAlert de error
-      Swal.fire({
-        title: 'Algo anda mal',
-        text: 'El número de referencia es incorrecto.',
-        icon: 'error',
-        confirmButtonText: 'Aceptar',
-        buttonsStyling: false,
-        customClass: {
-          confirmButton: 'w-40 bg-rojo hover:bg-rojo hover:opacity-80 text-white m-4 p-2 px-4 rounded-lg font-semibold shadow-lg',
-        },
-      });
+
+    const openCedula = () => {
+      window.open('/Cédula-de-comercio', '_blank');
     }
   };
+
+  const reloadWindow = () => {
+    Swal.fire({
+      title: 'Comerciante refrendado',
+      text: 'El comerciante ha sido refrendado exitosamente.',
+      icon: 'success',
+      confirmButtonText: 'Aceptar',
+      buttonsStyling: false,
+      customClass: {
+        confirmButton: 'w-40 bg-naranja hover:bg-naranja hover:opacity-80 text-white m-4 p-2 px-4 rounded-lg font-semibold shadow-lg',
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location.reload();
+      }
+    });
+  }
+
+  const otherCases = () => {
+    Swal.fire({
+      title: 'Orden de pago registrada',
+      text: 'Puede proceder con la accion necesaria.',
+      icon: 'success',
+      confirmButtonText: 'Aceptar',
+      buttonsStyling: false,
+      customClass: {
+        confirmButton: 'w-40 bg-naranja hover:bg-naranja hover:opacity-80 text-white m-4 p-2 px-4 rounded-lg font-semibold shadow-lg',
+      },
+    });
+  }
+
+  const showErrorAlert = (error) => {
+    console.log(error);
+    Swal.fire({
+      title: 'Algo anda mal',
+      text: error,
+      icon: 'error',
+      confirmButtonText: 'Aceptar',
+      buttonsStyling: false,
+      customClass: {
+        confirmButton: 'w-40 bg-rojo hover:bg-rojo hover:opacity-80 text-white m-4 p-2 px-4 rounded-lg font-semibold shadow-lg',
+      },
+    });
+  }
 
   return (
     <div className="fixed inset-0 flex items-start lg:items-center justify-center z-10 bg-gris bg-opacity-80 p-2 h-full overflow-auto">
       <div className="bg-white rounded-lg pt-2 h-auto">
-        <Header/>
+        <Header />
         <form>
           <div className='p-8'>
             <div className='mb-8'>
@@ -60,7 +107,7 @@ const Modal = ({ closeModal }) => {
                 htmlFor="NoReferencia"
                 className="font-Foco-Corp-Bold text-gris text-lg mb-2"
               >
-                No. Referencia de pago
+                Referencia de pago
               </label>
               <input
                 id="NoReferencia"
@@ -70,28 +117,13 @@ const Modal = ({ closeModal }) => {
             </div>
             <div className="flex flex-col md:flex-row gap-x-4 gap-y-4 mb-3 text-start">
               <div className="w-full md:w-1/3">
-                <div className="flex flex-col w-full">
-                  <label className="font-Foco-Corp-Bold text-gris text-lg mb-2">
-                    Fecha Inicio
-                  </label>
-                  <DatePickerInput />
-                </div>
+
               </div>
               <div className="w-full md:w-1/3">
-                <div className="flex flex-col">
-                  <label className="font-Foco-Corp-Bold text-gris text-lg mb-2">
-                    Fecha Termino
-                  </label>
-                  <DatePickerInput/>
-                </div>
+
               </div>
               <div className="w-full md:w-1/3">
-                <div className="flex flex-col ">
-                  <label className="font-Foco-Corp-Bold text-gris text-lg mb-2">
-                    Días
-                  </label>
-                  <CheckboxInput/>
-                </div>
+
               </div>
             </div>
           </div>

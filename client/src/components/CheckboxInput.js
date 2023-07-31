@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { FiCheck, FiCalendar } from 'react-icons/fi';
 
 
-const CheckboxInput = () => {
+const CheckboxInput = ({selectedDays, setSelectedDays}) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedDays, setSelectedDays] = useState([]);
+  
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
