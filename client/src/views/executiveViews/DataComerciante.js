@@ -247,6 +247,7 @@ const DataComerciante = () => {
   };
 
   const handleSaveClickTab1 = (e) => {
+    e.preventDefault();
     try {
       checkIfMetrajeIsValid(data.metraje);
       updateComerciante();
@@ -413,12 +414,17 @@ const DataComerciante = () => {
   };
 
   const navigateToOrdenDePago = () => {
-    const data = {
-      merchant: { ...originalData },
-      shop : { ...originalData },
-      phone : { ...telefonos },
-      }
-    navigate("/Orden-de-pago", { state: { data: data } })
+    try {
+      const data = {
+        merchant: { ...originalData },
+        shop : { ...originalData },
+        phone : { ...telefonos },
+        }
+      navigate("/Orden-de-pago", { state: { data: data } })
+    } catch (error) {
+      
+    }
+
   }
 
 

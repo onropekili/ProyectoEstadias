@@ -5,15 +5,17 @@ import Select from "react-select";
 import selectStyles from "../../components/StyleSelect";
 import DatePickerInput from "../../components/DatePickerInput";
 import CheckboxInput from "../../components/CheckboxInput";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ConceptList } from "../../components/ConceptList";
 import { showErrorAlert, showInfoAlertOp } from "../../components/SwAlerts";
 import { setDateFormat } from "../../components/formatDates";
 import DisableableButton from "../../components/DisableableButton";
+import { contarDiasDeLaSemana } from "../../components/countsDaysBetweeDates";
 const moment = require("moment");
 
 const OrdenPago = () => {
+  const navigate = useNavigate();
   const [options, setOptions] = useState([]);
   const [selectedDays, setSelectedDays] = useState([]);
   const [selectBeginDate, setSelectBeginDate] = useState(null);
@@ -55,7 +57,7 @@ const OrdenPago = () => {
     } else {
       showInfoAlertOp(
         "Operacion invalida",
-        "Solamente puedes agregar un concepto por orden de pago"
+        "Solamente puedes agregar un concepto por orden"
       );
     }
   };
@@ -74,27 +76,6 @@ const OrdenPago = () => {
 
   const addConceptoPago = () => {
     setConceptosPago([...conceptosPago, selectedOption.value]);
-  };
-
-  const contarDiasDeLaSemana = (
-    fechaInicialSinFormato,
-    fechaFinalSinFormato,
-    diaDeLaSemana
-  ) => {
-    const fechaInicialConFormato = formatearfechas(fechaInicialSinFormato);
-    const fechaFinalConFormato = formatearfechas(fechaFinalSinFormato);
-    let inicio = moment(fechaInicialConFormato);
-    const fin = moment(fechaFinalConFormato);
-    let contador = 0;
-
-    while (inicio.isSameOrBefore(fin)) {
-      if (inicio.day() === diccionarioDaysOfWeek.get(diaDeLaSemana)) {
-        contador++;
-      }
-      inicio.add(1, "day");
-    }
-
-    return contador;
   };
 
   useEffect(() => {
@@ -132,16 +113,6 @@ const OrdenPago = () => {
       setTotal(temporaryTotal);
     }
   }, [selectBeginDate, selectEndDate, selectedDays]);
-
-  const formatearfechas = (fechaSinFormato) => {
-    const fecha = new Date(fechaSinFormato);
-    const anio = fecha.getFullYear();
-    const mes = (fecha.getMonth() + 1).toString().padStart(2, "0");
-    const dia = fecha.getDate().toString().padStart(2, "0");
-    const fechaFormateada = `${anio}-${mes}-${dia}`;
-
-    return fechaFormateada;
-  };
 
   const setListaDeConceptosAgregados = (conceptosPago) => {
     const ListaDeConceptosAgregados = conceptosPago.map((concepto) => (
@@ -183,7 +154,11 @@ const OrdenPago = () => {
       (conceptoPago) => conceptoPago.idconcepto !== concepto.idconcepto
     );
     setConceptosPago(conceptosPagoActualizado);
-    setTotal(total - concepto.importe);
+    if(concepto.unidad === "PESOS"){
+      setTotal(total - concepto.importe);
+    }else{
+      setTotal(total - concepto.importe * totalMetraje * totalDaysWorked);
+    }
     console.log("eliminar");
   };
 
@@ -192,15 +167,6 @@ const OrdenPago = () => {
   clasificacion.set(2, "COMERCIO EN PUESTO FIJO");
   clasificacion.set(3, "COMERCIO EN PUESTO SEMI-FIJO");
   clasificacion.set(4, "COMERCIO EN PUESTO EN FESTIVIDADES");
-
-  const diccionarioDaysOfWeek = new Map();
-  diccionarioDaysOfWeek.set("Lun", 1);
-  diccionarioDaysOfWeek.set("Mar", 2);
-  diccionarioDaysOfWeek.set("Mie", 3);
-  diccionarioDaysOfWeek.set("Jue", 4);
-  diccionarioDaysOfWeek.set("Vie", 5);
-  diccionarioDaysOfWeek.set("Sab", 6);
-  diccionarioDaysOfWeek.set("Dom", 0);
 
   const merchantAdress = merchant
     ? merchant.calle
@@ -221,18 +187,36 @@ const OrdenPago = () => {
       )
     : "";
 
-    const createPaymentOrder =  () => {
-      const conceptoOrden = conceptosPago
-      const montoTotalOrden = total
-      const idComercio = merchant.id_comercio
-      const fechaInicio = selectBeginDate || "";
-      const fechaFin = selectEndDate || "";
-      const dias = selectedDays || [];
+  const createPaymentOrder = () => {
+    const conceptoOrden = conceptosPago;
+    const MontoOrdenTotal = total;
+    const idComercio = merchant.id_comercio;
+    const fechaInicio = selectBeginDate || null;
+    const fechaFin = selectEndDate || null;
+    const dias = selectedDays || null;
 
-      axios.post(`http://${process.env.REACT_APP_HOST}:4000/CreatePayOrder`, {conceptoOrden : conceptoOrden, montoTotalOrden : montoTotalOrden, idComercio : idComercio, fechaInicio : fechaInicio, fechaFin : fechaFin, dias : dias})
-      .then((res) => {console.log(res.data)})
-      .catch((error) => {console.log(error)})
-    }
+    axios
+      .post(`http://${process.env.REACT_APP_HOST}:4000/CreatePayOrder`, {
+        conceptoOrden: conceptoOrden,
+        MontoOrdenTotal: MontoOrdenTotal,
+        idComercio: idComercio,
+        fechaInicio: fechaInicio,
+        fechaFin: fechaFin,
+        dias: dias,
+      })
+      .then((res) => {
+        console.log(res.data);
+        navigate("/OrdenPagoPDF", {
+          state: {
+            referencia: res.data.referenciaOrdenPago,
+            idComercio: idComercio,
+          },
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <>
@@ -455,17 +439,15 @@ const OrdenPago = () => {
         </div>
         <div className="flex flex-col text-white text-xl font-Foco-Corp-Bold">
           {/* <Link to="/OrdenPagoPDF"> */}
-            <input
-              type="submit"
-              value={"Generar Orden"}
-              className={`self-center text-center bg-naranja w-full h-11 rounded-lg lg:w-80 ${
-                conceptosPago.length === 0
-                  ? "opacity-50 cursor-not-allowed"
-                  : ""
-              }`}
-              onClick={createPaymentOrder}
-              disabled={conceptosPago.length === 0}
-            />
+          <input
+            type="submit"
+            value={"Generar Orden"}
+            className={`self-center text-center bg-naranja w-full h-11 rounded-lg lg:w-80 ${
+              conceptosPago.length === 0 ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+            onClick={createPaymentOrder}
+            disabled={conceptosPago.length === 0}
+          />
           {/* </Link> */}
         </div>
       </footer>
