@@ -105,7 +105,7 @@ export default function App() {
           }
         />
         <Route
-          path="/Cédula-de-comercio"
+          path="/Cedula-de-comercio/:folio"
           element={
             // <ExecutiveProtectedRoute user={userData}>
               <Cedulacommerce/>

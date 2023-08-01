@@ -107,10 +107,6 @@ const updateCostumer = async (comerciante) => {
   ]);
 };
 
-// const updateTelefonoCostumer = async (comerciante) => {
-//   const { id_comerciante, telefono1, telefono2 } = comerciante;
-//   const updateTelefonoCostumerQuery =
-
 const updateAdressCostumer = async (comerciante) => {
   const {
     id_comerciante,

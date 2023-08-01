@@ -16,6 +16,7 @@ const verTodoInfo = require('../controllers/userController/VerTodoInfo');
 const getTerceraEdadViewData = require('../controllers/userController/getTerceraEdadViewData')
 const getInfoOrdenPago = require('../controllers/userController/getInfoOrdenPago')
 const refrendarComercio = require('../controllers/userController/refrendarComercio')
+const getCedulaData = require ('../controllers/userController/getCedulaData')
 const router = Router();
 const bodyParser = require('body-parser');
 router.use(bodyParser.json());
@@ -54,5 +55,7 @@ router.get('/getTerceraEdadViewData', getTerceraEdadViewData.getTerceraEdadViewD
 router.get('/getInfoOrdenPago', getInfoOrdenPago.getInfoOrdenPago);
 
 router.get('/refrendarComercio', refrendarComercio.refrendar)
+
+router.get('/getCedulaData', getCedulaData.getCedulaData )
 
 module.exports = router;
