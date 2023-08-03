@@ -5,7 +5,7 @@ import { MdStore } from "react-icons/md";
 import Select from "react-select";
 import selectStylesForm from "../../components/StyleSelectForm";
 import Swal from "sweetalert2";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Modal from "../../components/Modal"; // Importa el componente Modal
 import axios from "axios";
 import { setDateFormat } from "../../components/formatDates";
@@ -13,8 +13,7 @@ import { setDateFormat } from "../../components/formatDates";
 const DataComerciante = () => {
   //*STARTS THE BLOCK FOR DECLARING STATES
   const navigate = useNavigate();
-  const location = useLocation();
-  const folio = location && location.state && location.state.folio;
+  const {folio} = useParams();
   const [activeTab, setActiveTab] = useState(1);
 
   const [isMenuOpenTab1, setIsMenuOpenTab1] = useState(false);

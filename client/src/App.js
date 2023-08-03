@@ -97,7 +97,7 @@ export default function App() {
           }
         />
         <Route
-          path="/Datos-Comerciante-Comercio"
+          path="/Datos-Comerciante-Comercio/:folio"
           element={
              <ExecutiveProtectedRoute >
               <DataComerciante />

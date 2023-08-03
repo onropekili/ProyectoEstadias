@@ -25,7 +25,7 @@ export const InfoComponent = ({ folio, nombre, giroActivo, observaciones, fecha_
     const formattedFechaTermino = format(new Date(fecha_termino), 'dd/MM/yyyy');
 
     const verTodo = () => {
-        navigate('/Datos-Comerciante-Comercio', {state : {folio : folio}} )
+        navigate(`/Datos-Comerciante-Comercio/${folio}` )
     }
 
     return (
