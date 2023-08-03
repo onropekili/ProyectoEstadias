@@ -5,6 +5,7 @@ const { mssqlConfig, pool } = require("../../db");
 const CrearNuevaOrdenDePago = async (req, res) => {
   try {
     const { conceptoOrden, MontoOrdenTotal, idComercio, fechaInicio, fechaFin, dias } = req.body;
+    console.log(conceptoOrden);
     const internCreateNewPayOrder = await pool.query(
       "select crearNuevaOrdenPago($2, $3, $1)",
       [idComercio, conceptoOrden[0].concepto, MontoOrdenTotal]
@@ -41,7 +42,7 @@ const CrearNuevaOrdenDePago = async (req, res) => {
       " ",
       formatedMerchantData.apellido_materno
     );
-    const Descripcion = conceptoOrden.concepto;
+    const Descripcion = conceptoOrden[0].concepto;
 
     const fechaActual = new Date();
     const anio = fechaActual.getFullYear();
@@ -130,28 +131,28 @@ const CrearNuevaOrdenDePago = async (req, res) => {
       `;
     const ExternNewOrderPay = await ExternBD.query(queryUD_ORDEN_PAGO_ENC);
 
-    // const queryUD_ORDEN_PAGO_DET = `
-    //   INSERT INTO UD_ORDEN_PAGO_DET (
-    //     ID,
-    //     PARCIALIDAD,
-    //     DESCRIPCION,
-    //     CLAVE,
-    //     PARCIALIDADTOTAL,
-    //     IMPORTE,
-    //     CONCEPTO
-    //   )
-    //   VALUES (
-    //     NEWID(),
-    //     ${1},
-    //     '${conceptoOrden[0].concepto}',
-    //     ${clave},
-    //     ${MontoOrdenTotal},
-    //     ${MontoOrdenTotal},
-    //     ${conceptoOrden[0].codigo}
-    //   );`;
-    // const ExternNewOrderPayDetail = await ExternBD.query(
-    //   queryUD_ORDEN_PAGO_DET
-    // );
+    const queryUD_ORDEN_PAGO_DET = `
+      INSERT INTO UD_ORDEN_PAGO_DET (
+        ID,
+        PARCIALIDAD,
+        DESCRIPCION,
+        CLAVE,
+        PARCIALIDADTOTAL,
+        IMPORTE,
+        CONCEPTO
+      )
+      VALUES (
+        NEWID(),
+        ${1},
+        '${conceptoOrden[0].concepto}',
+        ${clave},
+        ${MontoOrdenTotal},
+        ${MontoOrdenTotal},
+        ${conceptoOrden[0].codigo}
+      );`;
+    const ExternNewOrderPayDetail = await ExternBD.query(
+      queryUD_ORDEN_PAGO_DET
+    );
 
     res.status(200).json({
       referenciaOrdenPago: referenciaOrdenPago,

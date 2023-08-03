@@ -12,7 +12,6 @@ const TramiteImprimible = () => {
   const [fecha, setFecha] = useState("");
 
   useEffect(() => {
-    console.log(id_comerciante);
     axios
       .get(`http://${process.env.REACT_APP_HOST}:4000/getTerceraEdadViewData`, {
         params: { id_comerciante: id_comerciante },

@@ -6,8 +6,8 @@ import { InfoComponent } from "../../components/InfoComponent";
 import Header from "../../components/Header";
 
 function DashBoard_Ejecutivo() {
+  console.log(localStorage.getItem("tipo_usuario"));
   const location = useLocation();
-  const user = location.state && location.state.data;
   const [comerciantes, setComerciantes] = useState([]);
   const [ComerciantesComponents, setComerciantesComponents] = useState([]);
 
@@ -43,7 +43,6 @@ function DashBoard_Ejecutivo() {
         mostrar: Mostrar,
         colonia: colonia,
       };
-      console.log(data);
       if (
         nameOrId !== "" ||
         filtrarPor !== "" ||
@@ -55,18 +54,15 @@ function DashBoard_Ejecutivo() {
             "http://localhost:4000/dashboard/find_by_name_or_id/",
             { params: data }
           );
-          console.log(res.data.result.rows);
           setInfoComponent(res.data.result.rows);
         } catch (error) {
           console.error(error);
         }
       } else {
         try {
-          console.log("isEmpty");
           const res = await axios.get(
             "http://localhost:4000/dashboard/find_by_name_or_id/"
           );
-          console.log(res.data.result.rows);
           setInfoComponent(res.data.result.rows);
         } catch (error) {
           console.error(error);

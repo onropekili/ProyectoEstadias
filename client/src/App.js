@@ -43,7 +43,7 @@ export default function App() {
         <Route
           path="/Registrar-comerciante"
           element={
-            <ExecutiveProtectedRoute user={userData}>
+            <ExecutiveProtectedRoute >
               <NewComercianteView />
             </ExecutiveProtectedRoute>
           }
@@ -51,7 +51,7 @@ export default function App() {
         <Route
           path="/Registrar-comerciante-evento"
           element={
-            <ExecutiveProtectedRoute user={userData}>
+            <ExecutiveProtectedRoute >
               <NewComercianteEventView />
             </ExecutiveProtectedRoute>
           }
@@ -59,7 +59,7 @@ export default function App() {
         <Route
           path="/Registrar-comercio"
           element={
-            <ExecutiveProtectedRoute user={userData}>
+            <ExecutiveProtectedRoute>
               <NewComercioView />
             </ExecutiveProtectedRoute>
           }
@@ -67,7 +67,7 @@ export default function App() {
         <Route
           path="/Registrar-comercio-evento"
           element={
-            <ExecutiveProtectedRoute user={userData}>
+            <ExecutiveProtectedRoute >
               <NewComercioEventView />
             </ExecutiveProtectedRoute>
           }
@@ -75,49 +75,49 @@ export default function App() {
         <Route
           path="/Orden-de-Pago"
           element={
-            // <ExecutiveProtectedRoute user={userData}>
+             <ExecutiveProtectedRoute >
               <OrdenPago />
-            // </ExecutiveProtectedRoute>
+             </ExecutiveProtectedRoute>
           }
         />
         <Route
           path="/TerceraEdad/:id_comerciante"
           element={
-            // <ExecutiveProtectedRoute user={userData}>
+             <ExecutiveProtectedRoute >
               <TerceraEdad />
-            // </ExecutiveProtectedRoute>
+             </ExecutiveProtectedRoute>
           }
         />
         <Route
           path="/OrdenPagoPDF"
           element={
-            // <ExecutiveProtectedRoute user={userData}>
+             <ExecutiveProtectedRoute >
               <OrdenPagoPDF />
-            // </ExecutiveProtectedRoute>
+             </ExecutiveProtectedRoute>
           }
         />
         <Route
           path="/Datos-Comerciante-Comercio"
           element={
-            // <ExecutiveProtectedRoute user={userData}>
+             <ExecutiveProtectedRoute >
               <DataComerciante />
-            // </ExecutiveProtectedRoute>
+             </ExecutiveProtectedRoute>
           }
         />
         <Route
           path="/Cedula-de-comercio/:folio"
           element={
-            // <ExecutiveProtectedRoute user={userData}>
+             <ExecutiveProtectedRoute >
               <Cedulacommerce/>
-            // </ExecutiveProtectedRoute>
+             </ExecutiveProtectedRoute>
           }
         />
         <Route
           path="/Formato-baja-comercio"
           element={
-            // <ExecutiveProtectedRoute user={userData}>
+             <ExecutiveProtectedRoute >
               <BajaCommerce/>
-            // </ExecutiveProtectedRoute>
+             </ExecutiveProtectedRoute>
           }
         />
       </Routes>

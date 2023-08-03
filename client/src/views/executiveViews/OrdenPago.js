@@ -35,6 +35,7 @@ const OrdenPago = () => {
   const metrosX = Number(shop.metraje?.split("x")[0]);
   const metrosY = Number(shop.metraje?.split("x")[1]);
   const totalMetraje = metrosX * metrosY;
+  console.log(merchant);
   const vigencia = shop?.fecha_termino
     ? setDateFormat(shop.fecha_termino)
     : "sin refrendo";
@@ -170,7 +171,7 @@ const OrdenPago = () => {
 
   const merchantAdress = merchant
     ? merchant.calle
-        .concat(merchant.numero_exterior)
+        .concat(' ' ,merchant.numero_exterior)
         .concat(
           merchant.numero_interior ? `, Int: ${merchant.numero_interior}, ` : ""
         )

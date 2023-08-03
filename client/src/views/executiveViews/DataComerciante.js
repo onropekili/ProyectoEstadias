@@ -427,6 +427,10 @@ const DataComerciante = () => {
 
   }
 
+  const volver = () => {
+    navigate("/Dashboard_E")
+  }
+
 
   return (
     <>
@@ -814,7 +818,7 @@ const DataComerciante = () => {
                             className="block w-full text-left px-4 py-2 text-base md:text-lg font-medium text-gris hover:bg-naranja hover:bg-opacity-80 hover:text-white"
                             onClick={navigateToOrdenDePago}
                           >
-                            Orden de pago
+                            Generar orden de pago
                           </button>
                         </li>
                         <li>
@@ -822,7 +826,7 @@ const DataComerciante = () => {
                             className="block w-full text-left px-4 py-2 text-base md:text-lg font-medium text-gris hover:bg-naranja hover:bg-opacity-80 hover:text-white"
                             onClick={openModal}
                           >
-                            Refrendar
+                            Verificar orden de pago
                           </button>
                           {showModal && <Modal closeModal={closeModal}></Modal>}
                         </li>
@@ -1138,6 +1142,7 @@ const DataComerciante = () => {
                   type="button"
                   value="Volver"
                   className="self-start text-center bg-verde w-full h-11 rounded-lg lg:w-40"
+                  onClick={()=>volver()}
                 />
               </div>
             </footer>
