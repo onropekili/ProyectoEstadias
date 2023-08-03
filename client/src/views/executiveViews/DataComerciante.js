@@ -5,7 +5,7 @@ import { MdStore } from "react-icons/md";
 import Select from "react-select";
 import selectStylesForm from "../../components/StyleSelectForm";
 import Swal from "sweetalert2";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Modal from "../../components/Modal"; // Importa el componente Modal
 import axios from "axios";
 import { setDateFormat } from "../../components/formatDates";
