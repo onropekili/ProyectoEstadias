@@ -436,6 +436,7 @@ const OrdenPago = () => {
             type="button"
             value="Volver"
             className="self-start text-center bg-verde w-full h-11 rounded-lg lg:w-40"
+            onClick={() => navigate(`/Datos-Comerciante-Comercio/${merchant.id_comercio}`)}
           />
         </div>
         <div className="flex flex-col text-white text-xl font-Foco-Corp-Bold">

@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 import { useNavigate, useParams } from "react-router-dom";
 import Modal from "../../components/Modal"; // Importa el componente Modal
 import axios from "axios";
-import { setDateFormat } from "../../components/formatDates";
+import { setDateFormat, setDateFormatDDMMYY } from "../../components/formatDates";
 
 const DataComerciante = () => {
   //*STARTS THE BLOCK FOR DECLARING STATES
@@ -116,8 +116,8 @@ const DataComerciante = () => {
 
   const setFechas = (fecha_inicio, fecha_termino) => {
     if (!fecha_inicio && !fecha_termino) return;
-    const fecha_inicio_formateada = setDateFormat(fecha_inicio);
-    const fecha_termino_formateada = setDateFormat(fecha_termino);
+    const fecha_inicio_formateada = setDateFormatDDMMYY(fecha_inicio);
+    const fecha_termino_formateada = setDateFormatDDMMYY(fecha_termino);
     setFecha_inicio(fecha_inicio_formateada);
     setFecha_termino(fecha_termino_formateada);
   };

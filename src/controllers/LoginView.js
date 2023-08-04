@@ -1,6 +1,5 @@
 const axios = require("axios");
 const {pool} = require("../db");
-const bcrypt = require("bcrypt");
 
 const loginView = (req, res) => {
   res.send("This is login view");
