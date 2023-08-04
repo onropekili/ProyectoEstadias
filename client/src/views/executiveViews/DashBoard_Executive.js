@@ -51,7 +51,7 @@ function DashBoard_Ejecutivo() {
       ) {
         try {
           const res = await axios.get(
-            "http://localhost:4000/dashboard/find_by_name_or_id/",
+            `http://${process.env.REACT_APP_HOST}:4000/dashboard/find_by_name_or_id/`,
             { params: data }
           );
           setInfoComponent(res.data.result.rows);
@@ -61,7 +61,7 @@ function DashBoard_Ejecutivo() {
       } else {
         try {
           const res = await axios.get(
-            "http://localhost:4000/dashboard/find_by_name_or_id/"
+            `http://${process.env.REACT_APP_HOST}:4000/dashboard/find_by_name_or_id/`
           );
           setInfoComponent(res.data.result.rows);
         } catch (error) {

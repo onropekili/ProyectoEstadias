@@ -21,7 +21,7 @@ const NewComercioView = () => {
   const onSubmit = (data) => {
     console.log({ datos: { data: data, comerciante: comercianteData } });
     axios
-      .post("http://localhost:4000/createCostumer", {
+      .post(`http://${process.env.REACT_APP_HOST}:4000/createCostumer`, {
         comerciante: comercianteData,
         comercio: data,
       })
@@ -36,7 +36,7 @@ const NewComercioView = () => {
         }).then((result) => {
           if (result.isConfirmed) {
             axios
-              .get("http://localhost:4000/dashboard/find_by_name_or_id/")
+              .get(`http://${process.env.REACT_APP_HOST}:4000/dashboard/find_by_name_or_id/`)
               .then((res) => {
                 console.log(res.data);
                 navigate(uri, {

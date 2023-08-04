@@ -44,7 +44,7 @@ export default function Login({ userData, setUserData }) {
       showInfoAlert("Algo anda mal", "Por favor ingrese usuario y contraseña");
     } else {
       axios
-        .post("http://localhost:4000/login", data)
+        .post(`http://${process.env.REACT_APP_HOST}:4000/login`, data)
         .then((response) => {
           const User = response.data.user;
           const admin = true;
@@ -61,7 +61,7 @@ export default function Login({ userData, setUserData }) {
               navigate("/DashBoard_A", { state: { data: User } });
             } else {
               axios
-                .get("http://localhost:4000/dashboard/find_by_name_or_id/")
+                .get(`http://${process.env.REACT_APP_HOST}:4000/dashboard/find_by_name_or_id/`)
                 .then((res) => {
                   const Data = res.data.result.rows;
 

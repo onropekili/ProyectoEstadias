@@ -81,7 +81,7 @@ const OrdenPago = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:4000/conceptos")
+      .get(`http://${process.env.REACT_APP_HOST}:4000/conceptos`)
       .then((res) => {
         setOptions(res.data.options);
         console.log(res.data.options);

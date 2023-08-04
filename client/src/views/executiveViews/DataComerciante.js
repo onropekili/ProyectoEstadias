@@ -61,7 +61,7 @@ const DataComerciante = () => {
 
   //*STARTS THE BLOCK OF FUNCTIONS FOR HANDLING THE API GET CALL
   const getTodoInfo = async (folio) => {
-    const getTodoInfoUri = "http://localhost:4000/getVerTodoInfo";
+    const getTodoInfoUri = `http://${process.env.REACT_APP_HOST}:4000/getVerTodoInfo`;
     const getTodoInfoParams = {
       folio: folio,
     };
