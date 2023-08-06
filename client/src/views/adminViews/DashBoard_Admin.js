@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Header from "../../components/Header";
 import Sidebar from '../../components/Sidebar';
 import DailyChart  from '../../components/DailyChart';
+import WeeklyChart  from '../../components/WeeklyChart';
 import { IoGrid, IoPerson, IoChevronForwardCircle, IoPeopleSharp, IoStorefrontSharp} from 'react-icons/io5';
 
 function DashBoard_Admin() {
@@ -115,11 +116,14 @@ function DashBoard_Admin() {
           <div className='grid grid-cols-3 px-8 gap-5'>
             <div className='w-full flex flex-col p-4 border-2 border-gray-200 rounded-md gap-4 shadow-md'>
               <span className='text-base text-left font-Foco-Corp-Bold text-gris'>Hace 5 días</span>
-              <DailyChart  data={data} />
+              <DailyChart data={data} />
             </div>
-            <div className='w-full p-4 border-2 rounded-md '>
+            <div className='w-full flex flex-col p-4 border-2 border-gray-200 rounded-md gap-4 shadow-md'>
+              <span className='text-base text-left font-Foco-Corp-Bold text-gris'>Últimas 4 semanas</span>
+              <WeeklyChart data={data} />
             </div>
-            <div className='w-full p-4 border-2 rounded-md '>
+            <div className='w-full flex flex-col p-4 border-2 border-gray-200 rounded-md gap-4 shadow-md'>
+
             </div>
           </div>
         </div>
