@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { AuthMiddleware } from '../../middleware/ProtectedMiddleware';
 import { useLocation, useNavigate } from 'react-router-dom';
+import Header from "../../components/Header";
 
 function DashBoard_Admin() {
   const location = useLocation();
@@ -12,7 +13,9 @@ function DashBoard_Admin() {
   }, [user, navigate]);
 
   return (
-    <div>Hola Admirinjillo</div>
+    <>
+    <Header/>
+    </>
   );
 }
 
