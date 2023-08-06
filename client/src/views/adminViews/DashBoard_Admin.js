@@ -3,6 +3,7 @@ import { AuthMiddleware } from '../../middleware/ProtectedMiddleware';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Header from "../../components/Header";
 import Sidebar from '../../components/Sidebar';
+import DailyChart  from '../../components/DailyChart';
 import { IoGrid, IoPerson, IoChevronForwardCircle, IoPeopleSharp, IoStorefrontSharp} from 'react-icons/io5';
 
 function DashBoard_Admin() {
@@ -17,6 +18,17 @@ function DashBoard_Admin() {
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
+  };
+
+  const data = {
+    labels: ['Enero', 'Febrero', 'Marzo'],
+    datasets: [
+      {
+        label: 'Ventas',
+        data: [100, 150, 120],
+        backgroundColor: ['red', 'blue', 'green'],
+      },
+    ],
   };
 
   return (
@@ -34,7 +46,7 @@ function DashBoard_Admin() {
             </button>
           </div>
           <div className="flex flex-col md:grid md:grid-cols-2 xl:grid-cols-4 gap-x-4 gap-y-4 px-8 py-6">
-            <div className=" bg-naranja bg-opacity-80 border border-naranja text-white font-semibold rounded-md">
+            <div className=" bg-naranja bg-opacity-80 border border-naranja text-white font-semibold rounded-md shadow-md">
               <div className='flex flex-row py-4 px-4 justify-between '>
                 <div className="w-3/4 flex flex-col gap-2">
                   <span className='text-4xl'>2</span>
@@ -49,7 +61,7 @@ function DashBoard_Admin() {
                 <IoChevronForwardCircle className="text-2xl"/>
               </button>
             </div>
-            <div className=" bg-verde bg-opacity-80 border border-verde text-white font-semibold rounded-md">
+            <div className=" bg-verde bg-opacity-80 border border-verde text-white font-semibold rounded-md shadow-md">
               <div className='flex flex-row py-4 px-4 justify-between '>
                 <div className="w-3/4 flex flex-col gap-2">
                     <span className='text-4xl'>3000</span>
@@ -64,7 +76,7 @@ function DashBoard_Admin() {
                 <IoChevronForwardCircle className="text-2xl"/>
               </button>
             </div>
-            <div className=" bg-azul bg-opacity-80 border border-azul text-white font-semibold rounded-md">
+            <div className=" bg-azul bg-opacity-80 border border-azul text-white font-semibold rounded-md shadow-md">
               <div className='flex flex-row py-4 px-4 justify-between '>
                 <div className="w-3/4 flex flex-col gap-2">
                     <span className='text-4xl'>3000</span>
@@ -79,7 +91,7 @@ function DashBoard_Admin() {
                 <IoChevronForwardCircle className="text-2xl"/>
               </button>
             </div>
-            <div className=" bg-morado bg-opacity-80 border border-morado text-white font-semibold rounded-md">
+            <div className=" bg-morado bg-opacity-80 border border-morado text-white font-semibold rounded-md shadow-md">
               <div className='flex flex-row py-4 px-4 justify-between '>
                 <div className="w-3/4 flex flex-col gap-2">
                     <span className='text-4xl'>3000</span>
@@ -93,6 +105,21 @@ function DashBoard_Admin() {
                 <span className='text-sm'>Ver todos</span>
                 <IoChevronForwardCircle className="text-2xl"/>
               </button>
+            </div>
+          </div>
+          <div className='px-8 pb-4'>
+            <h3 className="text-2xl font-Foco-Corp-Bold text-gris 2xl:text-4xl">
+              Últimos ingresos
+            </h3>
+          </div>
+          <div className='grid grid-cols-3 px-8 gap-5'>
+            <div className='w-full flex flex-col p-4 border-2 border-gray-200 rounded-md gap-4 shadow-md'>
+              <span className='text-base text-left font-Foco-Corp-Bold text-gris'>Hace 5 días</span>
+              <DailyChart  data={data} />
+            </div>
+            <div className='w-full p-4 border-2 rounded-md '>
+            </div>
+            <div className='w-full p-4 border-2 rounded-md '>
             </div>
           </div>
         </div>

@@ -4,7 +4,7 @@ import { CgArrowLeftR } from "react-icons/cg";
 
 const Sidebar = ({ isOpen }) => {
   return (
-    <div className={`bg-white border-r-zinc-100 shadow-md border-r-2 w-44 h-screen py-8 fixed top-14 md:top-28 left-0 ${isOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform z-50 md:static md:w-44 md:py-8 md:translate-x-0 shadow-xl`}>
+    <div className={`bg-white border-r-zinc-100 shadow-md border-r-2 w-44 h-full py-8 fixed top-14 md:top-28 left-0 ${isOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform z-50 md:static md:w-44 md:py-8 md:translate-x-0 shadow-xl`}>
       <ul className="space-y-4 flex flex-col flex-grow">
         {/* Contenido del sidebar */}
         <li className="flex flex-col items-center cursor-pointer text-gris hover:text-naranja hover:bg-gray-50 px-2 py-4">
