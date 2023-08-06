@@ -5,6 +5,7 @@ import Header from "../../components/Header";
 import Sidebar from '../../components/Sidebar';
 import DailyChart  from '../../components/DailyChart';
 import WeeklyChart  from '../../components/WeeklyChart';
+import MonthlyChart  from '../../components/MonthlyChart';
 import { IoGrid, IoPerson, IoChevronForwardCircle, IoPeopleSharp, IoStorefrontSharp} from 'react-icons/io5';
 
 function DashBoard_Admin() {
@@ -22,12 +23,12 @@ function DashBoard_Admin() {
   };
 
   const data = {
-    labels: ['Enero', 'Febrero', 'Marzo'],
+    labels: ['', '', ''],
     datasets: [
       {
-        label: 'Ventas',
+        label: '',
         data: [100, 150, 120],
-        backgroundColor: ['red', 'blue', 'green'],
+        backgroundColor: ['', '', ''],
       },
     ],
   };
@@ -109,7 +110,7 @@ function DashBoard_Admin() {
             </div>
           </div>
           <div className='px-8 pb-4'>
-            <h3 className="text-2xl font-Foco-Corp-Bold text-gris 2xl:text-4xl">
+            <h3 className="text-xl font-Foco-Corp-Bold text-gris 2xl:text-3xl">
               Últimos ingresos
             </h3>
           </div>
@@ -123,7 +124,8 @@ function DashBoard_Admin() {
               <WeeklyChart data={data} />
             </div>
             <div className='w-full flex flex-col p-4 border-2 border-gray-200 rounded-md gap-4 shadow-md'>
-
+              <span className='text-base text-left font-Foco-Corp-Bold text-gris'>Últimos 6 meses</span>
+              <MonthlyChart data={data} />
             </div>
           </div>
         </div>
