@@ -47,7 +47,7 @@ function DashBoard_Admin() {
               {isOpen ? <IoGrid className="text-3xl text-verde hover:text-opacity-80" /> : <IoGrid className="text-3xl text-naranja hover:text-opacity-80" />}
             </button>
           </div>
-          <div className="flex flex-col md:grid md:grid-cols-2 xl:grid-cols-4 gap-x-4 gap-y-4 px-8 py-6">
+          <div className="flex flex-col md:grid md:grid-cols-2 xl:grid-cols-4 gap-x-4 gap-y-4 px-8 pt-6">
             <div className=" bg-naranja bg-opacity-80 border border-naranja text-white font-semibold rounded-md shadow-md">
               <div className='flex flex-row py-4 px-4 justify-between '>
                 <div className="w-3/4 flex flex-col gap-2">
@@ -109,8 +109,8 @@ function DashBoard_Admin() {
               </button>
             </div>
           </div>
-          <div className='px-8 pb-4'>
-            <h3 className="text-xl font-Foco-Corp-Bold text-gris 2xl:text-3xl">
+          <div className='px-8 py-4 2xl:py-8'>
+            <h3 className="text-xl font-Foco-Corp-Bold text-gris 2xl:text-2xl">
               Últimos ingresos
             </h3>
           </div>
@@ -127,6 +127,12 @@ function DashBoard_Admin() {
               <span className='text-base text-left font-Foco-Corp-Bold text-gris'>Últimos 6 meses</span>
               <MonthlyChart data={data} />
             </div>
+          </div>
+          <div className='px-8 flex flex-row justify-between items-center pt-6 2xl:pt-8'>
+            <button className="w-full h-10 flex justify-center items-center gap-2 py-1 rounded-b-md  bg-naranja bg-opacity-80 hover:bg-naranja text-white font-semibold">
+              <span className='text-sm'>Ver todos los ingresos</span>
+              <IoChevronForwardCircle className="text-2xl"/>
+            </button>
           </div>
         </div>
       </div>
