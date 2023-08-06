@@ -43,7 +43,7 @@ function DashBoard_Admin() {
             <h3 className="text-2xl md:text-3xl font-Foco-Corp-Bold text-gris 2xl:text-4xl">
               Bienvenido Administrador
             </h3>
-            <button onClick={toggleSidebar}>
+            <button className='md:hidden' onClick={toggleSidebar}>
               {isOpen ? <IoGrid className="text-3xl text-verde hover:text-opacity-80" /> : <IoGrid className="text-3xl text-naranja hover:text-opacity-80" />}
             </button>
           </div>
@@ -114,7 +114,7 @@ function DashBoard_Admin() {
               Últimos ingresos
             </h3>
           </div>
-          <div className='grid grid-cols-3 px-8 gap-5'>
+          <div className='flex flex-col lg:grid lg:grid-cols-3 px-8 gap-5'>
             <div className='w-full flex flex-col p-4 border-2 border-gray-200 rounded-md gap-4 shadow-md'>
               <span className='text-base text-left font-Foco-Corp-Bold text-gris'>Hace 5 días</span>
               <DailyChart data={data} />
@@ -128,7 +128,7 @@ function DashBoard_Admin() {
               <MonthlyChart data={data} />
             </div>
           </div>
-          <div className='px-8 flex flex-row justify-between items-center pt-6 2xl:pt-8'>
+          <div className='px-8 flex flex-row justify-between items-center pt-6 2xl:pt-8 mb-5 2xl:mb-10'>
             <button className="w-full h-10 flex justify-center items-center gap-2 py-1 rounded-b-md  bg-naranja bg-opacity-80 hover:bg-naranja text-white font-semibold">
               <span className='text-sm'>Ver todos los ingresos</span>
               <IoChevronForwardCircle className="text-2xl"/>
