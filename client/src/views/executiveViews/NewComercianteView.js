@@ -27,6 +27,7 @@ const NewComercianteView = () => {
   // }, [user, navigate]);
 
   const onSubmit = (data) => {
+    console.log(data);
      navigate("/Registrar-comercio", {state : { comerciante: data }});
   };
   return (

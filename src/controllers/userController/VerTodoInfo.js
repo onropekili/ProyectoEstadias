@@ -36,7 +36,7 @@ const getComercianteAndcomercioInfo = async (req, res) => {
 };
 
 const getComerciantePhones = async (folio) => {
-const query = `Select * from telefonos where id_comerciante = $1`
+const query = `Select * from telefonos where id_comerciante = (select comerciante_id_comerciante from comercios where id_comercio = $1)`
 const result = await pool.query(query, [folio]);
 return result.rows;
 };

@@ -26,7 +26,7 @@ const getCostumer = async (req, res) => {
 
 const editCostumer = async (req, res) => {
   const { comercio, comerciante } = req.body;
-  console.log(comercio, comerciante);
+  console.log('comercio:',comercio, 'comerciante:',comerciante);
   try {
     // 2. Actualizar el comerciante
     await updateCostumer(comerciante);

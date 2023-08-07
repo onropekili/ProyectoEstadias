@@ -6,7 +6,6 @@ import { InfoComponent } from "../../components/InfoComponent";
 import Header from "../../components/Header";
 
 function DashBoard_Ejecutivo() {
-  console.log(localStorage.getItem("tipo_usuario"));
   const location = useLocation();
   const [comerciantes, setComerciantes] = useState([]);
   const [ComerciantesComponents, setComerciantesComponents] = useState([]);

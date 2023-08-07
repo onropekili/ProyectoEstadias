@@ -69,6 +69,7 @@ const DataComerciante = () => {
     try {
       const response = await makeGetApiCall(getTodoInfoUri, getTodoInfoParams);
       handleApiResponse(response.data.data);
+      console.log(response.data.data);
     } catch (error) {
       handleApiError(error);
     }
@@ -1056,6 +1057,7 @@ const DataComerciante = () => {
                             placeholder="Escribe algo"
                             disabled={!fieldsEditableTab2}
                             value={data ? data.calle_colindante_uno : ""}
+                            onChange={handleInputChange}
                           />
                         </div>
                         <div className="flex flex-col col-span-2">
