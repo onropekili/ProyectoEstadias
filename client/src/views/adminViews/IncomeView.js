@@ -2,6 +2,7 @@ import React, {useState } from 'react';
 import Header from "../../components/Header";
 import Sidebar from '../../components/Sidebar';
 import TabButton from '../../components/TabButton';
+import Table from '../../components/Table';
 import { IoGrid, IoArrowBack} from 'react-icons/io5';
 
 function IncomeView() {
@@ -18,12 +19,35 @@ function IncomeView() {
     setActiveTab(tab);
   };
 
+  
+  const table1Data = [
+    ['Celda 1,1', 'Celda 1,2', 'Celda 1,3', 'Celda 1,4'],
+    ['Celda 2,1', 'Celda 2,2', 'Celda 2,3', 'Celda 2,4'],
+    ['Celda 2,1', 'Celda 2,2', 'Celda 2,3', 'Celda 2,4'],
+  ];
+
+  const table2Data = [
+    ['Celda A,1', 'Celda A,2', 'Celda A,3', 'Celda A,4'],
+    ['Celda B,1', 'Celda B,2', 'Celda B,3', 'Celda B,4'],
+  ];
+
+  const table3Data = [
+    ['Celda X,1', 'Celda X,2', 'Celda X,3', 'Celda X,4', 'Celda X,4'],
+    ['Celda X,1', 'Celda X,2', 'Celda X,3', 'Celda X,4', 'Celda X,4'],
+    
+  ];
+
+  const table4Data = [
+    ['Celda Z,1', 'Celda Z,2', 'Celda Z,3', 'Celda Z,4'],
+    // Agrega más filas según sea necesario
+  ];
+
   const renderContent = () => {
     switch (activeTab) {
       case 'Dia':
         return <div className='grid grid-cols-2 gap-4'>
-          <div className='w-full flex flex-col p-4 border-2 border-gray-200 rounded-md gap-4 shadow-md'>
-          
+          <div className='w-full flex flex-col border-2 border-gray-200 rounded-md gap-4 shadow-md' style={{ height:'57vh' }}>
+            <Table data={table1Data} headers={['Hora', 'Fecha', 'Cédulas', 'Monto Total']} numColumns={4} />
           </div>
           <div className='w-full flex flex-col p-4 border-2 border-gray-200 rounded-md gap-4 shadow-md'>
             
@@ -31,30 +55,30 @@ function IncomeView() {
         </div>
       case 'semana':
         return <div className='grid grid-cols-2 gap-4'>
-        <div className='w-full flex flex-col p-4 border-2 border-gray-200 rounded-md gap-4 shadow-md'>
-        
-        </div>
-        <div className='w-full flex flex-col p-4 border-2 border-gray-200 rounded-md gap-4 shadow-md'>
+          <div className='w-full flex flex-col border-2 border-gray-200 rounded-md gap-4 shadow-md' style={{ height:'57vh' }}>
+            <Table data={table2Data} headers={['Hora', 'Fecha', 'Cédulas', 'Monto Total']} numColumns={4} />
+          </div>
+          <div className='w-full flex flex-col p-4 border-2 border-gray-200 rounded-md gap-4 shadow-md'>
           
-        </div>
-      </div>;
+          </div>
+        </div>;
       case 'mes':
         return <div className='grid grid-cols-2 gap-4'>
-        <div className='w-full flex flex-col p-4 border-2 border-gray-200 rounded-md gap-4 shadow-md'>
-        
-        </div>
-        <div className='w-full flex flex-col p-4 border-2 border-gray-200 rounded-md gap-4 shadow-md'>
+          <div className='w-full flex flex-col border-2 border-gray-200 rounded-md gap-4 shadow-md' style={{ height:'57vh' }}>
+            <Table data={table3Data} headers={['Hora', 'Fecha inicio', 'Fecha final', 'Cédulas', 'Monto Total']} numColumns={5} />
+          </div>
+          <div className='w-full flex flex-col p-4 border-2 border-gray-200 rounded-md gap-4 shadow-md'>
           
-        </div>
-      </div>;
+          </div>
+        </div>;
       case 'anual':
         return <div className='grid grid-cols-2 gap-4'>
-        <div className='w-full flex flex-col p-4 border-2 border-gray-200 rounded-md gap-4 shadow-md'>
-        
-        </div>
-        <div className='w-full flex flex-col p-4 border-2 border-gray-200 rounded-md gap-4 shadow-md'>
+          <div className='w-full flex flex-col border-2 border-gray-200 rounded-md gap-4 shadow-md' style={{ height:'57vh' }}>
+            <Table data={table4Data} headers={['Hora', 'Fecha', 'Cédulas', 'Monto Total']} numColumns={4} />
+          </div>
+          <div className='w-full flex flex-col p-4 border-2 border-gray-200 rounded-md gap-4 shadow-md'>
           
-        </div>
+          </div>
       </div>;
       default:
         return null;
