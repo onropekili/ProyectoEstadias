@@ -10,6 +10,7 @@ import NewComercioEventView from "./views/executiveViews/NewCommerceEvent";
 import OrdenPago from "./views/executiveViews/OrdenPago";
 import TerceraEdad from "./views/PDFViews/TerceraEdad";
 import OrdenPagoPDF from "./views/PDFViews/OrdenPagoPDF";
+import IncomeView from "./views/adminViews/IncomeView";
 import { LogOut, ExecutiveProtectedRoute } from "./components/Middlewares";
 import { useState } from "react";
 import DataComerciante from "./views/executiveViews/DataComerciante";
@@ -117,6 +118,14 @@ export default function App() {
           element={
             // <ExecutiveProtectedRoute user={userData}>
               <BajaCommerce/>
+            // </ExecutiveProtectedRoute>
+          }
+        />
+        <Route
+          path="/Ingresos-Totales"
+          element={
+            // <ExecutiveProtectedRoute user={userData}>
+              <IncomeView/>
             // </ExecutiveProtectedRoute>
           }
         />
