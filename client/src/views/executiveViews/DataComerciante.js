@@ -173,6 +173,11 @@ const DataComerciante = () => {
       tipo_comercio_id_tipo_comercio: data.tipo_comercio_id_tipo_comercio,
       tipo_permiso: data.tipo_permiso,
       dias_trabajados: data.dias_trabajados,
+      calle : data.calle_comercio,
+      calle_colindante_uno : data.calle_colindante_uno,
+      calle_colindante_dos : data.calle_colindante_dos,
+      colonia : data.colonia_comercio,
+      zona : data.zona,
     };
   };
 
@@ -659,77 +664,87 @@ const DataComerciante = () => {
                       <div className="flex flex-col gap-x-4 gap-y-4 xl:grid xl:grid-cols-4 lg:gap-y-2">
                         <div className="flex flex-col col-span-2 ">
                           <label
-                            htmlFor="calle"
+                            htmlFor="calle_comerciante"
                             className="font-Foco-Corp-Bold text-gris text-base mb-1"
                           >
                             Calle
                           </label>
                           <input
-                            id="calle"
+                            id="calle_comerciante"
+                            name="calle_comerciante"
                             className="bg-gris bg-opacity-10 text-gris text-sm rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black uppercase"
                             placeholder="Escribe algo"
                             disabled={!fieldsEditableTab1}
                             value={data ? data.calle_comerciante : ""}
+                            onChange={handleInputChange}
                           />
                         </div>
                         <div className="flex flex-col col-span-1">
                           <label
-                            htmlFor="numeroExterior"
+                            htmlFor="numero_exterior"
                             className="font-Foco-Corp-Bold text-gris text-base mb-1"
                           >
                             No. Exterior
                           </label>
                           <input
-                            id="numeroExterior"
+                            id="numero_exterior"
+                            name="numero_exterior"
                             className="bg-gris bg-opacity-10 text-gris text-sm rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black uppercase"
                             placeholder="Escribe algo"
                             disabled={!fieldsEditableTab1}
                             value={data ? data.numero_exterior : ""}
+                            onChange={handleInputChange}
                           />
                         </div>
                         <div className="flex flex-col col-span-1">
                           <label
-                            htmlFor="numeroInterior"
+                            htmlFor="numero_interior"
                             className="font-Foco-Corp-Bold text-gris text-base mb-1"
                           >
                             No. Interior
                           </label>
                           <input
-                            id="numeroInterior"
+                            id="numero_interior"
+                            name="numero_interior"
                             className="bg-gris bg-opacity-10 text-gris text-sm rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black uppercase"
                             placeholder="Escribe algo"
                             disabled={!fieldsEditableTab1}
                             value={data ? data.numero_interior : ""}
+                            onChange={handleInputChange}
                           />
                         </div>
                         <div className="flex flex-col col-span-3">
                           <label
-                            htmlFor="colonia"
+                            htmlFor="colonia_comerciante"
                             className="font-Foco-Corp-Bold text-gris text-base mb-1"
                           >
                             Colonia
                           </label>
                           <input
-                            id="colonia"
+                            id="colonia_comerciante"
+                            name="colonia_comerciante"
                             className="bg-gris bg-opacity-10 text-gris text-sm rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black uppercase"
                             placeholder="Escribe algo"
                             disabled={!fieldsEditableTab1}
                             value={data ? data.colonia_comerciante : ""}
+                            onChange={handleInputChange}
                           />
                         </div>
                         <div className="flex flex-col col-span-1">
                           <label
-                            htmlFor="np"
+                            htmlFor="codigo_postal"
                             className="font-Foco-Corp-Bold text-gris text-base mb-1"
                           >
                             C.P
                           </label>
                           <input
-                            id="np"
+                            id="codigo_postal"
+                            name="codigo_postal"
                             className="bg-gris bg-opacity-10 text-gris text-sm rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black uppercase"
                             placeholder="Escribe algo"
                             disabled={!fieldsEditableTab1}
                             value={data ? data.codigo_postal : ""}
+                            onChange={handleInputChange}
                           />
                         </div>
                         <div className="flex flex-col col-span-4">
@@ -741,25 +756,29 @@ const DataComerciante = () => {
                           </label>
                           <input
                             id="municipio"
+                            name="municipio"
                             className="bg-gris bg-opacity-10 text-gris text-sm rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black uppercase"
                             placeholder="Escribe algo"
                             disabled={!fieldsEditableTab1}
                             value={data ? data.municipio : ""}
+                            onChange={handleInputChange}
                           />
                         </div>
                         <div className="flex flex-col col-span-4">
                           <label
-                            htmlFor="observaciones"
+                            htmlFor="observaciones_comerciante"
                             className="font-Foco-Corp-Bold text-gris text-base mb-1"
                           >
                             Observaciones al comerciante
                           </label>
                           <input
-                            id="observaciones"
+                            id="observaciones_comerciante"
+                            name="observaciones_comerciante"
                             className="bg-gris bg-opacity-10 text-gris text-sm rounded-lg border-gray-300 border-2 p-2 h-9 hover:border-gray-400 focus:border-naranja focus:bg-gray-50 focus:outline-none focus:shadow-lg focus:text-black uppercase"
                             placeholder="Escribe algo"
                             disabled={!fieldsEditableTab1}
                             value={data ? data.observaciones_comerciante : ""}
+                            onChange={handleInputChange}
                           />
                         </div>
                       </div>
@@ -1041,6 +1060,8 @@ const DataComerciante = () => {
                             placeholder="Escribe algo"
                             disabled={!fieldsEditableTab2}
                             value={data ? data.calle_comercio : ""}
+                            onChange={handleInputChange}
+
                           />
                         </div>
                         <div className="flex flex-col col-span-2">
@@ -1074,6 +1095,7 @@ const DataComerciante = () => {
                             placeholder="Escribe algo"
                             disabled={!fieldsEditableTab2}
                             value={data ? data.calle_colindante_dos : ""}
+                            onChange={handleInputChange}
                           />
                         </div>
                         <div className="flex flex-col col-span-3">
@@ -1090,6 +1112,8 @@ const DataComerciante = () => {
                             placeholder="Escribe algo"
                             disabled={!fieldsEditableTab2}
                             value={data ? data.colonia_comercio : ""}
+                            onChange={handleInputChange}
+
                           />
                         </div>
                         <div className="flex flex-col col-span-1">
@@ -1106,6 +1130,7 @@ const DataComerciante = () => {
                             placeholder="Escribe algo"
                             disabled={!fieldsEditableTab2}
                             value={data ? data.zona : ""}
+                            onChange={handleInputChange}
                           />
                         </div>
                       </div>
