@@ -3,7 +3,9 @@ import { AuthMiddleware } from '../../middleware/ProtectedMiddleware';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Header from "../../components/Header";
 import Sidebar from '../../components/Sidebar';
+import BarChart from '../../components/BarChart';
 import { IoGrid, IoPerson, IoChevronForwardCircle, IoPeopleSharp, IoStorefrontSharp} from 'react-icons/io5';
+import { GiCash } from 'react-icons/gi';
 
 function DashBoard_Admin() {
   const location = useLocation();
@@ -18,6 +20,46 @@ function DashBoard_Admin() {
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
+
+  const dataChart1 = {
+    labels: ['Lun', 'Mar', 'Mie', 'Jue', 'Vie'],
+    datasets: [
+      {
+        label: 'Ingresos',
+        data: [100, 200, 150, 300, 250],
+        backgroundColor: 'rgba(155, 80, 192, 0.6)',
+        borderColor: 'rgba(155, 80, 192, 1)',
+        borderWidth: 2,
+      },
+    ],
+  };
+
+  const dataChart2 = {
+    labels: ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4'],
+    datasets: [
+      {
+        label: 'Ingresos semanales',
+        data: [100, 200, 150, 300],
+        backgroundColor: 'rgba(74, 193, 224, 0.6)',
+        borderColor: 'rgba(74, 193, 224, 1)',
+        borderWidth: 2,
+      },
+    ],
+  };
+
+  const dataChart3 = {
+    labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun'],
+    datasets: [
+      {
+        label: 'Ingresos mensuales',
+        data: [100, 200, 150, 300, 250, 350],
+        backgroundColor: 'rgba(112, 212, 75, 0.6)',
+        borderColor: 'rgba(112, 212, 75, 1)',
+        borderWidth: 2,
+      },
+    ],
+  };
+
 
   return (
     <>
@@ -86,7 +128,7 @@ function DashBoard_Admin() {
                     <span className='text-sm'>Ingresos totales</span>
                 </div>
                 <div className="w-1/4 text-center ">
-                  <IoStorefrontSharp className="text-7xl text-morado"/>
+                  <GiCash className="text-7xl text-morado"/>
                 </div>
               </div>
               <button className="w-full flex justify-center items-center gap-2 py-1 rounded-b-md  bg-morado hover:bg-opacity-60 text-white font-semibold">
@@ -103,15 +145,15 @@ function DashBoard_Admin() {
           <div className='flex flex-col lg:grid lg:grid-cols-3 px-8 gap-5'>
             <div className='w-full flex flex-col p-4 border-2 border-gray-200 rounded-md gap-4 shadow-md'>
               <span className='text-base text-left font-Foco-Corp-Bold text-gris'>Hace 5 días</span>
-              
+              <BarChart data={dataChart1} chartId="chart1" />
             </div>
             <div className='w-full flex flex-col p-4 border-2 border-gray-200 rounded-md gap-4 shadow-md'>
               <span className='text-base text-left font-Foco-Corp-Bold text-gris'>Últimas 4 semanas</span>
-              
+              <BarChart data={dataChart2} chartId="chart2" />
             </div>
             <div className='w-full flex flex-col p-4 border-2 border-gray-200 rounded-md gap-4 shadow-md'>
               <span className='text-base text-left font-Foco-Corp-Bold text-gris'>Últimos 6 meses</span>
-              
+              <BarChart data={dataChart3} chartId="chart3" />
             </div>
           </div>
           <div className='px-8 flex flex-row justify-between items-center pt-6 2xl:pt-8 mb-5 2xl:mb-10'>

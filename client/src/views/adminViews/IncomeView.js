@@ -3,6 +3,7 @@ import Header from "../../components/Header";
 import Sidebar from '../../components/Sidebar';
 import TabButton from '../../components/TabButton';
 import Table from '../../components/Table';
+import BarChart from '../../components/BarChart';
 import { IoGrid, IoArrowBack} from 'react-icons/io5';
 
 function IncomeView() {
@@ -42,6 +43,58 @@ function IncomeView() {
     // Agrega más filas según sea necesario
   ];
 
+  const dataChartDay = {
+    labels: ['Lun', 'Mar', 'Mie', 'Jue', 'Vie'],
+    datasets: [
+      {
+        label: 'Ingresos',
+        data: [100, 200, 150, 300, 250],
+        backgroundColor: 'rgba(155, 80, 192, 0.6)',
+        borderColor: 'rgba(155, 80, 192, 1)',
+        borderWidth: 2,
+      },
+    ],
+  };
+
+  const dataChartWeek = {
+    labels: ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4'],
+    datasets: [
+      {
+        label: 'Ingresos semanales',
+        data: [100, 200, 150, 300],
+        backgroundColor: 'rgba(155, 80, 192, 0.6)',
+        borderColor: 'rgba(155, 80, 192, 1)',
+        borderWidth: 2,
+      },
+    ],
+  };
+
+  const dataChartMonth = {
+    labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun'],
+    datasets: [
+      {
+        label: 'Ingresos mensuales',
+        data: [100, 200, 150, 300, 250, 350],
+        backgroundColor: 'rgba(155, 80, 192, 0.6)',
+        borderColor: 'rgba(155, 80, 192, 1)',
+        borderWidth: 2,
+      },
+    ],
+  };
+
+  const dataChartYear = {
+    labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun'],
+    datasets: [
+      {
+        label: 'Ingresos mensuales',
+        data: [100, 200, 150, 300, 250, 350],
+        backgroundColor: 'rgba(155, 80, 192, 0.6)',
+        borderColor: 'rgba(155, 80, 192, 1)',
+        borderWidth: 2,
+      },
+    ],
+  };
+
   const renderContent = () => {
     switch (activeTab) {
       case 'Dia':
@@ -50,7 +103,8 @@ function IncomeView() {
             <Table data={table1Data} headers={['Hora', 'Fecha', 'Cédulas', 'Monto Total']} numColumns={4} />
           </div>
           <div className='w-full flex flex-col p-4 border-2 border-gray-200 rounded-md gap-4 shadow-md'>
-            
+            <span className='text-base text-left font-Foco-Corp-Bold text-gris'>Hace 5 días</span>
+            <BarChart data={dataChartDay} chartId="chart1" />
           </div>
         </div>
       case 'semana':
@@ -59,7 +113,8 @@ function IncomeView() {
             <Table data={table2Data} headers={['Hora', 'Fecha', 'Cédulas', 'Monto Total']} numColumns={4} />
           </div>
           <div className='w-full flex flex-col p-4 border-2 border-gray-200 rounded-md gap-4 shadow-md'>
-          
+            <span className='text-base text-left font-Foco-Corp-Bold text-gris'>Hace 5 días</span>
+            <BarChart data={dataChartWeek} chartId="chart1" />
           </div>
         </div>;
       case 'mes':
@@ -68,7 +123,8 @@ function IncomeView() {
             <Table data={table3Data} headers={['Hora', 'Fecha inicio', 'Fecha final', 'Cédulas', 'Monto Total']} numColumns={5} />
           </div>
           <div className='w-full flex flex-col p-4 border-2 border-gray-200 rounded-md gap-4 shadow-md'>
-          
+            <span className='text-base text-left font-Foco-Corp-Bold text-gris'>Hace 5 días</span>
+            <BarChart data={dataChartMonth} chartId="chart1" />
           </div>
         </div>;
       case 'anual':
@@ -77,9 +133,10 @@ function IncomeView() {
             <Table data={table4Data} headers={['Hora', 'Fecha', 'Cédulas', 'Monto Total']} numColumns={4} />
           </div>
           <div className='w-full flex flex-col p-4 border-2 border-gray-200 rounded-md gap-4 shadow-md'>
-          
+            <span className='text-base text-left font-Foco-Corp-Bold text-gris'>Hace 5 días</span>
+            <BarChart data={dataChartYear} chartId="chart1" />
           </div>
-      </div>;
+        </div>;
       default:
         return null;
     }
