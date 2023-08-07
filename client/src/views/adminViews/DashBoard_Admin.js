@@ -3,9 +3,6 @@ import { AuthMiddleware } from '../../middleware/ProtectedMiddleware';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Header from "../../components/Header";
 import Sidebar from '../../components/Sidebar';
-import DailyChart  from '../../components/DailyChart';
-import WeeklyChart  from '../../components/WeeklyChart';
-import MonthlyChart  from '../../components/MonthlyChart';
 import { IoGrid, IoPerson, IoChevronForwardCircle, IoPeopleSharp, IoStorefrontSharp} from 'react-icons/io5';
 
 function DashBoard_Admin() {
@@ -20,17 +17,6 @@ function DashBoard_Admin() {
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
-  };
-
-  const data = {
-    labels: ['', '', ''],
-    datasets: [
-      {
-        label: '',
-        data: [100, 150, 120],
-        backgroundColor: ['', '', ''],
-      },
-    ],
   };
 
   return (
@@ -117,15 +103,15 @@ function DashBoard_Admin() {
           <div className='flex flex-col lg:grid lg:grid-cols-3 px-8 gap-5'>
             <div className='w-full flex flex-col p-4 border-2 border-gray-200 rounded-md gap-4 shadow-md'>
               <span className='text-base text-left font-Foco-Corp-Bold text-gris'>Hace 5 días</span>
-              <DailyChart data={data} />
+              
             </div>
             <div className='w-full flex flex-col p-4 border-2 border-gray-200 rounded-md gap-4 shadow-md'>
               <span className='text-base text-left font-Foco-Corp-Bold text-gris'>Últimas 4 semanas</span>
-              <WeeklyChart data={data} />
+              
             </div>
             <div className='w-full flex flex-col p-4 border-2 border-gray-200 rounded-md gap-4 shadow-md'>
               <span className='text-base text-left font-Foco-Corp-Bold text-gris'>Últimos 6 meses</span>
-              <MonthlyChart data={data} />
+              
             </div>
           </div>
           <div className='px-8 flex flex-row justify-between items-center pt-6 2xl:pt-8 mb-5 2xl:mb-10'>
