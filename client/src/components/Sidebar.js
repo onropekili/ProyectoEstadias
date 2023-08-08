@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { IoStorefrontSharp, IoHome, IoStatsChartSharp } from 'react-icons/io5';
 import { CgArrowLeftR } from "react-icons/cg";
 
@@ -8,24 +9,32 @@ const Sidebar = ({ isOpen }) => {
       <div className="flex flex-col h-full justify-between">
         {/* Contenido del sidebar */}
         <div className="space-y-4">
-          <li className="flex flex-col items-center cursor-pointer text-gris hover:text-naranja hover:bg-gray-50 px-2 py-4">
-            <IoHome className="text-3xl mb-2" />
-            <span className='text-xl font-Foco-Corp-Bold'>Inicio</span>
-          </li>
-          <li className="flex flex-col items-center cursor-pointer text-gris hover:text-morado hover:bg-gray-50 px-2 py-4">
-            <IoStatsChartSharp className="text-3xl mb-2" />
-            <span className='text-xl font-Foco-Corp-Bold'>Ingresos</span>
-          </li>
-          <li className="flex flex-col items-center cursor-pointer text-gris hover:text-azul hover:bg-gray-50 px-2 py-4">
-            <IoStorefrontSharp className="text-3xl mb-2" />
-            <span className='text-xl font-Foco-Corp-Bold'>Comercios</span>
-          </li>
+          <Link to="/DashBoard_A">
+            <li className="flex flex-col items-center cursor-pointer text-gris hover:text-naranja hover:bg-gray-50 px-2 py-4">
+              <IoHome className="text-3xl mb-2" />
+              <span className='text-xl font-Foco-Corp-Bold'>Inicio</span>
+            </li>
+          </Link>
+          <Link to="/Ingresos-Totales">
+            <li className="flex flex-col items-center cursor-pointer text-gris hover:text-morado hover:bg-gray-50 px-2 py-4">
+              <IoStatsChartSharp className="text-3xl mb-2" />
+              <span className='text-xl font-Foco-Corp-Bold'>Ingresos</span>
+            </li>
+          </Link>
+          <Link to="/">
+            <li className="flex flex-col items-center cursor-pointer text-gris hover:text-azul hover:bg-gray-50 px-2 py-4">
+              <IoStorefrontSharp className="text-3xl mb-2" />
+              <span className='text-xl font-Foco-Corp-Bold'>Comercios</span>
+            </li>
+          </Link>
         </div>
         {/* Botón "Cerrar Sesión" */}
-        <li className="flex flex-col items-center cursor-pointer text-gris hover:text-rojo hover:bg-gray-50 px-2 py-4">
-          <CgArrowLeftR className="text-3xl mb-2" />
-          <span className='text-xl font-Foco-Corp-Bold'>Cerrar Sesión</span>
-        </li>
+        <Link to="/">
+          <li className="flex flex-col items-center cursor-pointer text-gris hover:text-rojo hover:bg-gray-50 px-2 py-4">
+            <CgArrowLeftR className="text-3xl mb-2" />
+            <span className='text-xl font-Foco-Corp-Bold'>Cerrar Sesión</span>
+          </li>
+        </Link>
       </div>
     </div>
   );
