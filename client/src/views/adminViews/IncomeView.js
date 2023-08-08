@@ -116,7 +116,7 @@ function IncomeView() {
             <Table data={table1Data} headers={['Hora', 'Fecha', 'Cédulas', 'Monto Total']} numColumns={4} />
           </div>
           <div className='w-full flex flex-col p-4 border-2 border-gray-200 rounded-md gap-4 shadow-md'>
-            <span className='text-base text-left font-Foco-Corp-Bold text-gris'>Hace 5 días</span>
+            <span className='text-base text-left font-Foco-Corp-Bold text-gris'>Ingresos totales de hoy</span>
             <BarChart data={dataChartDay} chartId="chart1" />
           </div>
         </div>
@@ -151,7 +151,7 @@ function IncomeView() {
             </div>
           </div>
           <div className='w-full flex flex-col p-4 border-2 border-gray-200 rounded-md gap-4 shadow-md'>
-            <span className='text-base text-left font-Foco-Corp-Bold text-gris'>Hace 5 días</span>
+            <span className='text-base text-left font-Foco-Corp-Bold text-gris'>Ingresos totales de la semana</span>
             <BarChart data={dataChartWeek} chartId="chart1" />
           </div>
         </div>;
@@ -190,7 +190,7 @@ function IncomeView() {
             </div>
           </div>
           <div className='w-full flex flex-col p-4 border-2 border-gray-200 rounded-md gap-4 shadow-md'>
-            <span className='text-base text-left font-Foco-Corp-Bold text-gris'>Hace 5 días</span>
+            <span className='text-base text-left font-Foco-Corp-Bold text-gris'>Ingresos totales del mes</span>
             <BarChart data={dataChartMonth} chartId="chart1" />
           </div>
         </div>;
@@ -229,7 +229,7 @@ function IncomeView() {
             </div>
           </div>
           <div className='w-full flex flex-col p-4 border-2 border-gray-200 rounded-md gap-4 shadow-md'>
-            <span className='text-base text-left font-Foco-Corp-Bold text-gris'>Hace 5 días</span>
+            <span className='text-base text-left font-Foco-Corp-Bold text-gris'>Ingresos totales del año</span>
             <BarChart data={dataChartYear} chartId="chart1" />
           </div>
         </div>;
