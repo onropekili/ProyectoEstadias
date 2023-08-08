@@ -67,7 +67,7 @@ function DashBoard_Admin() {
       <div className='flex flex-row'>
         <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar}/>
         <div className='w-full bg-white overflow-auto'>
-          <div className='px-8 pt-8 flex flex-row justify-between items-center'>
+          <div className='px-4 lg:px-8 pt-8 flex flex-row justify-between items-center'>
             <h3 className="text-2xl md:text-3xl font-Foco-Corp-Bold text-gris 2xl:text-4xl">
               Bienvenido Administrador
             </h3>
@@ -75,7 +75,7 @@ function DashBoard_Admin() {
               {isOpen ? <IoGrid className="text-3xl text-verde hover:text-opacity-80" /> : <IoGrid className="text-3xl text-naranja hover:text-opacity-80" />}
             </button>
           </div>
-          <div className="flex flex-col md:grid md:grid-cols-2 xl:grid-cols-4 gap-x-4 gap-y-4 px-8 pt-6">
+          <div className="flex flex-col md:grid md:grid-cols-2 xl:grid-cols-4 gap-x-4 gap-y-4 px-4 lg:px-8 pt-6">
             <div className=" bg-naranja bg-opacity-80 border border-naranja text-white font-semibold rounded-md shadow-md">
               <div className='flex flex-row py-4 px-4 justify-between '>
                 <div className="w-3/4 flex flex-col gap-2">
@@ -137,12 +137,12 @@ function DashBoard_Admin() {
               </button>
             </div>
           </div>
-          <div className='px-8 py-4 2xl:py-8'>
+          <div className='px-4 lg:px-8 py-4 2xl:py-8'>
             <h3 className="text-xl font-Foco-Corp-Bold text-gris 2xl:text-2xl">
               Últimos ingresos
             </h3>
           </div>
-          <div className='flex flex-col lg:grid lg:grid-cols-3 px-8 gap-5'>
+          <div className='flex flex-col lg:grid lg:grid-cols-3 px-4 lg:px-8 gap-5'>
             <div className='w-full flex flex-col p-4 border-2 border-gray-200 rounded-md gap-4 shadow-md'>
               <span className='text-base text-left font-Foco-Corp-Bold text-gris'>Hace 5 días</span>
               <BarChart data={dataChart1} chartId="chart1" />
@@ -156,7 +156,7 @@ function DashBoard_Admin() {
               <BarChart data={dataChart3} chartId="chart3" />
             </div>
           </div>
-          <div className='px-8 flex flex-row justify-between items-center pt-6 2xl:pt-8 mb-5 2xl:mb-10'>
+          <div className='px-4 lg:px-8 flex flex-row justify-between items-center pt-6 2xl:pt-8 mb-5 2xl:mb-10'>
             <button className="w-full h-10 flex justify-center items-center gap-2 py-1 rounded-b-md  bg-naranja bg-opacity-80 hover:bg-naranja text-white font-semibold">
               <span className='text-sm'>Ver todos los ingresos</span>
               <IoChevronForwardCircle className="text-2xl"/>

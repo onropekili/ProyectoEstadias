@@ -5,7 +5,7 @@ const Table = ({ data, headers, numColumns }) => {
           <thead>
             <tr className='border-b bg-gray-100 font-Foco-Corp text-lg text-morado'>
               {headers.map((header, index) => (
-                <th key={index} className='sticky top-0 z-10 text-center font-semibold p-2 bg-gray-100'>
+                <th key={index} className='sticky top-0 text-center font-semibold p-2 bg-gray-100'>
                   {header}
                 </th>
               ))}
