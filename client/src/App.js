@@ -11,7 +11,7 @@ import OrdenPago from "./views/executiveViews/OrdenPago";
 import TerceraEdad from "./views/PDFViews/TerceraEdad";
 import OrdenPagoPDF from "./views/PDFViews/OrdenPagoPDF";
 import IncomeView from "./views/adminViews/IncomeView";
-import { LogOut, ExecutiveProtectedRoute } from "./components/Middlewares";
+import { LogOut, ExecutiveProtectedRoute, AdminProtectedRoute } from "./components/Middlewares";
 import { useState } from "react";
 import DataComerciante from "./views/executiveViews/DataComerciante";
 import Cedulacommerce from "./views/PDFViews/CedulaCommerce";
@@ -40,7 +40,10 @@ export default function App() {
             </ExecutiveProtectedRoute>
           }
         />
-        <Route path="/DashBoard_A" element={<DashBoard_Admin />} />
+        <Route path="/DashBoard_A" element={
+          <AdminProtectedRoute>
+        <DashBoard_Admin/>
+        </AdminProtectedRoute>} />
         <Route
           path="/Registrar-comerciante"
           element={

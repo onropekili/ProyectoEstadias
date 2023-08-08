@@ -667,7 +667,6 @@ const DataComerciante = () => {
                             htmlFor="calle_comerciante"
                             className="font-Foco-Corp-Bold text-gris text-base mb-1"
                           >
-                            Calle
                           </label>
                           <input
                             id="calle_comerciante"

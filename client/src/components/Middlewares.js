@@ -20,3 +20,13 @@ export const LogOut = ({ setuserData, children }) => {
   }, [setuserData]);
   return children;
 };
+
+export const AdminProtectedRoute = ({children}) => {
+  const userString = localStorage.getItem("tipo_usuario");
+  const userBoolean = userString ? JSON.parse(userString) : null;
+  if (userBoolean !== true) {
+    return <Navigate to={"/"} />;
+  } else  {
+    return children;
+  }
+};
