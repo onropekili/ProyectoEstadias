@@ -15,7 +15,7 @@ function DashBoard_Admin() {
   const dayLabels = [dayGraph[0]?.dia_semana, dayGraph[1]?.dia_semana, dayGraph[2]?.dia_semana, dayGraph[3]?.dia_semana, dayGraph[4]?.dia_semana];
   const dayIncome = [dayGraph[0]?.total_semana, dayGraph[1]?.total_semana, dayGraph[2]?.total_semana, dayGraph[3]?.total_semana, dayGraph[4]?.total_semana];
   const [weekGraph, setWeekGraph] = useState([]);
-  const weekLabels = ['semana 1', 'semana 2', 'semana 3', 'semana 4'];
+  const weekLabels = ['Esta semana', 'Semana pasada', 'Hace 3 semanas', 'Hace 4 semanas'];
   const weekIncome = [weekGraph[0]?.total_semana, weekGraph[1]?.total_semana, weekGraph[2]?.total_semana, weekGraph[3]?.total_semana];
   const [monthGraph, setMonthGraph] = useState([]);
   const monthLabels = ['Mes actual', 'Mes anterior', 'Hace 3 meses', 'Hace 4 meses', 'Hace 5 meses', 'Hace 6 meses'];

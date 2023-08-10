@@ -19,6 +19,7 @@ const refrendarComercio = require('../controllers/userController/refrendarComerc
 const getCedulaData = require ('../controllers/userController/getCedulaData')
 const getDashboardInformation = require('../controllers/admin/getDashboardInfo');
 const getIncome = require('../controllers/admin/getIncome');
+const getFormatoInfo = require('../controllers/userController/baja/getFormatoInfo');
 const router = Router();
 const bodyParser = require('body-parser');
 router.use(bodyParser.json());
@@ -63,5 +64,7 @@ router.get('/getCedulaData', getCedulaData.getCedulaData );
 router.get('/admin/getDashboardInformation', getDashboardInformation.getDashoardinformation);
 
 router.get('/admin/getIncome', getIncome.getIncome);
+
+router.get('/getFormatoInfo', getFormatoInfo.getFormatoInfo);
 
 module.exports = router;

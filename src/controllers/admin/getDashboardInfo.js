@@ -28,12 +28,13 @@ const getDashoardinformation = async (req, res) => {
           WHEN DATE_PART('dow', ds.dia) = 5 THEN 'Viernes'
           WHEN DATE_PART('dow', ds.dia) = 6 THEN 'Sábado'
       END AS dia_semana,
-      COALESCE(SUM(total), 0) AS total_semana
+      COALESCE(SUM(CASE WHEN op.pagado = true THEN op.total ELSE 0 END), 0) AS total_semana
   FROM dias_semana ds
   LEFT JOIN ordenes_pago op ON ds.dia = op.fecha
   WHERE DATE_PART('dow', ds.dia) NOT IN (0, 6) -- Excluir domingo (0) y sábado (6)
   GROUP BY ds.dia, dia_semana
-  ORDER BY ds.dia;`
+  ORDER BY ds.dia;
+  `
 
     const rawResultDayGraph = await pool.query(queryDayGraph);
     const dayGraph = rawResultDayGraph.rows;
@@ -47,7 +48,7 @@ const getDashoardinformation = async (req, res) => {
   )
   SELECT
       TO_CHAR(s.semana, 'YYYY-MM-DD') AS semana,
-      COALESCE(SUM(op.total), 0) AS total_semana
+      COALESCE(SUM(CASE WHEN op.pagado = true THEN op.total ELSE 0 END), 0) AS total_semana
   FROM
       semanas s
   LEFT JOIN
@@ -55,7 +56,8 @@ const getDashoardinformation = async (req, res) => {
   GROUP BY
       s.semana
   ORDER BY
-      s.semana DESC;`
+      s.semana DESC;
+  `
 
     const rawResultWeekGraph = await pool.query(queryWeekGraph);
     const weekGraph = rawResultWeekGraph.rows;
@@ -69,7 +71,7 @@ const getDashoardinformation = async (req, res) => {
   )
   SELECT
       TO_CHAR(m.mes, 'YYYY-MM') AS mes,
-      COALESCE(SUM(op.total), 0) AS total_mes
+      COALESCE(SUM(CASE WHEN op.pagado = true THEN op.total ELSE 0 END), 0) AS total_mes
   FROM
       meses m
   LEFT JOIN
@@ -77,7 +79,8 @@ const getDashoardinformation = async (req, res) => {
   GROUP BY
       m.mes
   ORDER BY
-      m.mes;`
+      m.mes;
+  `
 
     const rawResultMonthGraph = await pool.query(queryMonthGraph);
     const monthGraph = rawResultMonthGraph.rows;
