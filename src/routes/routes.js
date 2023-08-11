@@ -19,7 +19,7 @@ const refrendarComercio = require('../controllers/userController/refrendarComerc
 const getCedulaData = require ('../controllers/userController/getCedulaData')
 const getDashboardInformation = require('../controllers/admin/getDashboardInfo');
 const getIncome = require('../controllers/admin/getIncome');
-const getFormatoInfo = require('../controllers/userController/baja/getFormatoInfo');
+const getFormatoInfo = require('../controllers/userController/baja/getFormatoBajaInfo');
 const router = Router();
 const bodyParser = require('body-parser');
 router.use(bodyParser.json());
@@ -65,6 +65,8 @@ router.get('/admin/getDashboardInformation', getDashboardInformation.getDashoard
 
 router.get('/admin/getIncome', getIncome.getIncome);
 
-router.get('/getFormatoInfo', getFormatoInfo.getFormatoInfo);
+router.get('/availableToCancel', getFormatoInfo.checkIfCommerceIsAvailableToLeave);
+
+router.get('/getFormatoBajaInfo', getFormatoInfo.getFormatoBajaInfo);
 
 module.exports = router;

@@ -1,5 +1,5 @@
 const {pool} = require("../../../db");
-const getFormatoInfo = async (req, res)  => {
+const checkIfCommerceIsAvailableToLeave = async (req, res)  => {
     const {id_comercio} = req.query;
     console.log(id_comercio)
 
@@ -23,12 +23,8 @@ const getFormatoInfo = async (req, res)  => {
             return res.status(400).json({message: "El comercio tiene refrendo pero no cedula"});
         }
 
-        const infoFormatoBaja = await getInfoToSend();
-        infoFormatoBaja.folio = folio;
-        const dataToSend = {
-            ...infoFormatoBaja
-        };
-        return res.status(200).json({data: dataToSend});
+
+        return res.status(200).json({message: "El comercio puede darse de baja"});
 
     } catch (error) {
         console.log(error);
@@ -37,13 +33,13 @@ const getFormatoInfo = async (req, res)  => {
 
 }
 
-async function getInfoToSend() {
+async function getInfoToSend({id_comercio}) {
     const queryInfoFormatoBaja = `SELECT CONCAT(ce.nombres, ' ', ce.apellido_paterno, ' ', ce.apellido_materno) as nombre, co.giro, 
         concat(dco.calle, ' entre ', dco.calle_colindante_uno , ' y ', dco.calle_colindante_dos) as domicilio, colonia from comercios as co
         inner join comerciantes ce on ce.id_comerciante = co.comerciante_id_comerciante 
-        inner join direcciones_comercios dco on dco.comercio_id_comercio = co.id_comercio
+        inner join direcciones_comercios dco on dco.comercio_id_comercio = co.id_comercio where id_comercio = $1
         `;
-    const rawInfoFormatoBaja = await pool.query(queryInfoFormatoBaja);
+    const rawInfoFormatoBaja = await pool.query(queryInfoFormatoBaja, [id_comercio]);
     const infoFormatoBaja = rawInfoFormatoBaja.rows[0];
     return infoFormatoBaja;
 }
@@ -55,5 +51,10 @@ async function getFolio(id_comercio, fechaInicio, fechaTermino) {
     return folio;
 }
 
+const getFormatoBajaInfo = async (req, res) => {
+    const {id_comercio} = req.query;
+    const infoToSend = await getInfoToSend({id_comercio});
 
-module.exports = {getFormatoInfo}
+    res.status(200).json(infoToSend);
+}
+module.exports = {checkIfCommerceIsAvailableToLeave, getFormatoBajaInfo};

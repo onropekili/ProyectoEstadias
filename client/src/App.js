@@ -117,7 +117,7 @@ export default function App() {
           }
         />
         <Route
-          path="/Formato-baja-comercio"
+          path="/Formato-baja-comercio/:folio"
           element={
              <ExecutiveProtectedRoute >
               <BajaCommerce/>
