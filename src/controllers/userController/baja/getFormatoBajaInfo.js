@@ -1,18 +1,19 @@
 const {pool} = require("../../../db");
+
+
+
+
 const checkIfCommerceIsAvailableToLeave = async (req, res)  => {
     const {id_comercio} = req.query;
     console.log(id_comercio)
 
     try {
-        const query = `SELECT co.fecha_termino, fecha_inicio, current_date as fecha_actual from comercios as co where co.id_comercio = $1`
-        const rawFecha = await pool.query(query, [id_comercio]);
+        const rawFecha = await getFechas(id_comercio);
         if (rawFecha.rowCount === 0) {
             return res.status(404).json({message: "El comercio no existe"});
         }
 
-        const fechaTermino = rawFecha.rows[0].fecha_termino;
-        const fechaInicio = rawFecha.rows[0].fecha_inicio;
-        const fechaActual = rawFecha.rows[0].fecha_actual;
+        const {fechaTermino, fechaInicio, fechaActual} = formatFechas(rawFecha);
 
         if (fechaTermino < fechaActual) {
             return res.status(400).json({message: "El comercio no tiene refrendo"});
@@ -34,10 +35,15 @@ const checkIfCommerceIsAvailableToLeave = async (req, res)  => {
 }
 
 async function getInfoToSend({id_comercio}) {
-    const queryInfoFormatoBaja = `SELECT CONCAT(ce.nombres, ' ', ce.apellido_paterno, ' ', ce.apellido_materno) as nombre, co.giro, 
-        concat(dco.calle, ' entre ', dco.calle_colindante_uno , ' y ', dco.calle_colindante_dos) as domicilio, colonia from comercios as co
-        inner join comerciantes ce on ce.id_comerciante = co.comerciante_id_comerciante 
-        inner join direcciones_comercios dco on dco.comercio_id_comercio = co.id_comercio where id_comercio = $1
+    const queryInfoFormatoBaja = `SELECT UPPER(CONCAT(ce.nombres, ' ', ce.apellido_paterno, ' ', ce.apellido_materno)) as nombre,
+       UPPER(co.giro) as giro,
+       UPPER(concat(dco.calle, ' entre ', dco.calle_colindante_uno , ' y ', dco.calle_colindante_dos)) as domicilio,
+       UPPER(colonia)
+        FROM comercios as co
+        INNER JOIN comerciantes ce ON ce.id_comerciante = co.comerciante_id_comerciante 
+        INNER JOIN direcciones_comercios dco ON dco.comercio_id_comercio = co.id_comercio
+        WHERE id_comercio = $1;
+
         `;
     const rawInfoFormatoBaja = await pool.query(queryInfoFormatoBaja, [id_comercio]);
     const infoFormatoBaja = rawInfoFormatoBaja.rows[0];
@@ -51,9 +57,27 @@ async function getFolio(id_comercio, fechaInicio, fechaTermino) {
     return folio;
 }
 
+async function getFechas(id_comercio) {
+    const query = `SELECT co.fecha_termino, fecha_inicio, current_date as fecha_actual from comercios as co where co.id_comercio = $1`
+    const rawFecha = await pool.query(query, [id_comercio]);
+    return rawFecha;
+}
+
+function formatFechas(rawFecha) {
+    const fechaTermino = rawFecha.rows[0].fecha_termino;
+    const fechaInicio = rawFecha.rows[0].fecha_inicio;
+    const fechaActual = rawFecha.rows[0].fecha_actual;
+    return {fechaTermino, fechaInicio, fechaActual};
+}
+
 const getFormatoBajaInfo = async (req, res) => {
     const {id_comercio} = req.query;
     const infoToSend = await getInfoToSend({id_comercio});
+
+    const rawFecha = await getFechas(id_comercio);
+    const {fechaTermino, fechaInicio, fechaActual} = formatFechas(rawFecha);
+    const folio = await getFolio(id_comercio, fechaInicio, fechaTermino);
+    infoToSend.folio = folio;
 
     res.status(200).json(infoToSend);
 }
