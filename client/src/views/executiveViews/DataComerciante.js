@@ -1085,6 +1085,7 @@ const DataComerciante = () => {
                               placeholder="Escribe algo"
                               disabled={!fieldsEditableTab2}
                               value={data ? data.observaciones_comercio : ""}
+                              onChange={handleInputChange}
                             />
                           </div>
                         </div>

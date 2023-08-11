@@ -19,6 +19,16 @@ const NewComercioView = () => {
   } = useForm();
 
   const onSubmit = (data) => {
+    if(!(/^\d{0,10}x\d{0,10}$/.test(data.metraje))){
+      Swal.fire({
+          title: "Metraje inválido",
+          text: "El formato debe ser \"numberxnumber\". Ejemplo: 2x2",
+          icon: "warning",
+          confirmButtonText: "Aceptar"
+        }
+      )
+      return
+    }
     console.log({ datos: { data: data, comerciante: comercianteData } });
     axios
       .post(`http://${process.env.REACT_APP_HOST}:4000/createCostumer`, {
