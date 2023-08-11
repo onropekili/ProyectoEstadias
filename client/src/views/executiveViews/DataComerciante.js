@@ -395,18 +395,23 @@ const DataComerciante = () => {
 
     const handlePhoneOneChange = (e) => {
       const {name, value} = e.target;
-      const temporaryTelefonos = [...telefonos];
-      temporaryTelefonos[0].numero_telefonico = value;
-      setTelefono1(value);
-      setTelefonos(temporaryTelefonos);
+      //validar que solo se ingresen números y que no se exceda el límite de 10 caracteres
+      if(/^\d{0,10}$/.test(value)) {
+        const temporaryTelefonos = [...telefonos];
+        temporaryTelefonos[0].numero_telefonico = value;
+        setTelefono1(value);
+        setTelefonos(temporaryTelefonos);
+      }
     };
 
     const handlePhoneTwoChange = (e) => {
       const {name, value} = e.target;
-      const temporaryTelefonos = [...telefonos];
-      temporaryTelefonos[1].numero_telefonico = value;
-      setTelefono2(value);
-      setTelefonos(temporaryTelefonos);
+      if(/^\d{0,10}$/.test(value)) {
+        const temporaryTelefonos = [...telefonos];
+        temporaryTelefonos[1].numero_telefonico = value;
+        setTelefono2(value);
+        setTelefonos(temporaryTelefonos);
+      };
     };
 
     const handleTerceraEdadChange = (e) => {
@@ -419,6 +424,16 @@ const DataComerciante = () => {
     };
 
     const navigateToOrdenDePago = () => {
+      if(!(/^\d{0,10}x\d{0,10}$/.test(data.metraje))){
+        Swal.fire({
+          title: "Metraje inválido",
+          text: "El formato debe ser \"numberxnumber\". Ejemplo: 2x2",
+          icon: "warning",
+          confirmButtonText: "Aceptar"
+        }
+        )
+        return
+      }
       try {
         const data = {
           merchant: {...originalData},
@@ -638,6 +653,8 @@ const DataComerciante = () => {
                               value={telefono1}
                               name="1"
                               onChange={handlePhoneOneChange}
+                              max={10}
+
                             />
                           </div>
                           <div className="flex flex-col col-span-1">
@@ -655,6 +672,7 @@ const DataComerciante = () => {
                               value={telefono2}
                               name="2"
                               onChange={handlePhoneTwoChange}
+                              max={10}
                             />
                           </div>
                           <div className="flex flex-col col-span-2 mb-2">
