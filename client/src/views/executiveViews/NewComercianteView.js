@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import Header from "../../components/Header";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AuthMiddleware } from "../../middleware/ProtectedMiddleware";
+import Swal from "sweetalert2";
 
 const NewComercianteView = () => {
   const location = useLocation();
@@ -27,8 +28,28 @@ const NewComercianteView = () => {
   // }, [user, navigate]);
 
   const onSubmit = (data) => {
+    if(!(/^\d{0,10}$/.test(data.telefono1) && /^\d{0,10}$/.test(data.telefono2))){
+      Swal.fire({
+        icon: "warning",
+        title: "Telefono",
+        text: "El telefono debe ser un numero de 10 digitos",
+        showConfirmButton: true,
+      });
+
+      return;
+    } else if(!(/^\d{0,5}$/.test(data.np))){
+      Swal.fire({
+        icon: "warning",
+        title: "Código postal",
+        text: "El código postal debe ser un numero",
+        showConfirmButton: true
+      });
+      return;
+      }
+
     console.log(data);
      navigate("/Registrar-comercio", {state : { comerciante: data }});
+
   };
   return (
     <>
