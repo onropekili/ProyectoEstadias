@@ -20,6 +20,7 @@ const getCedulaData = require ('../controllers/userController/getCedulaData')
 const getDashboardInformation = require('../controllers/admin/getDashboardInfo');
 const getIncome = require('../controllers/admin/getIncome');
 const getFormatoInfo = require('../controllers/userController/baja/getFormatoBajaInfo');
+const baja = require('../controllers/userController/baja/baja');
 const router = Router();
 const bodyParser = require('body-parser');
 router.use(bodyParser.json());
@@ -68,5 +69,7 @@ router.get('/admin/getIncome', getIncome.getIncome);
 router.get('/availableToCancel', getFormatoInfo.checkIfCommerceIsAvailableToLeave);
 
 router.get('/getFormatoBajaInfo', getFormatoInfo.getFormatoBajaInfo);
+
+router.put('/baja', baja.baja);
 
 module.exports = router;
