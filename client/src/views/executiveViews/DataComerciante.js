@@ -10,9 +10,7 @@ import Modal from "../../components/Modal"; // Importa el componente Modal
 import axios from "axios";
 import { setDateFormatDDMMYY} from "../../components/formatDates";
 import useParamsDataComerciante from "../../customHooks/useParamsDataComerciante";
-const useData = () => {
 
-}
 const DataComerciante = () => {
     //*STARTS THE BLOCK FOR DECLARING STATES
     const navigate = useNavigate();
