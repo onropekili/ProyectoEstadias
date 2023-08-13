@@ -5,7 +5,7 @@ const createNewCostumer = async (req, res) => {
   const { comerciante, comercio } = req.body;
   console.log(comerciante, comercio);
   const telefonos = [comerciante.telefono1, comerciante.telefono2];
-    
+    await queryToDatabase(comerciante, comercio, telefonos);
 
   try {
     // await queryToDatabase(comerciante, comercio, telefonos);
