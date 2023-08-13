@@ -330,6 +330,26 @@ const DataComerciante = () => {
       }).then((result) => {
         if (result.isConfirmed) {
           //TODO Lógica para eliminar el comerciante
+          axios.put(`http://${process.env.REACT_APP_HOST}:4000/baja`, {
+            folio: folio
+          }).then((res) => {
+            if (res.status === 200) {
+              Swal.fire({
+                title: "¡Comerciante eliminado!",
+                icon: "success",
+                confirmButtonText: "Aceptar",
+              });
+              navigate("/Dashboard_E")
+            }
+          }).catch((error) => {
+            console.log(error)
+            Swal.fire({
+              title: "¡Error!",
+              text: error.response.data.message,
+              icon: "warning",
+              confirmButtonText: "Aceptar",
+            });
+          })
         }
       });
     };
@@ -396,7 +416,7 @@ const DataComerciante = () => {
     const handlePhoneOneChange = (e) => {
       const {name, value} = e.target;
       //validar que solo se ingresen números y que no se exceda el límite de 10 caracteres
-      if(/^\d{0,10}$/.test(value)) {
+      if (/^\d{0,10}$/.test(value)) {
         const temporaryTelefonos = [...telefonos];
         temporaryTelefonos[0].numero_telefonico = value;
         setTelefono1(value);
@@ -406,12 +426,13 @@ const DataComerciante = () => {
 
     const handlePhoneTwoChange = (e) => {
       const {name, value} = e.target;
-      if(/^\d{0,10}$/.test(value)) {
+      if (/^\d{0,10}$/.test(value)) {
         const temporaryTelefonos = [...telefonos];
         temporaryTelefonos[1].numero_telefonico = value;
         setTelefono2(value);
         setTelefonos(temporaryTelefonos);
-      };
+      }
+      ;
     };
 
     const handleTerceraEdadChange = (e) => {
@@ -424,13 +445,13 @@ const DataComerciante = () => {
     };
 
     const navigateToOrdenDePago = () => {
-      if(!(/^\d{0,10}x\d{0,10}$/.test(data.metraje))){
+      if (!(/^\d{0,10}x\d{0,10}$/.test(data.metraje))) {
         Swal.fire({
-          title: "Metraje inválido",
-          text: "El formato debe ser \"numberxnumber\". Ejemplo: 2x2",
-          icon: "warning",
-          confirmButtonText: "Aceptar"
-        }
+            title: "Metraje inválido",
+            text: "El formato debe ser \"numberxnumber\". Ejemplo: 2x2",
+            icon: "warning",
+            confirmButtonText: "Aceptar"
+          }
         )
         return
       }
@@ -909,7 +930,7 @@ const DataComerciante = () => {
                           <li>
                             <button
                               className="block w-full text-left px-4 py-2 rounded-b-lg text-base md:text-lg font-medium text-gris hover:bg-naranja hover:bg-opacity-80 hover:text-white"
-                              onClick={handleDeleteClickTab2}
+                              onClick={handleDeleteClick}
                             >
                               Eliminar comercio
                             </button>
