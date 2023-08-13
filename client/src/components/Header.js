@@ -3,7 +3,9 @@ import logoEmpresa from '../assets/images/logoEmpresa.jpg';
 import NewComercianteEventView from '../views/executiveViews/NewComercianteEventView';
 import DashBoard_Ejecutivo from '../views/executiveViews/DashBoard_Executive';
 import NewComercianteView from '../views/executiveViews/NewComercianteView';
+import {useNavigate} from "react-router-dom";
 export default function Header({ useButton, currentPage }) {
+  const navigate = useNavigate();
   let title = "";
 
   if (currentPage === DashBoard_Ejecutivo) {
@@ -16,7 +18,9 @@ export default function Header({ useButton, currentPage }) {
     useButton = false;
     title = "Alta por evento";
   }
-
+const cerrarSesion = () => {
+    navigate("/");
+}
   return (
     <header>
       <div className="flex items-center justify-between bg-white">
@@ -29,7 +33,7 @@ export default function Header({ useButton, currentPage }) {
         </div>
         {useButton ? (
           
-            <button className="p-1 w-48 text-black text-lg font-Foco-Corp-Bold flex items-center hover:opacity-70">
+            <button onClick={cerrarSesion} className="p-1 w-48 text-black text-lg font-Foco-Corp-Bold flex items-center hover:opacity-70">
               {title}
               <img src={require('../assets/images/close-circle.png')} alt="Img" className="ml-1 w-8 h-8" />
             </button>
