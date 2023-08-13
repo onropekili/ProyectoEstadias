@@ -8,32 +8,51 @@ import Swal from "sweetalert2";
 import {useNavigate, useParams} from "react-router-dom";
 import Modal from "../../components/Modal"; // Importa el componente Modal
 import axios from "axios";
-import {setDateFormat, setDateFormatDDMMYY} from "../../components/formatDates";
+import { setDateFormatDDMMYY} from "../../components/formatDates";
+import useParamsDataComerciante from "../../customHooks/useParamsDataComerciante";
+const useData = () => {
 
+}
 const DataComerciante = () => {
     //*STARTS THE BLOCK FOR DECLARING STATES
     const navigate = useNavigate();
     const {folio} = useParams();
-    const [activeTab, setActiveTab] = useState(1);
-
-    const [isMenuOpenTab1, setIsMenuOpenTab1] = useState(false);
-    const [showButtonsTab1, setShowButtonsTab1] = useState(false);
-    const [fieldsEditableTab1, setFieldsEditableTab1] = useState(false);
-
-    const [isMenuOpenTab2, setIsMenuOpenTab2] = useState(false);
-    const [showButtonsTab2, setShowButtonsTab2] = useState(false);
-    const [fieldsEditableTab2, setFieldsEditableTab2] = useState(false);
-    const [data, setData] = useState(null); // Almacena los datos modificados por el usuario
-    const [originalData, setOriginalData] = useState(null); // Almacena los datos originales
-    const [telefonos, setTelefonos] = useState([]); // Almacena el estado inicial de los telefonos
-    const [telefono1, setTelefono1] = useState(""); // Almacena el telefono que se muestra en el campo de telefono 1
-    const [telefono2, setTelefono2] = useState(""); // Almacena el telefono que se muestra en el campo de telefono 2
-    const [fecha_inicio, setFecha_inicio] = useState(""); // Almacena la fecha de inicio del permiso
-    const [fecha_termino, setFecha_termino] = useState(""); // Almacena la fecha de termino del permiso
-
-    const [selectedClasificacion, setSelectedClasificacion] = useState(null);
-    const [selectedHorario, setSelectedHorario] = useState(null);
-    const [selectedTipo, setSelectedTipo] = useState(null);
+    const {
+      activeTab,
+      setActiveTab,
+      isMenuOpenTab1,
+      setIsMenuOpenTab1,
+      showButtonsTab1,
+      setShowButtonsTab1,
+      fieldsEditableTab1,
+      setFieldsEditableTab1,
+      isMenuOpenTab2,
+      setIsMenuOpenTab2,
+      showButtonsTab2,
+      setShowButtonsTab2,
+      fieldsEditableTab2,
+      setFieldsEditableTab2,
+      data,
+      setData,
+      originalData,
+      setOriginalData,
+      telefonos,
+      setTelefonos,
+      telefono1,
+      setTelefono1,
+      telefono2,
+      setTelefono2,
+      fecha_inicio,
+      setFecha_inicio,
+      fecha_termino,
+      setFecha_termino,
+      selectedClasificacion,
+      setSelectedClasificacion,
+      selectedHorario,
+      setSelectedHorario,
+      selectedTipo,
+      setSelectedTipo
+    } = useParamsDataComerciante();
     //*ENDS THE BLOCK FOR DECLARING STATES
 
     //*STARTS THE BLOCK OF OPTIONS FOR SELECTS INPUTS
@@ -185,7 +204,7 @@ const DataComerciante = () => {
       return axios.put(url, data);
     };
 
-    const handleUpdateSuccess = (response) => {
+    const handleUpdateSuccess = () => {
       getTodoInfo(folio);
       Swal.fire({
         title: "¡Datos actualizados!",
@@ -354,28 +373,7 @@ const DataComerciante = () => {
       });
     };
 
-    const handleDeleteClickTab2 = () => {
-      setIsMenuOpenTab1(false); // Cerrar el menú de opciones
-      Swal.fire({
-        title: "Eliminar",
-        text: "¿Quieres eliminar este comercio?",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Sí, eliminar",
-        cancelButtonText: "No, cancelar",
-        buttonsStyling: false,
-        customClass: {
-          confirmButton:
-            "bg-naranja hover:bg-naranja hover:opacity-80 text-white m-4 p-2 px-4 rounded-lg font-semibold",
-          cancelButton:
-            "bg-rojo hover:bg-rojo hover:opacity-80 text-white m-4 py-2 px-4 rounded-lg font-semibold",
-        },
-      }).then((result) => {
-        if (result.isConfirmed) {
-          //TODO Lógica para eliminar el comerciante
-        }
-      });
-    };
+
     //*ENDS THE BLOCK OF FUNCTIONS FOR ALERTS AND CONFIRMATIONS
 
     const handleClasificacionChange = (selectedOption) => {
@@ -414,7 +412,7 @@ const DataComerciante = () => {
     };
 
     const handlePhoneOneChange = (e) => {
-      const {name, value} = e.target;
+      const {value} = e.target;
       //validar que solo se ingresen números y que no se exceda el límite de 10 caracteres
       if (/^\d{0,10}$/.test(value)) {
         const temporaryTelefonos = [...telefonos];
@@ -425,17 +423,17 @@ const DataComerciante = () => {
     };
 
     const handlePhoneTwoChange = (e) => {
-      const {name, value} = e.target;
+      const {value} = e.target;
       if (/^\d{0,10}$/.test(value)) {
         const temporaryTelefonos = [...telefonos];
         temporaryTelefonos[1].numero_telefonico = value;
         setTelefono2(value);
         setTelefonos(temporaryTelefonos);
       }
-      ;
+
     };
 
-    const handleTerceraEdadChange = (e) => {
+    const handleTerceraEdadChange = () => {
       const terceraEdad = data.tercera_edad;
       setData({
         ...data,
@@ -737,6 +735,7 @@ const DataComerciante = () => {
                               htmlFor="calle_comerciante"
                               className="font-Foco-Corp-Bold text-gris text-base mb-1"
                             >
+                              Calle
                             </label>
                             <input
                               id="calle_comerciante"
