@@ -7,7 +7,6 @@ import Header from "../../components/Header";
 
 function DashBoard_Ejecutivo() {
   const location = useLocation();
-  const user = location.state && location.state.data;
   const [comerciantes, setComerciantes] = useState([]);
   const [ComerciantesComponents, setComerciantesComponents] = useState([]);
 
@@ -43,7 +42,6 @@ function DashBoard_Ejecutivo() {
         mostrar: Mostrar,
         colonia: colonia,
       };
-      console.log(data);
       if (
         nameOrId !== "" ||
         filtrarPor !== "" ||
@@ -52,21 +50,18 @@ function DashBoard_Ejecutivo() {
       ) {
         try {
           const res = await axios.get(
-            "http://localhost:4000/dashboard/find_by_name_or_id/",
+            `http://${process.env.REACT_APP_HOST}:4000/dashboard/find_by_name_or_id/`,
             { params: data }
           );
-          console.log(res.data.result.rows);
           setInfoComponent(res.data.result.rows);
         } catch (error) {
           console.error(error);
         }
       } else {
         try {
-          console.log("isEmpty");
           const res = await axios.get(
-            "http://localhost:4000/dashboard/find_by_name_or_id/"
+            `http://${process.env.REACT_APP_HOST}:4000/dashboard/find_by_name_or_id/`
           );
-          console.log(res.data.result.rows);
           setInfoComponent(res.data.result.rows);
         } catch (error) {
           console.error(error);
@@ -81,7 +76,7 @@ function DashBoard_Ejecutivo() {
     const components = comerciantes.map((comerciante) => (
       <InfoComponent
         key={comerciante.id_comercio}
-        folio={comerciante.id_comerciante}
+        folio={comerciante.id_comercio}
         nombre={comerciante.nombre_completo}
         giroActivo={comerciante.giro}
         observaciones={comerciante.observaciones_comerciante}

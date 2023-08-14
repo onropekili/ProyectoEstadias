@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
-import { useForm } from "react-hook-form";
+import React, {useEffect} from "react";
+import {useForm} from "react-hook-form";
 import Header from "../../components/Header";
-import { useLocation, useNavigate } from "react-router-dom";
-import { AuthMiddleware } from "../../middleware/ProtectedMiddleware";
+import {useLocation, useNavigate} from "react-router-dom";
+import {AuthMiddleware} from "../../middleware/ProtectedMiddleware";
+import Swal from "sweetalert2";
 
 const NewComercianteView = () => {
   const location = useLocation();
@@ -18,7 +19,7 @@ const NewComercianteView = () => {
     register,
     handleSubmit,
     watch,
-    formState: { errors },
+    formState: {errors},
   } = useForm();
 
 
@@ -27,11 +28,32 @@ const NewComercianteView = () => {
   // }, [user, navigate]);
 
   const onSubmit = (data) => {
-     navigate("/Registrar-comercio", {state : { comerciante: data }});
+    if (!(/^\d{0,10}$/.test(data.telefono1))&& !(/^$|^\d{1,10}$/.test(data.telefono2))) {
+      Swal.fire({
+        icon: "warning",
+        title: "Telefono",
+        text: "El telefono debe ser un numero de 10 digitos",
+        showConfirmButton: true,
+      });
+
+      return;
+    } else if (!(/^\d{0,5}$/.test(data.np))) {
+      Swal.fire({
+        icon: "warning",
+        title: "Código postal",
+        text: "El código postal debe ser un numero",
+        showConfirmButton: true
+      });
+      return;
+    }
+
+    console.log(data);
+    navigate("/Registrar-comercio", {state: {comerciante: data}});
+
   };
   return (
     <>
-      <Header useButton={true} currentPage={NewComercianteView} />
+      <Header useButton={true} currentPage={NewComercianteView}/>
 
       {/* Contenido */}
       <div className="text-center lg:text-start md:text-start md:ms-3.5">
@@ -59,7 +81,7 @@ const NewComercianteView = () => {
                 <input
                   id="apellidoPaterno"
                   className="bg-gris bg-opacity-10 text-black rounded-lg border-gray-500 border p-2 h-9"
-                  {...register("apellidoPaterno", { required: true })}
+                  {...register("apellidoPaterno", {required: true})}
                   placeholder="Escribe algo"
                 />
               </div>
@@ -88,7 +110,7 @@ const NewComercianteView = () => {
               <input
                 id="nombres"
                 className="bg-gris bg-opacity-10 text-black rounded-lg border-gray-500 border p-2 w-full h-9"
-                {...register("nombres", { required: true })}
+                {...register("nombres", {required: true})}
                 placeholder="Escribe algo"
               />
             </div>
@@ -103,7 +125,7 @@ const NewComercianteView = () => {
                 <input
                   id="telefono1"
                   className="bg-gris bg-opacity-10 text-black rounded-lg border-gray-500 border p-2 h-9"
-                  {...register("telefono1", { required: true })}
+                  {...register("telefono1", {required: true})}
                   placeholder="Escribe algo"
                 />
               </div>
@@ -132,7 +154,7 @@ const NewComercianteView = () => {
               <input
                 id="email"
                 className="bg-gris bg-opacity-10 text-black rounded-lg border-gray-500 border p-2 h-9"
-                {...register("email", { required: true })}
+                {...register("email", {required: true})}
                 placeholder="Escribe algo"
               />
             </div>
@@ -180,7 +202,7 @@ const NewComercianteView = () => {
                 <input
                   id="calle"
                   className="bg-gris bg-opacity-10 text-black rounded-lg border-gray-500 border p-2 h-9 "
-                  {...register("calle", { required: true })}
+                  {...register("calle", {required: true})}
                   placeholder="Escribe algo"
                 />
               </div>
@@ -194,7 +216,7 @@ const NewComercianteView = () => {
                 <input
                   id="numeroExterior"
                   className="bg-gris bg-opacity-10 text-black rounded-lg border-gray-500 border p-2 h-9"
-                  {...register("numeroExterior", { required: true })}
+                  {...register("numeroExterior", {required: true})}
                   placeholder="Escribe algo"
                 />
               </div>
@@ -208,7 +230,7 @@ const NewComercianteView = () => {
                 <input
                   id="numeroInterior"
                   className="bg-gris bg-opacity-10 text-black rounded-lg border-gray-500 border p-2 h-9 "
-                  {...register("numeroInterior", { required: false })}
+                  {...register("numeroInterior", {required: false})}
                   placeholder="Escribe algo"
                 />
               </div>
@@ -224,7 +246,7 @@ const NewComercianteView = () => {
                 <input
                   id="colonia"
                   className="bg-gris bg-opacity-10 text-black rounded-lg border-gray-500 border p-2 h-9 "
-                  {...register("colonia", { required: true })}
+                  {...register("colonia", {required: true})}
                   placeholder="Escribe algo"
                 />
               </div>
@@ -238,7 +260,7 @@ const NewComercianteView = () => {
                 <input
                   id="np"
                   className="bg-gris bg-opacity-10 text-black rounded-lg border-gray-500 border p-2 h-9"
-                  {...register("np", { required: true })}
+                  {...register("np", {required: true})}
                   placeholder="Escribe algo"
                 />
               </div>
@@ -253,7 +275,7 @@ const NewComercianteView = () => {
               <input
                 id="municipio"
                 className="bg-gris bg-opacity-10 text-black rounded-lg border-gray-500 border p-2 h-9"
-                {...register("municipio", { required: true })}
+                {...register("municipio", {required: true})}
                 placeholder="Escribe algo"
               />
             </div>

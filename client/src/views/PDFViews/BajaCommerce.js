@@ -1,7 +1,23 @@
-import React, { useRef } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import { useReactToPrint } from 'react-to-print';
+import {useParams} from "react-router-dom";
+import axios from "axios";
 
 const TramiteImprimible = () => {
+  const {folio} = useParams();
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    axios.get(`http://${process.env.REACT_APP_HOST}:4000/getFormatoBajaInfo?id_comercio=${folio}`)
+    .then((res) => {
+      setData(res.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  }, [folio]);
+
+  console.log(data);
   const componentRef = useRef();
 
   const generatePDF = useReactToPrint({
@@ -22,7 +38,7 @@ const TramiteImprimible = () => {
             <label className="font-Foco-Corp-Bold text-lg antialiased">PRESENTE.</label>
           </div>
           <div className='font-Foco-Corp text-base text-justify text-justify-last antialiased leading-10 tracking-wide mb-10'>
-            <p>POR MEDIO DE ESTE DOCUMENTO YO <span className='font-bold'>ANGELICA ARACELI SILVA PALMAS</span>, SOLICITO LA BAJA(SUSPENSIÓN DE ACTIVIDADES PERMANENTE), CON REFERENCIA A LA CEDULA CON NÚMERO DE <span className='font-bold'>FOLIO: 000000 </span> CON EL GIRO DE <span className='font-bold'>ALIMENTOS(TACOS DE ASADA)</span>, UBICADO <span className='font-bold'>HIGUERA #90 </span> FRACCIONAMIENTO <span className='font-bold'>PRADOS DE LA HIGUERA</span>, MUNICIPIO DE TLAJOMULCO DE ZUÑIGA.</p>
+            <p>POR MEDIO DE ESTE DOCUMENTO YO <span className='font-bold'>{data?.nombre || ''}</span>, SOLICITO LA BAJA(SUSPENSIÓN DE ACTIVIDADES PERMANENTE), CON REFERENCIA A LA CEDULA CON NÚMERO DE <span className='font-bold'>FOLIO: {String(folio).padStart(6, '0')} </span> CON EL GIRO DE <span className='font-bold'>{data.giro || ''}</span>, UBICADO EN <span className='font-bold'>{data.domicilio || ''}</span>, {data.colonia || ''}</p>
             <p className='mt-10'>EL MOTIVO DE LA SOLICITUD ES LA SIGUIENTE:</p>
             <div className="border border-gris w-FULL mx-auto mt-8"></div>
             <div className="border border-gris w-FULL mx-auto mt-8"></div>

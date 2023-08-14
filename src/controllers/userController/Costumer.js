@@ -26,7 +26,6 @@ const getCostumer = async (req, res) => {
 
 const editCostumer = async (req, res) => {
   const { comercio, comerciante } = req.body;
-  console.log(comercio, comerciante);
   try {
     // 2. Actualizar el comerciante
     await updateCostumer(comerciante);
@@ -107,10 +106,6 @@ const updateCostumer = async (comerciante) => {
   ]);
 };
 
-// const updateTelefonoCostumer = async (comerciante) => {
-//   const { id_comerciante, telefono1, telefono2 } = comerciante;
-//   const updateTelefonoCostumerQuery =
-
 const updateAdressCostumer = async (comerciante) => {
   const {
     id_comerciante,
@@ -185,23 +180,24 @@ const updateComercio = async (comercio) => {
 };
 
 const updateAdressComercio = async (comercio) => {
+  console.log(comercio);
   const {
     zona,
     calle,
     calle_colindante_uno,
     calle_colindante_dos,
     colonia,
-    id_comercio,
+    comerciante_id_comerciante,
   } = comercio;
   const updateAdressComercioQuery =
-    "UPDATE direcciones_comercios SET zona = $1, calle = $2, calle_colindante_uno = $3, calle_colindante_dos = $4, colonia = $5 WHERE comercio_id_comercio = $6";
+    "UPDATE direcciones_comercios SET zona = $1, calle = $2, calle_colindante_uno = $3, calle_colindante_dos = $4, colonia = $5 WHERE comercio_id_comercio = (select id_comercio from comercios where comerciante_id_comerciante = $6)";
   await pool.query(updateAdressComercioQuery, [
     zona,
     calle,
     calle_colindante_uno,
     calle_colindante_dos,
     colonia,
-    id_comercio,
+    comerciante_id_comerciante,
   ]);
 };
 

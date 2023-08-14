@@ -20,7 +20,7 @@ const getComercianteAndcomercioInfo = async (req, res) => {
       LEFT JOIN direcciones_comercios AS dco ON dco.comercio_id_comercio = co.id_comercio
       LEFT JOIN direcciones_comerciantes AS dce ON dce.id_comerciante = ce.id_comerciante
     WHERE
-      ce.id_comerciante = $1
+      co.id_comercio = $1
     `,
       [folio]
     );
@@ -36,7 +36,7 @@ const getComercianteAndcomercioInfo = async (req, res) => {
 };
 
 const getComerciantePhones = async (folio) => {
-const query = `Select * from telefonos where id_comerciante = $1`
+const query = `Select * from telefonos where id_comerciante = (select comerciante_id_comerciante from comercios where id_comercio = $1)`
 const result = await pool.query(query, [folio]);
 return result.rows;
 };

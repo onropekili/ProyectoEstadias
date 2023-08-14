@@ -10,7 +10,8 @@ import NewComercioEventView from "./views/executiveViews/NewCommerceEvent";
 import OrdenPago from "./views/executiveViews/OrdenPago";
 import TerceraEdad from "./views/PDFViews/TerceraEdad";
 import OrdenPagoPDF from "./views/PDFViews/OrdenPagoPDF";
-import { LogOut, ExecutiveProtectedRoute } from "./components/Middlewares";
+import IncomeView from "./views/adminViews/IncomeView";
+import { LogOut, ExecutiveProtectedRoute, AdminProtectedRoute } from "./components/Middlewares";
 import { useState } from "react";
 import DataComerciante from "./views/executiveViews/DataComerciante";
 import Cedulacommerce from "./views/PDFViews/CedulaCommerce";
@@ -39,11 +40,14 @@ export default function App() {
             </ExecutiveProtectedRoute>
           }
         />
-        <Route path="/DashBoard_A" element={<DashBoard_Admin />} />
+        <Route path="/DashBoard_A" element={
+          <AdminProtectedRoute>
+        <DashBoard_Admin/>
+        </AdminProtectedRoute>} />
         <Route
           path="/Registrar-comerciante"
           element={
-            <ExecutiveProtectedRoute user={userData}>
+            <ExecutiveProtectedRoute >
               <NewComercianteView />
             </ExecutiveProtectedRoute>
           }
@@ -51,7 +55,7 @@ export default function App() {
         <Route
           path="/Registrar-comerciante-evento"
           element={
-            <ExecutiveProtectedRoute user={userData}>
+            <ExecutiveProtectedRoute >
               <NewComercianteEventView />
             </ExecutiveProtectedRoute>
           }
@@ -59,7 +63,7 @@ export default function App() {
         <Route
           path="/Registrar-comercio"
           element={
-            <ExecutiveProtectedRoute user={userData}>
+            <ExecutiveProtectedRoute>
               <NewComercioView />
             </ExecutiveProtectedRoute>
           }
@@ -67,7 +71,7 @@ export default function App() {
         <Route
           path="/Registrar-comercio-evento"
           element={
-            <ExecutiveProtectedRoute user={userData}>
+            <ExecutiveProtectedRoute >
               <NewComercioEventView />
             </ExecutiveProtectedRoute>
           }
@@ -75,48 +79,56 @@ export default function App() {
         <Route
           path="/Orden-de-Pago"
           element={
-            // <ExecutiveProtectedRoute user={userData}>
+             <ExecutiveProtectedRoute >
               <OrdenPago />
-            // </ExecutiveProtectedRoute>
+             </ExecutiveProtectedRoute>
           }
         />
         <Route
           path="/TerceraEdad/:id_comerciante"
           element={
-            // <ExecutiveProtectedRoute user={userData}>
+             <ExecutiveProtectedRoute >
               <TerceraEdad />
-            // </ExecutiveProtectedRoute>
+             </ExecutiveProtectedRoute>
           }
         />
         <Route
           path="/OrdenPagoPDF"
           element={
-            // <ExecutiveProtectedRoute user={userData}>
+             <ExecutiveProtectedRoute >
               <OrdenPagoPDF />
-            // </ExecutiveProtectedRoute>
+             </ExecutiveProtectedRoute>
           }
         />
         <Route
-          path="/Datos-Comerciante-Comercio"
+          path="/Datos-Comerciante-Comercio/:folio"
           element={
-            // <ExecutiveProtectedRoute user={userData}>
+             <ExecutiveProtectedRoute >
               <DataComerciante />
-            // </ExecutiveProtectedRoute>
+             </ExecutiveProtectedRoute>
           }
         />
         <Route
-          path="/Cédula-de-comercio"
+          path="/Cedula-de-comercio/:folio"
           element={
-            // <ExecutiveProtectedRoute user={userData}>
+             <ExecutiveProtectedRoute >
               <Cedulacommerce/>
-            // </ExecutiveProtectedRoute>
+             </ExecutiveProtectedRoute>
           }
         />
         <Route
-          path="/Formato-baja-comercio"
+          path="/Formato-baja-comercio/:folio"
+          element={
+             <ExecutiveProtectedRoute >
+              <BajaCommerce/>
+             </ExecutiveProtectedRoute>
+          }
+        />
+        <Route
+          path="/Ingresos-Totales"
           element={
             // <ExecutiveProtectedRoute user={userData}>
-              <BajaCommerce/>
+              <IncomeView/>
             // </ExecutiveProtectedRoute>
           }
         />

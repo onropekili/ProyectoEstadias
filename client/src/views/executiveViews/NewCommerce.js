@@ -19,9 +19,19 @@ const NewComercioView = () => {
   } = useForm();
 
   const onSubmit = (data) => {
+    if(!(/^\d{0,10}x\d{0,10}$/.test(data.metraje))){
+      Swal.fire({
+          title: "Metraje inválido",
+          text: "El formato debe ser \"numberxnumber\". Ejemplo: 2x2",
+          icon: "warning",
+          confirmButtonText: "Aceptar"
+        }
+      )
+      return
+    }
     console.log({ datos: { data: data, comerciante: comercianteData } });
     axios
-      .post("http://localhost:4000/createCostumer", {
+      .post(`http://${process.env.REACT_APP_HOST}:4000/createCostumer`, {
         comerciante: comercianteData,
         comercio: data,
       })
@@ -36,7 +46,7 @@ const NewComercioView = () => {
         }).then((result) => {
           if (result.isConfirmed) {
             axios
-              .get("http://localhost:4000/dashboard/find_by_name_or_id/")
+              .get(`http://${process.env.REACT_APP_HOST}:4000/dashboard/find_by_name_or_id/`)
               .then((res) => {
                 console.log(res.data);
                 navigate(uri, {
