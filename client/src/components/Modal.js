@@ -4,11 +4,18 @@ import DatePickerInput from "../components/DatePickerInput";
 import CheckboxInput from "../components/CheckboxInput";
 import Swal from 'sweetalert2';
 import axios from 'axios';
+import {Spinner} from 'reactstrap'
+import 'bootstrap'
 
 const Modal = ({ closeModal }) => {
 
-  const handleRefrendarClick = (event) => {
+  const [pendding, setPendding] = React.useState(true);
 
+  const handleRefrendarClick = (event) => {
+    setPendding(false);
+    //wait 10 seconds to simulate the api call
+    setTimeout(() => {}, 10000);
+    
     event.preventDefault();// Evitar el envío del formulario y la recarga de la página
 
     // Obtener el elemento del input
@@ -17,35 +24,29 @@ const Modal = ({ closeModal }) => {
     // Obtener el valor del input
     const numeroReferencia = inputNumeroReferencia.value;
 
+    
     axios.get(`http://${process.env.REACT_APP_HOST}:4000/refrendarComercio?numeroReferencia=${numeroReferencia}`)
       .then((response) => {
-        switch (response.data) {
-          case "Se puede imprimir la cédula":
-
-            openCedula();
-            closeModal();
-            break;
-
-          case "Comerciante refrendado":
-            reloadWindow();
-            closeModal();
-
-            break;
-
-          case "Orden de pago pagada":
-            otherCases();
-            closeModal();
-            break;
-          default:
-            break;
+        console.log(response.data);
+        setPendding(true);
+        if (!(isNaN(response.data))) {
+          openCedula(response.data);
+          closeModal();
+        } else if (response.data === 'Comerciante refrendado') {
+          reloadWindow();
+          closeModal();
+        } else if (response.data === 'Orden de pago pagada') {
+          otherCases();
+          closeModal();
         }
       })
       .catch((error) => {
+        setPendding(true);
         showErrorAlert(error);
       });
 
-    const openCedula = () => {
-      window.open('/Cédula-de-comercio', '_blank');
+    const openCedula = (folio) => {
+      window.open(`/Cedula-de-comercio/${folio}`, '_blank');
     }
   };
 
@@ -82,8 +83,8 @@ const Modal = ({ closeModal }) => {
   const showErrorAlert = (error) => {
     console.log(error);
     Swal.fire({
-      title: 'Algo anda mal',
-      text: error,
+      title: 'Error',
+      text: error.response.data,
       icon: 'error',
       confirmButtonText: 'Aceptar',
       buttonsStyling: false,
@@ -94,6 +95,7 @@ const Modal = ({ closeModal }) => {
   }
 
   return (
+
     <div className="fixed inset-0 flex items-start lg:items-center justify-center z-10 bg-gris bg-opacity-80 p-2 h-full overflow-auto">
       <div className="bg-white rounded-lg pt-2 h-auto">
         <Header />
@@ -128,11 +130,13 @@ const Modal = ({ closeModal }) => {
             </div>
           </div>
           <div className='w-full flex flex-col md:flex-row py-2 md:py-8 px-4 rounded-b-lg gap-4 lg:gap-10 bg-gray-100 justify-center mb-1'>
+
+              
             <button
               className="text-center text-lg w-full md:w-72 h-10 shadow-lg font-Foco-Corp-Bold border-2 bg-naranja border-naranja hover:bg-naranja hover:opacity-80 rounded-lg text-white"
               onClick={handleRefrendarClick}
             >
-              Refrendar
+              {pendding ? 'Refrendar' : <Spinner >Loading...</Spinner>}
             </button>
             <button
               className="text-center text-lg w-full md:w-72 h-10 shadow-lg font-Foco-Corp-Bold border-2 bg-rojo border-rojo hover:bg-rojo hover:opacity-80 rounded-lg text-white"
@@ -140,10 +144,12 @@ const Modal = ({ closeModal }) => {
             >
               Cancelar
             </button>
+            
           </div>
         </form>
       </div>
     </div>
+    
   );
 };
 

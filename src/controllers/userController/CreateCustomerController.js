@@ -5,10 +5,10 @@ const createNewCostumer = async (req, res) => {
   const { comerciante, comercio } = req.body;
   console.log(comerciante, comercio);
   const telefonos = [comerciante.telefono1, comerciante.telefono2];
-    
+    await queryToDatabase(comerciante, comercio, telefonos);
 
   try {
-    await queryToDatabase(comerciante, comercio, telefonos);
+    // await queryToDatabase(comerciante, comercio, telefonos);
     res.status(200).json({ message: "Registo creado exitosamente" });
 
   } catch (error) {

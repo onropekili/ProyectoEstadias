@@ -35,6 +35,7 @@ const OrdenPago = () => {
   const metrosX = Number(shop.metraje?.split("x")[0]);
   const metrosY = Number(shop.metraje?.split("x")[1]);
   const totalMetraje = metrosX * metrosY;
+  console.log(merchant);
   const vigencia = shop?.fecha_termino
     ? setDateFormat(shop.fecha_termino)
     : "sin refrendo";
@@ -80,7 +81,7 @@ const OrdenPago = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:4000/conceptos")
+      .get(`http://${process.env.REACT_APP_HOST}:4000/conceptos`)
       .then((res) => {
         setOptions(res.data.options);
         console.log(res.data.options);
@@ -170,7 +171,7 @@ const OrdenPago = () => {
 
   const merchantAdress = merchant
     ? merchant.calle
-        .concat(merchant.numero_exterior)
+        .concat(' ' ,merchant.numero_exterior)
         .concat(
           merchant.numero_interior ? `, Int: ${merchant.numero_interior}, ` : ""
         )
@@ -435,6 +436,7 @@ const OrdenPago = () => {
             type="button"
             value="Volver"
             className="self-start text-center bg-verde w-full h-11 rounded-lg lg:w-40"
+            onClick={() => navigate(`/Datos-Comerciante-Comercio/${merchant.id_comercio}`)}
           />
         </div>
         <div className="flex flex-col text-white text-xl font-Foco-Corp-Bold">

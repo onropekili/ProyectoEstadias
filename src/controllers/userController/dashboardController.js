@@ -1,7 +1,7 @@
-const {pool} = require("../../db");
+const { pool } = require("../../db");
 const { param } = require("../../routes/routes");
 
-const databaseInstance = pool
+const databaseInstance = pool;
 
 const getDashboardInformation = async (req, res) => {
   try {
@@ -23,13 +23,16 @@ const findByNameOrId = async (req, res) => {
     if (Object.keys(filters).length !== 0) {
       let parametersArray = {};
 
-      let limitedConsult = getConsult(filters, parametersArray) + " order by fecha_alta desc limit 9";
+      let limitedConsult =
+        getConsult(filters, parametersArray) +
+        " and cancelaciones_bajas = false order by fecha_alta desc limit 9";
       resultOfConsult = await queryToDatabaseWithFilters(
         limitedConsult,
         parametersArray
       );
     } else {
-      limitedConsult = "select * from dashboard where 1=1 order by fecha_alta desc limit 9";
+      limitedConsult =
+        "select * from dashboard where 1=1 and cancelaciones_bajas = false order by fecha_alta desc limit 9";
       resultOfConsult = await queryToDatabaseWithOutFilters(limitedConsult);
     }
     res
@@ -60,8 +63,8 @@ function isNameOrId(filters, parametersArray) {
       parametersArray.nameOrId = "%" + parametersArray.nameOrId + "%";
       return "select * from dashboard where unaccent(nombre_completo)  ilike unaccent($1)";
     }
-  }else {
-    return "select * from dashboard where 1=1 "
+  } else {
+    return "select * from dashboard where 1=1 ";
   }
 }
 
@@ -91,14 +94,13 @@ function getOptions(filters) {
 }
 
 const queryToDatabaseWithFilters = async (limitedConsult, parametersArray) => {
-  if(Object.keys(parametersArray).length > 0){
+  if (Object.keys(parametersArray).length > 0) {
     return await databaseInstance.query(limitedConsult, [
       parametersArray.nameOrId,
     ]);
-  }else {
+  } else {
     return await databaseInstance.query(limitedConsult);
   }
-
 };
 
 const queryToDatabaseWithOutFilters = async (limitedConsult) => {

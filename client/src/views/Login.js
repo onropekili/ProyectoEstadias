@@ -4,7 +4,9 @@ import { showInfoAlert, showErrorAlert } from "../components/SwAlerts";
 import { useNavigate } from "react-router-dom";
 
 export default function Login({ userData, setUserData }) {
+  
   useEffect(() => {
+    localStorage.clear();
     // Enfoque inicial en el campo de usuario cuando se renderiza el componente
     usernameRef.current.focus();
   }, []);
@@ -42,14 +44,15 @@ export default function Login({ userData, setUserData }) {
       showInfoAlert("Algo anda mal", "Por favor ingrese usuario y contraseña");
     } else {
       axios
-        .post("http://localhost:4000/login", data)
+        .post(`http://${process.env.REACT_APP_HOST}:4000/login`, data)
         .then((response) => {
           const User = response.data.user;
           const admin = true;
           let isCorrect = 200;
-          console.log(response.status);
 
           if (response.status === isCorrect) {
+            console.log(User.tipo_usuario);
+            localStorage.setItem('tipo_usuario', JSON.stringify(User.tipo_usuario));
             setUserData({
               id_usuario: User.id_usuario,
               tipo_usuario: User.tipo_usuario,
@@ -58,11 +61,10 @@ export default function Login({ userData, setUserData }) {
               navigate("/DashBoard_A", { state: { data: User } });
             } else {
               axios
-                .get("http://localhost:4000/dashboard/find_by_name_or_id/")
+                .get(`http://${process.env.REACT_APP_HOST}:4000/dashboard/find_by_name_or_id/`)
                 .then((res) => {
                   const Data = res.data.result.rows;
 
-                  console.log(res.data);
                   navigate("/DashBoard_E", {
                     state: { comerciante: Data },
                   });
