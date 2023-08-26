@@ -215,7 +215,6 @@ const OrdenPago = () => {
         });
       })
       .catch((error) => {
-        console.log(error);
       });
   };
 

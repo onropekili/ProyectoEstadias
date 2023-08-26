@@ -22,7 +22,7 @@ const NewComercioView = () => {
     if(!(/^\d{0,10}x\d{0,10}$/.test(data.metraje))){
       Swal.fire({
           title: "Metraje inválido",
-          text: "El formato debe ser \"numberxnumber\". Ejemplo: 2x2",
+          text: "El formato debe ser \"numeroxnumero\". Ejemplo: 2x2",
           icon: "warning",
           confirmButtonText: "Aceptar"
         }

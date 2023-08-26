@@ -74,7 +74,7 @@ function DashBoard_Ejecutivo() {
 
   const setInfoComponent = (comerciantes) => {
     const components = comerciantes.map((comerciante) => (
-      <InfoComponent
+      <InfoComponent 
         key={comerciante.id_comercio}
         folio={comerciante.id_comercio}
         nombre={comerciante.nombre_completo}

@@ -269,22 +269,22 @@ function IncomeView() {
           </div>
           <div className="flex flex-col md:grid md:grid-cols-2 xl:grid-cols-4 gap-x-4 gap-y-4 px-4 lg:px-8 pt-6">
             <TabButton
-              label={{ count: `$${data?.topInfo[0].total_pagado_hoy}`, text: 'Ingresos del día' }}
+              label={{ count: `$${data?.topInfo[0].total_pagado_hoy || 0}`, text: 'Ingresos del día' }}
               isActive={activeTab === 'Dia'}
               onClick={() => handleTabClick('Dia')}
             />
             <TabButton
-              label={{ count: `$${data?.topInfo[0].total_pagado_semana_actual}`, text: 'Ingresos Semanales' }}
+              label={{ count: `$${data?.topInfo[0].total_pagado_semana_actual || 0}`, text: 'Ingresos Semanales' }}
               isActive={activeTab === 'semana'}
               onClick={() => handleTabClick('semana')}
             />
             <TabButton
-              label={{ count: `$${data?.topInfo[0].total_pagado_mes_actual}`, text: 'Ingresos Mensuales' }}
+              label={{ count: `$${data?.topInfo[0].total_pagado_mes_actual || 0}`, text: 'Ingresos Mensuales' }}
               isActive={activeTab === 'mes'}
               onClick={() => handleTabClick('mes')}
             />
             <TabButton
-              label={{ count: `$${data.topInfo[0].total_pagado_anio_actual}`, text: 'Ingresos Anuales' }}
+              label={{ count: `$${data?.topInfo[0].total_pagado_anio_actual || 0}`, text: 'Ingresos Anuales' }}
               isActive={activeTab === 'anual'}
               onClick={() => handleTabClick('anual')}
             />

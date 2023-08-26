@@ -18,6 +18,7 @@ const getIncome = async (req, res) => {
     const dashboardInfo = rawDashboardInfo.data;
     const rawResult = await pool.query(query);
     const result = rawResult.rows;
+    console.log(result);
     const data = {
       graphInfo: dashboardInfo,
       topInfo: result,

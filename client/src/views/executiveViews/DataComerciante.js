@@ -281,11 +281,12 @@ const DataComerciante = () => {
         console.log(error);
         setData({...data, metraje: originalData.metraje});
         Swal.fire({
-          title: "¡Error!",
-          text: 'El metraje debe tener el siguiente formato: "14x20"',
-          icon: "warning",
-          confirmButtonText: "Aceptar",
-        });
+            title: "Metraje inválido",
+            text: "El formato debe ser \"numeroxnumero\". Ejemplo: 2x2",
+            icon: "warning",
+            confirmButtonText: "Aceptar"
+          }
+        );
       }
     };
 
