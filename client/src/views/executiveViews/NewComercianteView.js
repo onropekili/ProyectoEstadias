@@ -5,7 +5,7 @@ import {useLocation, useNavigate} from "react-router-dom";
 import {AuthMiddleware} from "../../middleware/ProtectedMiddleware";
 import Swal from "sweetalert2";
 
-const NewComercianteView = () => {
+const NewComercianteView = ({currentView}) => {
   const location = useLocation();
   const data = location.state && location.state.data;
   const user = data ? (data.user ? data.user : null) : null;
@@ -53,7 +53,7 @@ const NewComercianteView = () => {
   };
   return (
     <>
-      <Header useButton={true} currentPage={NewComercianteView}/>
+      <Header useButton={true} currentPage={currentView}/>
 
       {/* Contenido */}
       <div className="text-center lg:text-start md:text-start md:ms-3.5">

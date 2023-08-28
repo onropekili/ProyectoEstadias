@@ -11,10 +11,10 @@ export default function Header({ useButton, currentPage }) {
   if (currentPage === DashBoard_Ejecutivo) {
     useButton = true;
     title = "Cerrar sesión"
-  } else if (currentPage === NewComercianteView) {
+  } else if (currentPage === 'NuevoComerciante') {
     useButton = false;
     title = "Alta en vía pública";
-  } else if (currentPage === NewComercianteEventView) {
+  } else if (currentPage === 'NuevoComercianteEventual') {
     useButton = false;
     title = "Alta por evento";
   }
