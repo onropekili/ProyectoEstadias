@@ -48,7 +48,7 @@ export default function App() {
           path="/Registrar-comerciante"
           element={
             <ExecutiveProtectedRoute >
-              <NewComercianteView />
+              <NewComercianteView currentView={'NuevoComerciante'}/>
             </ExecutiveProtectedRoute>
           }
         />
@@ -56,7 +56,7 @@ export default function App() {
           path="/Registrar-comerciante-evento"
           element={
             <ExecutiveProtectedRoute >
-              <NewComercianteEventView />
+              <NewComercianteView currentView={'NuevoComercianteEventual'}/>
             </ExecutiveProtectedRoute>
           }
         />
@@ -64,7 +64,7 @@ export default function App() {
           path="/Registrar-comercio"
           element={
             <ExecutiveProtectedRoute>
-              <NewComercioView />
+              <NewComercioView currentView={'NuevoComerciante'}/>
             </ExecutiveProtectedRoute>
           }
         />
@@ -72,7 +72,7 @@ export default function App() {
           path="/Registrar-comercio-evento"
           element={
             <ExecutiveProtectedRoute >
-              <NewComercioEventView />
+              <NewComercioView currentView={'NuevoComercianteEventual'}/>
             </ExecutiveProtectedRoute>
           }
         />

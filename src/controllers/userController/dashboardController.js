@@ -59,7 +59,7 @@ function isNameOrId(filters, parametersArray) {
     if (!isNaN(filters.isNameOrId)) {
       return "select * from dashboard where id_comercio = $1";
     } else {
-      //*This establish the ilike format for the string
+      //*This establishes the ilike format for the string
       parametersArray.nameOrId = "%" + parametersArray.nameOrId + "%";
       return "select * from dashboard where unaccent(nombre_completo)  ilike unaccent($1)";
     }
