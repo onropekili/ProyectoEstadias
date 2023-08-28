@@ -3,7 +3,7 @@ import { useReactToPrint } from "react-to-print";
 import tljlogox from "../../assets/images/tlj-logox.png";
 import logoEmpresa from "../../assets/images/logoEmpresa.jpg";
 import layuoutp from "../../assets/images/layuoutp.png";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { setDateFormat } from "../../components/formatDates";
 
@@ -13,6 +13,9 @@ const TramiteImprimible = () => {
   const [data, setData] = useState({});
   const [vigencia, setVigencia] = useState("");
   const [expedicion, setExpedicion] = useState("");
+
+  const navigate = useNavigate();
+
   useEffect(() => {
     const folioValue = folio; // Reemplaza YOUR_FOLIO_VALUE con el valor del folio que deseas consultar
 
@@ -46,6 +49,12 @@ const TramiteImprimible = () => {
           onClick={generatePDF}
         >
           Imprimir
+        </button>
+        <button 
+        className='h-9 w-full md:w-60 px-5 py-1 font-Foco-Corp-Bold shadow-md bg-verde hover:opacity-80 text-white text-lg rounded-md' 
+        onClick={ () => {navigate('/DashBoard_E')} }
+        >
+          Inicio
         </button>
       </div>
       {/* contenido que se imprime */}
