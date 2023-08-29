@@ -68,7 +68,7 @@ function formatFechas(rawFecha) {
     const fechaInicio = rawFecha.rows[0].fecha_inicio;
     const fechaActual = rawFecha.rows[0].fecha_actual;
     return {fechaTermino, fechaInicio, fechaActual};
-}
+} 
 
 const getFormatoBajaInfo = async (req, res) => {
     const {id_comercio} = req.query;

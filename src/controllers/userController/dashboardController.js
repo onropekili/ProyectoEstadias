@@ -39,6 +39,7 @@ const findByNameOrId = async (req, res) => {
       .status(200)
       .json({ message: "Busqueda exitosa", result: resultOfConsult });
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: error.message });
   }
 };

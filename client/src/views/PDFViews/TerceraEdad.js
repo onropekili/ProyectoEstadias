@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useReactToPrint } from "react-to-print";
 import logoEmpresa from "../../assets/images/logoEmpresa.jpg";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { setDateFormat } from "../../components/formatDates";
 
@@ -10,6 +10,8 @@ const TramiteImprimible = () => {
   const { id_comerciante } = useParams();
   const [dataMerchant, setDataMerchant] = useState([]);
   const [fecha, setFecha] = useState("");
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -38,6 +40,12 @@ const TramiteImprimible = () => {
           onClick={generatePDF}
         >
           Imprimir
+        </button>
+        <button 
+        className='h-9 w-full md:w-60 px-5 py-1 font-Foco-Corp-Bold shadow-md bg-verde hover:opacity-80 text-white text-lg rounded-md' 
+        onClick={ () => {navigate('/DashBoard_E')} }
+        >
+          Inicio
         </button>
       </div>
       <div className="border-2 lg:p-10">

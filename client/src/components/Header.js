@@ -1,8 +1,6 @@
 import React from 'react'
 import logoEmpresa from '../assets/images/logoEmpresa.jpg';
-import NewComercianteEventView from '../views/executiveViews/NewComercianteEventView';
 import DashBoard_Ejecutivo from '../views/executiveViews/DashBoard_Executive';
-import NewComercianteView from '../views/executiveViews/NewComercianteView';
 import {useNavigate} from "react-router-dom";
 export default function Header({ useButton, currentPage }) {
   const navigate = useNavigate();

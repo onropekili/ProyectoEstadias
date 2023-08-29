@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { useReactToPrint } from 'react-to-print';
 import logoEmpresa from '../../assets/images/logoEmpresa.jpg';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { setDateFormat } from '../../components/formatDates'
 import { now } from 'moment';
@@ -11,6 +11,8 @@ const TramiteImprimible = () => {
   const location = useLocation();
   const { referencia, idComercio} = location.state;
   const componentRef = useRef();
+
+  const navigate = useNavigate();
 
   const [data, setData] = useState(null);
   const [direccion, setDirecion] = useState({});
@@ -58,7 +60,18 @@ const TramiteImprimible = () => {
     <div className='mx-5 lg:mx-28 my-10'>
       <div className='flex flex-col md:flex-row justify-between mb-5 gap-4'>
         <p className='text-xl md:text-3xl font-Foco-Corp-Bold text-naranja'>Orden de pago vía pública</p>
-        <button className='h-9 w-full md:w-60 px-5 py-1 font-Foco-Corp-Bold shadow-md bg-naranja hover:opacity-80 text-white text-lg rounded-md' onClick={ generatePDF }>Imprimir</button>
+        <button 
+        className='h-9 w-full md:w-60 px-5 py-1 font-Foco-Corp-Bold shadow-md bg-naranja hover:opacity-80 text-white text-lg rounded-md' 
+        onClick={ generatePDF }
+        >
+          Imprimir
+        </button>
+        <button 
+        className='h-9 w-full md:w-60 px-5 py-1 font-Foco-Corp-Bold shadow-md bg-verde hover:opacity-80 text-white text-lg rounded-md' 
+        onClick={ () => {navigate('/DashBoard_E')} }
+        >
+          Inicio
+        </button>
       </div>
       <div className='border-2'>
         {/* contenido que se imprime */}
