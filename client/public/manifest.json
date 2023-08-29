@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Cédula de mercados",
+  "name": "Portal web cédula de mercados",
   "icons": [
     {
       "src": "favicon.png",
