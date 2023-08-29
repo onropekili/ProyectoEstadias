@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useReactToPrint } from "react-to-print";
-import tljlogox from "../../assets/images/tlj-logox.png";
+import cintillo from "../../assets/images/Cintillo_comercio_via_publica _pages-to-jpg-0001.jpg"
 import logoEmpresa from "../../assets/images/logoEmpresa.jpg";
 import layuoutp from "../../assets/images/layuoutp.png";
 import { useParams, useNavigate } from "react-router-dom";
@@ -60,29 +60,8 @@ const TramiteImprimible = () => {
       {/* contenido que se imprime */}
       <div className="border-2 lg:p-10 overflow-auto h-auto">
         <div ref={componentRef}>
-          <div className="flex gap-x-2 py-4 items-center">
-            <div className="w-1/4"></div>
-            <div className="w-2/4 items-center text-center flex flex-col">
-              <label className="font-Foco-Corp text-xl antialiased">
-                Dirección General de Padrón y Licencias
-              </label>
-              <label className="font-Foco-Corp text-base antialiased">
-                Gobierno Municipal de Tlajomulco 2018-2023
-              </label>
-              <label className="font-Foco-Corp text-lg text-gris antialiased">
-                PERMISO PARA COMERCIO EN VÍA PÚBLICA
-              </label>
-            </div>
-            <div className="w-1/4 flex justify-center">
-              <img className="w-14 h-14" src={tljlogox} alt="Logo" />
-            </div>
-          </div>
-          <div className="flex justify-between">
-            <div className="h-2 w-1/5 bg-naranja"></div>
-            <div className="h-2 w-1/5 bg-rojo"></div>
-            <div className="h-2 w-1/5 bg-verde"></div>
-            <div className="h-2 w-1/5 bg-azul"></div>
-            <div className="h-2 w-1/5 bg-purple-400"></div>
+          <div className="flex mb-8">
+            <img className="h-auto" src={cintillo} alt="Logo de la empresa" />
           </div>
           <div className=" flex-col inline-grid md:grid md:grid-cols-4 gap-x-1 gap-y-2 px-6 lg:px-16 pt-10 mb-32">
             <div className="col-span-1 hidden md:block"></div>
@@ -193,7 +172,7 @@ const TramiteImprimible = () => {
               Jefe de Mercados
             </label>
           </div>
-          <div className="px-6 lg:px-16 font-Foco-Corp text-sm text-justify text-justify-last antialiased mb-4">
+          <div className="px-6 lg:px-16 font-Foco-Corp text-sm text-justify text-justify-last antialiased mb-8">
             <p className="mb-2">
               El presente permiso es personal e intransferible y solo puede ser
               ejercido por su titular en el lugar autorizado, en consecuencia no
