@@ -1,4 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
+import cintillo from "../../assets/images/cintillo_Mercados_Baja_en_vía_pública.png"
 import { useReactToPrint } from 'react-to-print';
 import {useParams, useNavigate} from "react-router-dom";
 import axios from "axios";
@@ -44,27 +45,32 @@ const TramiteImprimible = () => {
       </div>
       <div className='border-2 lg:p-10'>
         {/* contenido que se imprime */}
-        <div className="px-10 lg:px-16" ref={componentRef}>
-          <div className="flex flex-col col-span-2 text-left pt-16 mb-8">
-            <label className="font-Foco-Corp-Bold text-lg antialiased">JEFE DE MERCADOS</label>
-            <label className="font-Foco-Corp-Bold text-lg antialiased">PRESENTE.</label>
+        <div className="" ref={componentRef}>
+          <div className="flex mb-2">
+            <img className="h-auto" src={cintillo} alt="Logo de la empresa" />
           </div>
-          <div className='font-Foco-Corp text-base text-justify text-justify-last antialiased leading-10 tracking-wide mb-10'>
-            <p>POR MEDIO DE ESTE DOCUMENTO YO <span className='font-bold'>{data?.nombre || ''}</span>, SOLICITO LA BAJA(SUSPENSIÓN DE ACTIVIDADES PERMANENTE), CON REFERENCIA A LA CEDULA CON NÚMERO DE <span className='font-bold'>FOLIO: {String(folio).padStart(6, '0')} </span> CON EL GIRO DE <span className='font-bold'>{data?.giro || ''}</span>, UBICADO EN <span className='font-bold'>{data?.domicilio || ''}</span>, {data?.colonia || ''}</p>
-            <p className='mt-10'>EL MOTIVO DE LA SOLICITUD ES LA SIGUIENTE:</p>
-            <div className="border border-gris w-FULL mx-auto mt-8"></div>
-            <div className="border border-gris w-FULL mx-auto mt-8"></div>
-            <div className="border border-gris w-FULL mx-auto mt-8"></div>
-            <div className="border border-gris w-FULL mx-auto mt-8"></div>
-            <div className="border border-gris w-FULL mx-auto mt-8"></div>
-          </div>
-          <div className="flex flex-col col-span-2 gap-0 text-center">
-            <label className="font-Foco-Corp-Bold text-xl antialiased mb-24">ATENTAMENTE</label>
-            <div className="border border-gris w-full md:w-96 mx-auto mt-8"></div>
-            <label className="font-Foco-Corp-Bold text-lg antialiased mt-4">NOMBRE Y FIRMA</label>
-          </div>
-          <div className="flex flex-row text-start mb-8">
-            <label className="font-Foco-Corp-Bold text-lg antialiased mt-12">TELÉFONO: <span className='font-bold'>3319698761</span></label>
+            <div className="px-10 lg:px-16">
+              <div className="flex flex-col col-span-2 text-left pt-16 mb-8">
+                <label className="font-Foco-Corp-Bold text-lg antialiased">JEFE DE MERCADOS</label>
+                <label className="font-Foco-Corp-Bold text-lg antialiased">PRESENTE.</label>
+              </div>
+              <div className='font-Foco-Corp text-base text-justify text-justify-last antialiased leading-10 tracking-wide mb-10'>
+                <p>POR MEDIO DE ESTE DOCUMENTO YO <span className='font-bold'>{data?.nombre || ''}</span>, SOLICITO LA BAJA(SUSPENSIÓN DE ACTIVIDADES PERMANENTE), CON REFERENCIA A LA CEDULA CON NÚMERO DE <span className='font-bold'>FOLIO: {String(folio).padStart(6, '0')} </span> CON EL GIRO DE <span className='font-bold'>{data?.giro || ''}</span>, UBICADO EN <span className='font-bold'>{data?.domicilio || ''}</span>, {data?.colonia || ''}</p>
+                <p className='mt-10'>EL MOTIVO DE LA SOLICITUD ES LA SIGUIENTE:</p>
+                <div className="border border-gris w-FULL mx-auto mt-8"></div>
+                <div className="border border-gris w-FULL mx-auto mt-8"></div>
+                <div className="border border-gris w-FULL mx-auto mt-8"></div>
+                <div className="border border-gris w-FULL mx-auto mt-8"></div>
+                <div className="border border-gris w-FULL mx-auto mt-8"></div>
+              </div>
+              <div className="flex flex-col col-span-2 gap-0 text-center">
+                <label className="font-Foco-Corp-Bold text-xl antialiased mb-24">ATENTAMENTE</label>
+                <div className="border border-gris w-full md:w-96 mx-auto mt-8"></div>
+                <label className="font-Foco-Corp-Bold text-lg antialiased mt-4">NOMBRE Y FIRMA</label>
+              </div>
+              <div className="flex flex-row text-start mb-8">
+              <label className="font-Foco-Corp-Bold text-lg antialiased mt-12">TELÉFONO: <span className='font-bold'>3319698761</span></label>
+           </div>
           </div>
         </div>
       </div>
