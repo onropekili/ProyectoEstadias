@@ -138,55 +138,51 @@ function DashBoard_Ejecutivo() {
   return (
     <>
       <Header useButton={true} currentPage={DashBoard_Ejecutivo} />
-      <div className="px-8 pt-7">
-        <div className="flex flex-col lg:grid lg:grid-cols-4 items-start gap-4">
-          <div className="col-span-2 flex flex-col lg:grid lg grid-cols-2 gap-4">
-            <div className=" flex flex-col gap-2 w-full">
-              <div className="relative flex items-center">
+      <div className="px-4 lg:px-8 pt-8 mb-10">
+        <div className="flex flex-col lg:grid lg:grid-cols-4 items-start gap-6">
+          <div className="col-span-2 w-full flex flex-col lg:grid lg grid-cols-2 gap-5">
+            <div className=" flex flex-col gap-3">
+              <div className="relative flex items-center w-full">
                 <input
                   value={nameOrId}
                   id="nameOrId"
                   type="text"
-                  className="pl-14 px-4 py-2.5 w-96 max-w-lg rounded-lg font-Foco-Corp text-gris placeholder:text-base placeholder:text-gris placeholder:text-opacity-70 shadow-sm ring-2 ring-inset ring-gris focus:drop-shadow-lg focus:ring-2 focus:ring-gris focus:ring-opacity-75 focus:outline-none sm:text-sm sm:leading-6"
+                  className="w-full h-11 pl-14 px-4 py-2.5 text-lg rounded-lg font-Foco-Corp text-gris placeholder:text-lg placeholder:text-gris placeholder:text-opacity-70 shadow-sm ring-2 ring-inset ring-gris focus:drop-shadow-lg focus:ring-2 focus:ring-gris focus:ring-opacity-75 focus:outline-none"
                   placeholder="Nombre O No. de folio"
                   onChange={HandleInputChanges}
                 />
                 <img
                   src={require("../../assets/images/search.png")}
                   alt="Img"
-                  className="absolute left-0 w-11 h-11 p-2 border border-gris rounded-lg rounded-r-none"
+                  className="absolute left-0 w-11 h-11 p-2 border-r-2 border-gris rounded-lg rounded-r-none"
                 />
               </div>
-              <div className="relative flex items-center">
+              <div className="relative flex items-center w-full">
                 <input
                   value={colonia}
                   id="colonia"
                   type="text"
-                  className="pl-14 px-4 py-2.5 w-96 max-w-lg rounded-lg font-Foco-Corp text-gris placeholder:text-base placeholder:text-gris placeholder:text-opacity-70 shadow-sm ring-2 ring-inset ring-gris focus:drop-shadow-lg focus:ring-2 focus:ring-gris focus:ring-opacity-75 focus:outline-none sm:text-sm sm:leading-6"
+                  className="w-full h-11 pl-14 px-4 py-2.5 text-lg rounded-lg font-Foco-Corp text-gris placeholder:text-lg placeholder:text-gris placeholder:text-opacity-70 shadow-sm ring-2 ring-inset ring-gris focus:drop-shadow-lg focus:ring-2 focus:ring-gris focus:ring-opacity-75 focus:outline-none"
                   placeholder="Buscar por colonia"
                   onInput={HandleInputChanges}
                 />
                 <img
                   src={require("../../assets/images/search.png")}
                   alt="Img"
-                  className="absolute left-0 w-11 h-11 p-2 border border-gris rounded-lg rounded-r-none"
+                  className="absolute left-0 w-11 h-11 p-2 border-r-2 border-gris rounded-lg rounded-r-none"
                 />
               </div>
             </div>
-            <div className="flex flex-col gap-2 w-full">
+            <div className="flex flex-col gap-3 w-full">
               <select
                 id="filtrar"
                 value={filtrarPor}
                 name="filtrar"
-                className="px-4 py-3.5 w-64 h-11 rounded-lg font-Foco-Corp text-gris placeholder:text-gris placeholder:text-opacity-70 shadow-sm ring-2 ring-inset ring-gris focus:drop-shadow-lg focus:ring-2 focus:ring-gris focus:ring-opacity-75 focus:outline-none sm:text-sm sm:leading-6"
+                className="w-full h-11 px-4 text-lg rounded-lg font-Foco-Corp text-gris placeholder:text-gris placeholder:text-opacity-70 shadow-sm ring-2 ring-inset ring-gris focus:drop-shadow-lg focus:ring-2 focus:ring-gris focus:ring-opacity-75 focus:outline-none"
                 onInput={HandleInputChanges}
               >
-                <option  value="">
-                  Filtrar por
-                </option>
-                <option value="terceraEdad">
-                  Tercera edad/Capacidades diferentes
-                </option>
+                <option  value="">Filtrar por</option>
+                <option value="terceraEdad">Tercera edad/Capacidades diferentes</option>
                 <option value="refrendados">Refrendados</option>
                 <option value="noRefrendados">No Refrendados</option>
                 <option value="conObservacion">Con Observaciones</option>
@@ -194,7 +190,7 @@ function DashBoard_Ejecutivo() {
               <select
                 value={Mostrar}
                 id="mostrar"
-                className=" px-4 py-3.5 w-64 h-11 rounded-lg font-Foco-Corp text-gris placeholder:text-gris placeholder:text-opacity-70 shadow-sm ring-2 ring-inset ring-gris focus:drop-shadow-lg focus:ring-2 focus:ring-gris focus:ring-opacity-75 focus:outline-none sm:text-sm sm:leading-6"
+                className="w-full h-11 px-4 text-lg rounded-lg font-Foco-Corp text-gris placeholder:text-gris placeholder:text-opacity-70 shadow-sm ring-2 ring-inset ring-gris focus:drop-shadow-lg focus:ring-2 focus:ring-gris focus:ring-opacity-75 focus:outline-none"
                 onChange={HandleInputChanges}
               >
                 <option value="">Todos</option>
@@ -205,40 +201,36 @@ function DashBoard_Ejecutivo() {
           </div>
           <div className="col-span-2 flex flex-col w-full">
             <div className="flex flex-col lg:grid lg:grid-cols-2 gap-4">
-              <div className="flex">
-                <div className="relative flex items-center w-full">
-                  <button
-                    onClick={() => navigate("/Registrar-comerciante")}
-                    className="bg-naranja hover:bg-naranja hover:opacity-75 text-white font-bold w-full py-2 px-20 rounded"
-                  >
-                    Alta vía pública
-                  </button>
-                  <img
-                    src={require("../../assets/images/edit.png")}
-                    alt="Img"
-                    className="absolute left-0 w-11 h-11 p-2 border-2 border-white rounded-md rounded-r-none"
-                  />
-                </div>
+              <div className="relative flex items-center w-full">
+                <button
+                  onClick={() => navigate("/Registrar-comerciante")}
+                  className="w-full h-11 bg-naranja hover:bg-naranja hover:opacity-75 text-white font-bold rounded"
+                >
+                  Alta vía pública
+                </button>
+                <img
+                  src={require("../../assets/images/edit.png")}
+                  alt="Img"
+                  className="absolute left-0 w-11 h-11 p-2 border-r-2 border-white"
+                />
               </div>
-              <div className="flex">
-                <div className="relative flex items-center w-full">
-                  <button
-                    onClick={() => navigate("/Registrar-comerciante-evento")}
-                    className="bg-verde hover:bg-verde hover:opacity-75 text-white font-bold w-full py-2 px-20 rounded"
-                  >
-                    Alta por evento
-                  </button>
-                  <img
-                    src={require("../../assets/images/edit.png")}
-                    alt="Img"
-                    className="absolute left-0 w-11 h-11 p-2 border-2 border-white rounded-md rounded-r-none"
-                  />
-                </div>
+              <div className="relative flex items-center w-full">
+                <button
+                  onClick={() => navigate("/Registrar-comerciante-evento")}
+                  className="w-full h-11 bg-verde hover:bg-verde hover:opacity-75 text-white font-bold rounded"
+                >
+                  Alta por evento
+                </button>
+                <img
+                  src={require("../../assets/images/edit.png")}
+                  alt="Img"
+                  className="absolute left-0 w-11 h-11 p-2 border-r-2 border-white"
+                />
               </div>
             </div>
           </div>
         </div>
-        <div className="justify-center items-center flex flex-wrap gap-5 py-5">
+        <div className="justify-center items-start flex flex-col md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 overflow-auto px-1 py-6">
           {ComerciantesComponents}
         </div>
       </div>

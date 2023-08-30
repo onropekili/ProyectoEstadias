@@ -29,7 +29,7 @@ export const InfoComponent = ({ folio, nombre, giroActivo, observaciones, fecha_
     }
 
     return (
-        <div className={`rounded-md shadow-lg w-96 ring-1 ${colorAll}`}>
+        <div className={`rounded-md shadow-lg w-full h-full ring-1 ${colorAll}`}>
             <div className={`flex justify-end items-end rounded-t-md px-4 py-1 bg-opacity-30 bg-${colorAll} ring-1`}>
                 <h4 className="text-lg font-Foco-Corp-Bold">Folio: {String(folio).padStart(6, '0')}</h4>
             </div>
