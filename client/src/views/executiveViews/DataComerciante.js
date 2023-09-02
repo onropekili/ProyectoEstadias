@@ -6,7 +6,7 @@ import Select from "react-select";
 import selectStylesForm from "../../components/StyleSelectForm";
 import Swal from "sweetalert2";
 import {useNavigate, useParams} from "react-router-dom";
-import Modal from "../../components/Modal"; // Importa el componente Modal
+import Modal from "../../components/Modal";
 import axios from "axios";
 import { setDateFormatDDMMYY} from "../../components/formatDates";
 import useParamsDataComerciante from "../../customHooks/useParamsDataComerciante";
@@ -347,7 +347,6 @@ const DataComerciante = () => {
         },
       }).then((result) => {
         if (result.isConfirmed) {
-          //TODO Lógica para eliminar el comerciante
           axios.put(`http://${process.env.REACT_APP_HOST}:4000/baja`, {
             folio: folio
           }).then((res) => {

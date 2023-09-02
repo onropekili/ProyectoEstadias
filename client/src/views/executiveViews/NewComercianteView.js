@@ -23,10 +23,6 @@ const NewComercianteView = ({currentView}) => {
   } = useForm();
 
 
-  // useEffect(() => {
-  //   AuthMiddleware(user, navigate);
-  // }, [user, navigate]);
-
   const onSubmit = (data) => {
     if (!(/^\d{0,10}$/.test(data.telefono1))&& !(/^$|^\d{1,10}$/.test(data.telefono2))) {
       Swal.fire({

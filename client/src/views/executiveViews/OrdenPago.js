@@ -162,7 +162,7 @@ const merchantFullName = merchant
           setTotal(subtotal + total);
         }
       });
-      // console.log(conceptosPago);
+      
      }, [conceptosPago]);
 
 
@@ -179,11 +179,7 @@ const merchantFullName = merchant
     console.log("eliminar");
   };
 
-  const clasificacion = new Map();
-  clasificacion.set(1, "COMERCIO AMBULANTE");
-  clasificacion.set(2, "COMERCIO EN PUESTO FIJO");
-  clasificacion.set(3, "COMERCIO EN PUESTO SEMI-FIJO");
-  clasificacion.set(4, "COMERCIO EN PUESTO EN FESTIVIDADES");
+
 
   const createPaymentOrder = () => {
     const conceptoOrden = conceptosPago;
@@ -214,6 +210,12 @@ const merchantFullName = merchant
       .catch((error) => {
       });
   };
+
+  const clasificacion = new Map();
+  clasificacion.set(1, "COMERCIO AMBULANTE");
+  clasificacion.set(2, "COMERCIO EN PUESTO FIJO");
+  clasificacion.set(3, "COMERCIO EN PUESTO SEMI-FIJO");
+  clasificacion.set(4, "COMERCIO EN PUESTO EN FESTIVIDADES");
 
   return (
     <>
