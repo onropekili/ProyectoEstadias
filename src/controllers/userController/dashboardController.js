@@ -25,14 +25,14 @@ const findByNameOrId = async (req, res) => {
 
       let limitedConsult =
         getConsult(filters, parametersArray) +
-        " and cancelaciones_bajas = false order by fecha_alta desc limit 9";
+        " and cancelaciones_bajas = false order by fecha_alta desc limit 12";
       resultOfConsult = await queryToDatabaseWithFilters(
         limitedConsult,
         parametersArray
       );
     } else {
       limitedConsult =
-        "select * from dashboard where 1=1 and cancelaciones_bajas = false order by fecha_alta desc limit 9";
+        "select * from dashboard where 1=1 and cancelaciones_bajas = false order by fecha_alta desc limit 12";
       resultOfConsult = await queryToDatabaseWithOutFilters(limitedConsult);
     }
     res

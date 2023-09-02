@@ -1,5 +1,5 @@
 //TODO: ESTE CODIGO SE TIENE QUE REFACTORIZAR URGENTEMENTE
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Header from "../../components/Header";
 import Select from "react-select";
 import selectStyles from "../../components/StyleSelect";
@@ -35,10 +35,27 @@ const OrdenPago = () => {
   const metrosX = Number(shop.metraje?.split("x")[0]);
   const metrosY = Number(shop.metraje?.split("x")[1]);
   const totalMetraje = metrosX * metrosY;
-  console.log(merchant);
   const vigencia = shop?.fecha_termino
     ? setDateFormat(shop.fecha_termino)
     : "sin refrendo";
+  const merchantAdress = merchant
+  ? merchant.calle
+      .concat(' ' ,merchant.numero_exterior)
+      .concat(
+        merchant.numero_interior ? `, Int: ${merchant.numero_interior}, ` : ""
+      )
+      .concat(` Entre ${merchant.calle_colindante_uno}`)
+      .concat(` y ${merchant.calle_colindante_dos}`)
+  : "";
+
+const merchantFullName = merchant
+  ? merchant.nombres.concat(
+      " ",
+      merchant.apellido_paterno,
+      " ",
+      merchant.apellido_materno
+    )
+  : "";
 
   const handleChange = (option) => {
     setSelectedOption(option);
@@ -91,7 +108,7 @@ const OrdenPago = () => {
       });
   }, []);
 
-  useEffect(() => {
+  const calculateTotal = useMemo(() => {
     if (selectBeginDate && selectEndDate && selectedDays.length > 0) {
       let diasTotales = 0;
       for (let i = 0; i <= selectedDays.length; i++) {
@@ -102,13 +119,17 @@ const OrdenPago = () => {
         );
       }
       setTotalDaysWorked(diasTotales);
-
+      
       let temporaryTotal = 0;
       for (const concepto of conceptosPago) {
         if (concepto.unidad === "PESOS") {
           temporaryTotal += concepto.importe * diasTotales;
         } else {
+          if(merchant?.tercera_edad){
+            temporaryTotal += 0;
+          }else{
           temporaryTotal += concepto.importe * totalMetraje * diasTotales;
+          }
         }
       }
       setTotal(temporaryTotal);
@@ -128,8 +149,8 @@ const OrdenPago = () => {
     setListaDeConceptos(ListaDeConceptosAgregados);
   };
 
-  const pushConceptosPago = () => {
-    if (primerRender) {
+  const pushConceptosPago = useMemo(() => {
+   
       setListaDeConceptosAgregados(conceptosPago);
       conceptosPago.forEach((concepto) => {
         let subtotal = 0;
@@ -142,13 +163,8 @@ const OrdenPago = () => {
         }
       });
       // console.log(conceptosPago);
-    } else {
-      setPrimerRender(true);
-    }
-    console.log("hola");
-  };
+     }, [conceptosPago]);
 
-  useEffect(pushConceptosPago, [conceptosPago]);
 
   const popConceptosPago = (concepto) => {
     const conceptosPagoActualizado = conceptosPago.filter(
@@ -168,25 +184,6 @@ const OrdenPago = () => {
   clasificacion.set(2, "COMERCIO EN PUESTO FIJO");
   clasificacion.set(3, "COMERCIO EN PUESTO SEMI-FIJO");
   clasificacion.set(4, "COMERCIO EN PUESTO EN FESTIVIDADES");
-
-  const merchantAdress = merchant
-    ? merchant.calle
-        .concat(' ' ,merchant.numero_exterior)
-        .concat(
-          merchant.numero_interior ? `, Int: ${merchant.numero_interior}, ` : ""
-        )
-        .concat(` Entre ${merchant.calle_colindante_uno}`)
-        .concat(` y ${merchant.calle_colindante_dos}`)
-    : "";
-
-  const merchantFullName = merchant
-    ? merchant.nombres.concat(
-        " ",
-        merchant.apellido_paterno,
-        " ",
-        merchant.apellido_materno
-      )
-    : "";
 
   const createPaymentOrder = () => {
     const conceptoOrden = conceptosPago;
