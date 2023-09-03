@@ -20,7 +20,11 @@ const TramiteImprimible = () => {
       })
       .then((response) => {
         setDataMerchant(response.data);
-        setFecha(setDateFormat(response.data.fecha_termino));
+        if(response.data.fecha_termino) {
+          setFecha(setDateFormat(response.data.fecha_termino));
+        } else {
+          setFecha('Indefinido');
+        }
       })
       .catch((error) => console.log(error));
   }, []);
@@ -105,7 +109,7 @@ const TramiteImprimible = () => {
               </p>
             </div>
             <div className="flex flex-col col-span-2 gap-0 text-left mb-5">
-              <p className="font-Foco-Corp-Bold text-base antialiased mb-20">
+              <p className="font-Foco-Corp-Bold text-base antialiased mb-12">
                 FIRMA DE ENTERADO
               </p>
               <p className="font-Foco-Corp-Bold text-base antialiased ">

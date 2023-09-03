@@ -94,33 +94,48 @@ const OrdenPago = () => {
     };
 
 
-    const calculateTotal = useMemo(() => {
-      if (selectBeginDate && selectEndDate && selectedDays.length > 0) {
-        let diasTotales = 0;
-        for (let i = 0; i <= selectedDays.length; i++) {
-          diasTotales += contarDiasDeLaSemana(
-            selectBeginDate,
-            selectEndDate,
-            selectedDays[i]
-          );
-        }
-        setTotalDaysWorked(diasTotales);
+// Función para calcular los días trabajados
+    function calculateTotalDaysWorked(beginDate, endDate, selectedDays) {
+      let totalDays = 0;
+      for (const day of selectedDays) {
+        totalDays += contarDiasDeLaSemana(beginDate, endDate, day);
+      }
+      return totalDays;
+    }
 
-        let temporaryTotal = 0;
-        for (const concepto of conceptosPago) {
-          if (concepto.unidad === "PESOS") {
-            temporaryTotal += concepto.importe * diasTotales;
+// Función para calcular el total temporal
+    function calculateTemporaryTotal(conceptosPago, diasTotales, merchant, totalMetraje) {
+      let temporaryTotal = 0;
+      const isTerceraEdad = merchant?.tercera_edad;
+
+      for (const concepto of conceptosPago) {
+        if (concepto.unidad === "PESOS") {
+          temporaryTotal += concepto.importe * diasTotales;
+        } else {
+          if (isTerceraEdad) {
+            console.log("tercera edad");
+            temporaryTotal += 0;
           } else {
-            if (merchant?.tercera_edad) {
-              temporaryTotal += 0;
-            } else {
-              temporaryTotal += concepto.importe * totalMetraje * diasTotales;
-            }
+            temporaryTotal += concepto.importe * totalMetraje * diasTotales;
           }
         }
-        setTotal(temporaryTotal);
       }
-    }, [selectBeginDate, selectEndDate, selectedDays]);
+      return temporaryTotal;
+    }
+
+    const calculateTotal = useMemo(() => {
+      if (!selectBeginDate || !selectEndDate || selectedDays.length < 0) {
+        return;
+      }
+
+      const diasTotales = calculateTotalDaysWorked(selectBeginDate, selectEndDate, selectedDays);
+      setTotalDaysWorked(diasTotales);
+
+      const temporaryTotal = calculateTemporaryTotal(conceptosPago, diasTotales, merchant, totalMetraje);
+      console.log(temporaryTotal);
+      setTotal(temporaryTotal);
+    }, [selectBeginDate, selectEndDate, selectedDays, conceptosPago, merchant, totalMetraje]);
+
 
     const setListaDeConceptosAgregados = (conceptosPago) => {
       const ListaDeConceptosAgregados = conceptosPago.map((concepto) => (
@@ -136,19 +151,7 @@ const OrdenPago = () => {
     };
 
     const pushConceptosPago = useMemo(() => {
-
       setListaDeConceptosAgregados(conceptosPago);
-      conceptosPago.forEach((concepto) => {
-        let subtotal = 0;
-        if (concepto.unidad === "PESOS") {
-          subtotal = concepto.importe;
-          setTotal(subtotal + total);
-        } else {
-          subtotal = totalMetraje * concepto.importe * totalDaysWorked;
-          setTotal(subtotal + total);
-        }
-      });
-
     }, [conceptosPago]);
 
 
@@ -157,11 +160,7 @@ const OrdenPago = () => {
         (conceptoPago) => conceptoPago.idconcepto !== concepto.idconcepto
       );
       setConceptosPago(conceptosPagoActualizado);
-      if (concepto.unidad === "PESOS") {
-        setTotal(total - concepto.importe);
-      } else {
-        setTotal(total - concepto.importe * totalMetraje * totalDaysWorked);
-      }
+      setTotal(0)
       console.log("eliminar");
     };
 
@@ -429,10 +428,10 @@ const OrdenPago = () => {
               type="submit"
               value={"Generar Orden"}
               className={`self-center text-center bg-naranja w-full h-11 rounded-lg lg:w-80 ${
-                conceptosPago.length === 0 ? "opacity-50 cursor-not-allowed" : ""
+                (conceptosPago.length === 0 || (conceptosPago[0]?.unidad !== "PESOS" && totalDaysWorked === 0)) ? "opacity-50 cursor-not-allowed" : ""
               }`}
               onClick={createPaymentOrder}
-              disabled={conceptosPago.length === 0}
+              disabled={(conceptosPago.length === 0 || (conceptosPago[0]?.unidad !== "PESOS" && totalDaysWorked === 0))}
             />
             {/* </Link> */}
           </div>
