@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { AuthMiddleware } from '../../middleware/ProtectedMiddleware';
-import { useLocation, useNavigate } from 'react-router-dom';
 import Header from "../../components/Header";
 import Sidebar from '../../components/Sidebar';
 import BarChart from '../../components/BarChart';

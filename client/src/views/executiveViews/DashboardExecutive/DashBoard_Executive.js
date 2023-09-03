@@ -1,6 +1,5 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { AuthMiddleware } from "../../../middleware/ProtectedMiddleware";
 import { useLocation, useNavigate } from "react-router-dom";
 import { InfoComponent } from "../../../components/InfoComponent";
 import Header from "../../../components/Header";
