@@ -1,10 +1,10 @@
 import React from 'react';
 
 /**
- * @param selectedOption {Boolean | String}
- * @param selectBeginDate {Boolean | String}
- * @param selectEndDate {Boolean | String}
- * @param selectedDays {Boolean| Array}
+ * @param selectedOption {JSON}
+ * @param selectBeginDate {Date}
+ * @param selectEndDate {Date}
+ * @param selectedDays {Array<String>}
  * @param agregaConceptoPago {Function}
  * @returns {JSX.Element}
  * @description Componente que renderiza un botón que se deshabilita si no se ha seleccionado algun concepto
