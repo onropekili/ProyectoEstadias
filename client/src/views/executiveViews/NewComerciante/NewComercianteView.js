@@ -1,8 +1,8 @@
 import React, {useEffect} from "react";
 import {useForm} from "react-hook-form";
-import Header from "../../components/Header";
+import Header from "../../../components/Header";
 import {useLocation, useNavigate} from "react-router-dom";
-import {AuthMiddleware} from "../../middleware/ProtectedMiddleware";
+import {AuthMiddleware} from "../../../middleware/ProtectedMiddleware";
 import Swal from "sweetalert2";
 
 const NewComercianteView = ({currentView}) => {

@@ -1,9 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { AuthMiddleware } from "../../middleware/ProtectedMiddleware";
+import { AuthMiddleware } from "../../../middleware/ProtectedMiddleware";
 import { useLocation, useNavigate } from "react-router-dom";
-import { InfoComponent } from "../../components/InfoComponent";
-import Header from "../../components/Header";
+import { InfoComponent } from "../../../components/InfoComponent";
+import Header from "../../../components/Header";
 import { AiFillCaretDown } from 'react-icons/ai';
 
 function DashBoard_Ejecutivo() {
@@ -149,7 +149,7 @@ function DashBoard_Ejecutivo() {
                   onChange={HandleInputChanges}
                 />
                 <img
-                  src={require("../../assets/images/search.png")}
+                  src={require("../../../assets/images/search.png")}
                   alt="Img"
                   className="absolute left-0 w-11 h-11 p-2 border-r-2 border-gris bg-gris bg-opacity-5"
                 />
@@ -164,7 +164,7 @@ function DashBoard_Ejecutivo() {
                   onInput={HandleInputChanges}
                 />
                 <img
-                  src={require("../../assets/images/search.png")}
+                  src={require("../../../assets/images/search.png")}
                   alt="Img"
                   className="absolute left-0 w-11 h-11 p-2 border-r-2 border-gris bg-gris bg-opacity-5"
                 />
@@ -216,7 +216,7 @@ function DashBoard_Ejecutivo() {
                   Alta vía pública
                 </button>
                 <img
-                  src={require("../../assets/images/edit.png")}
+                  src={require("../../../assets/images/edit.png")}
                   alt="Img"
                   className="absolute left-0 w-11 h-11 p-2 border-r-2 border-white"
                 />
@@ -229,7 +229,7 @@ function DashBoard_Ejecutivo() {
                   Alta por evento
                 </button>
                 <img
-                  src={require("../../assets/images/edit.png")}
+                  src={require("../../../assets/images/edit.png")}
                   alt="Img"
                   className="absolute left-0 w-11 h-11 p-2 border-r-2 border-white"
                 />

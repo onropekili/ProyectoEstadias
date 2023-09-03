@@ -1,6 +1,6 @@
 import React from 'react'
 import logoEmpresa from '../assets/images/logoEmpresa.jpg';
-import DashBoard_Ejecutivo from '../views/executiveViews/DashBoard_Executive';
+import DashBoard_Ejecutivo from '../views/executiveViews/DashboardExecutive/DashBoard_Executive';
 import {useNavigate} from "react-router-dom";
 export default function Header({ useButton, currentPage }) {
   const navigate = useNavigate();

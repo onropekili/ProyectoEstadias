@@ -1,11 +1,11 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import * as React from "react";
 import Login from "./views/Login";
-import DashBoard_Executive from "./views/executiveViews/DashBoard_Executive";
+import DashBoard_Executive from "./views/executiveViews/DashboardExecutive/DashBoard_Executive";
 import DashBoard_Admin from "./views/adminViews/DashBoard_Admin";
-import NewComercianteView from "./views/executiveViews/NewComercianteView";
-import NewComercioView from "./views/executiveViews/NewCommerce";
-import OrdenPago from "./views/executiveViews/OrdenPago";
+import NewComercianteView from "./views/executiveViews/NewComerciante/NewComercianteView";
+import NewComercioView from "./views/executiveViews/NewCommerce/NewCommerce";
+import OrdenPago from "./views/executiveViews/OrdenPago/OrdenPago";
 import TerceraEdad from "./views/PDFViews/TerceraEdad";
 import OrdenPagoPDF from "./views/PDFViews/OrdenPagoPDF";
 import IncomeView from "./views/adminViews/IncomeView";
@@ -15,7 +15,7 @@ import {
   AdminProtectedRoute,
 } from "./components/Middlewares";
 import { useState } from "react";
-import DataComerciante from "./views/executiveViews/DataComerciante";
+import DataComerciante from "./views/executiveViews/DataComerciante/DataComerciante";
 import Cedulacommerce from "./views/PDFViews/CedulaCommerce";
 import BajaCommerce from "./views/PDFViews/BajaCommerce";
 export default function App() {
@@ -27,8 +27,8 @@ export default function App() {
         <Route
           path="/"
           element={
-            <LogOut setuserData={setuserData}>
-              <Login userData={userData} setUserData={setuserData} />
+            <LogOut >
+              <Login />
             </LogOut>
           }
         />
@@ -36,25 +36,9 @@ export default function App() {
         <Route
           path="/DashBoard_E"
           element={
-            <ExecutiveProtectedRoute user={userData}>
+            <ExecutiveProtectedRoute>
               <DashBoard_Executive />
             </ExecutiveProtectedRoute>
-          }
-        />
-        <Route
-          path="/DashBoard_A"
-          element={
-            <AdminProtectedRoute>
-              <DashBoard_Admin />
-            </AdminProtectedRoute>
-          }
-        />
-        <Route
-          path="/Ingresos-Totales"
-          element={
-            <AdminProtectedRoute>
-              <IncomeView />
-            </AdminProtectedRoute>
           }
         />
         <Route
@@ -135,6 +119,22 @@ export default function App() {
             <ExecutiveProtectedRoute>
               <BajaCommerce />
             </ExecutiveProtectedRoute>
+          }
+        />
+        <Route
+          path="/DashBoard_A"
+          element={
+            <AdminProtectedRoute>
+              <DashBoard_Admin />
+            </AdminProtectedRoute>
+          }
+        />
+        <Route
+          path="/Ingresos-Totales"
+          element={
+            <AdminProtectedRoute>
+              <IncomeView />
+            </AdminProtectedRoute>
           }
         />
       </Routes>

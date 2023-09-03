@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import Header from "../../components/Header";
+import Header from "../../../components/Header";
 import { useLocation, useNavigate } from "react-router-dom";
-import { showInfoAlert } from "../../components/SwAlerts";
+import { showInfoAlert } from "../../../components/SwAlerts";
 import axios from "axios";
 import Swal from "sweetalert2";
 

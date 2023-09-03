@@ -1,17 +1,17 @@
 //TODO: ESTE CODIGO SE TIENE QUE REFACTORIZAR URGENTEMENTE
 import React, { useEffect, useMemo, useState } from "react";
-import Header from "../../components/Header";
+import Header from "../../../components/Header";
 import Select from "react-select";
-import selectStyles from "../../components/StyleSelect";
-import DatePickerInput from "../../components/DatePickerInput";
-import CheckboxInput from "../../components/CheckboxInput";
+import selectStyles from "../../../components/StyleSelect";
+import DatePickerInput from "../../../components/DatePickerInput";
+import CheckboxInput from "../../../components/CheckboxInput";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { ConceptList } from "../../components/ConceptList";
-import { showErrorAlert, showInfoAlertOp } from "../../components/SwAlerts";
-import { setDateFormat } from "../../components/formatDates";
-import DisableableButton from "../../components/DisableableButton";
-import { contarDiasDeLaSemana } from "../../components/countsDaysBetweeDates";
+import { ConceptList } from "../../../components/ConceptList";
+import { showErrorAlert, showInfoAlertOp } from "../../../components/SwAlerts";
+import { setDateFormat } from "../../../components/formatDates";
+import DisableableButton from "../../../components/DisableableButton";
+import { contarDiasDeLaSemana } from "../../../components/countsDaysBetweeDates";
 const moment = require("moment");
 
 const OrdenPago = () => {
