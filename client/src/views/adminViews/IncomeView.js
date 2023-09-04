@@ -28,7 +28,6 @@ function IncomeView() {
   const twelveMonthLabels = ['Mes actual', 'Mes anterior', 'Hace 3 meses', 'Hace 4 meses', 'Hace 5 meses', 'Hace 6 meses', 'Hace 7 meses', 'Hace 8 meses', 'Hace 9 meses', 'Hace 10 meses', 'Hace 11 meses', 'Hace 12 meses'];
   const twelveMonthIncome = [twelveMonthGraph[11]?.total_mes, twelveMonthGraph[10]?.total_mes, twelveMonthGraph[9]?.total_mes, twelveMonthGraph[8]?.total_mes, twelveMonthGraph[7]?.total_mes, twelveMonthGraph[6]?.total_mes, twelveMonthGraph[5]?.total_mes, twelveMonthGraph[4]?.total_mes, twelveMonthGraph[3]?.total_mes, twelveMonthGraph[2]?.total_mes, twelveMonthGraph[1]?.total_mes, twelveMonthGraph[0]?.total_mes];
 
-
   useEffect(() => {
     axios.get(`http://${process.env.REACT_APP_HOST}:4000/admin/getIncome`)
     .then((res) => {
@@ -71,7 +70,7 @@ function IncomeView() {
       setTable3Data(format);
     }
     for(const period of yearlyInfo) {
-      const format = [[period.formato_anios, period.fecha_inicio, period.fecha_termino, period.cantidad_ordenes, period.suma_montos]]
+      const format = [[period.formato_meses, period.fecha_inicio, period.fecha_termino, period.cantidad_ordenes, period.suma_montos]]
       console.log(format)
       setTable4Data(format);
     }
@@ -157,7 +156,7 @@ function IncomeView() {
         return <div className='flex flex-col lg:grid lg:grid-cols-2 gap-4'>
           <div className='w-full flex flex-col' style={{ height:'57vh' }}>
             <div className='w-full flex flex-col border-2 border-gray-200 rounded-md gap-4 shadow-md overflow-auto'>
-              <Table data={table4Data} headers={['Fecha inicio', 'Fecha final', 'Cédulas', 'Monto Total']} numColumns={4} />
+              <Table data={table4Data} headers={['Mes','Fecha inicio', 'Fecha final', 'Cédulas', 'Monto Total']} numColumns={5} />
             </div>
           </div>
           <div className='w-full flex flex-col p-4 border-2 border-gray-200 rounded-md gap-4 shadow-md'>
