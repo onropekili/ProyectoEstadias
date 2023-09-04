@@ -321,6 +321,7 @@ const NewComercioView = () => {
               type="button"
               value="Volver"
               className="self-start text-center bg-verde w-40 h-11 rounded-lg"
+              onClick={() => navigate(-1)}
             />
           </div>
           <div className="flex flex-col text-white text-xl font-Foco-Corp-Bold">
