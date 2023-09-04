@@ -85,11 +85,34 @@ const getDashoardinformation = async (req, res) => {
     const rawResultMonthGraph = await pool.query(queryMonthGraph);
     const monthGraph = rawResultMonthGraph.rows;
 
+    const queryYearGraph = `WITH meses AS (
+      SELECT generate_series(
+          DATE_TRUNC('month', NOW() - INTERVAL '1 year'),
+          DATE_TRUNC('month', NOW()),
+          INTERVAL '1 month'
+      ) AS mes
+  )
+  SELECT
+      TO_CHAR(m.mes, 'YYYY-MM') AS mes,
+      COALESCE(SUM(CASE WHEN op.pagado = true THEN op.total ELSE 0 END), 0) AS total_mes
+  FROM
+      meses m
+  LEFT JOIN
+      ordenes_pago op ON DATE_TRUNC('month', op.fecha) = m.mes
+  GROUP BY
+      m.mes
+  ORDER BY
+      m.mes;`;
+
+    const rawResultYearGraph = await pool.query(queryYearGraph);
+    const yearGraph = rawResultYearGraph.rows;
+
     const data = {
       topInfo: topInfo,
       dayGraph: dayGraph,
       weekGraph: weekGraph,
-      monthGraph: monthGraph
+      monthGraph: monthGraph,
+      yearGraph: yearGraph
     }
 
 

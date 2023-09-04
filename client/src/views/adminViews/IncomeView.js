@@ -12,12 +12,32 @@ function IncomeView() {
 
   const [isOpen, setIsOpen] = useState(false);
   const [data, setData] = useState(null);
+  const [table2Data, setTable2Data] = useState([]);
+  const [table3Data, setTable3Data] = useState([]);
+  const [table4Data, setTable4Data] = useState([]);
+  const [dayGraph, setDayGraph] = useState([]);
+  const dayLabels = [dayGraph[0]?.dia_semana, dayGraph[1]?.dia_semana, dayGraph[2]?.dia_semana, dayGraph[3]?.dia_semana, dayGraph[4]?.dia_semana];
+  const dayIncome = [dayGraph[0]?.total_semana, dayGraph[1]?.total_semana, dayGraph[2]?.total_semana, dayGraph[3]?.total_semana, dayGraph[4]?.total_semana];
+  const [weekGraph, setWeekGraph] = useState([]);
+  const weekLabels = ['Esta semana', 'Semana pasada', 'Hace 3 semanas', 'Hace 4 semanas'];
+  const weekIncome = [weekGraph[0]?.total_semana, weekGraph[1]?.total_semana, weekGraph[2]?.total_semana, weekGraph[3]?.total_semana];
+  const [monthGraph, setMonthGraph] = useState([]);
+  const monthLabels = ['Mes actual', 'Mes anterior', 'Hace 3 meses', 'Hace 4 meses', 'Hace 5 meses', 'Hace 6 meses'];
+  const monthIncome = [monthGraph[6]?.total_mes, monthGraph[5]?.total_mes, monthGraph[4]?.total_mes, monthGraph[3]?.total_mes, monthGraph[2]?.total_mes, monthGraph[1]?.total_mes];
+  const [twelveMonthGraph, setTwelveMonthGraph] = useState([]);
+  const twelveMonthLabels = ['Mes actual', 'Mes anterior', 'Hace 3 meses', 'Hace 4 meses', 'Hace 5 meses', 'Hace 6 meses', 'Hace 7 meses', 'Hace 8 meses', 'Hace 9 meses', 'Hace 10 meses', 'Hace 11 meses', 'Hace 12 meses'];
+  const twelveMonthIncome = [twelveMonthGraph[11]?.total_mes, twelveMonthGraph[10]?.total_mes, twelveMonthGraph[9]?.total_mes, twelveMonthGraph[8]?.total_mes, twelveMonthGraph[7]?.total_mes, twelveMonthGraph[6]?.total_mes, twelveMonthGraph[5]?.total_mes, twelveMonthGraph[4]?.total_mes, twelveMonthGraph[3]?.total_mes, twelveMonthGraph[2]?.total_mes, twelveMonthGraph[1]?.total_mes, twelveMonthGraph[0]?.total_mes];
+
 
   useEffect(() => {
     axios.get(`http://${process.env.REACT_APP_HOST}:4000/admin/getIncome`)
     .then((res) => {
-      console.log(res.data);
       setData(res.data);
+      setTables(res.data);
+      setDayGraph(res.data.graphInfo.dayGraph);
+      setWeekGraph(res.data.graphInfo.weekGraph);
+      setMonthGraph(res.data.graphInfo.monthGraph);
+      setTwelveMonthGraph(res.data.graphInfo.yearGraph);
     })
     .catch((err) => {
       console.log(err);
@@ -29,66 +49,51 @@ function IncomeView() {
     setIsOpen(!isOpen);
   };
 
-  const [activeTab, setActiveTab] = useState('Dia');
+  const [activeTab, setActiveTab] = useState('semana');
+
+  const setTables = (data) => {
+    console.log(data);
+
+    let { weeklyInfo, monthlyInfo, yearlyInfo } = data;
+
+    weeklyInfo = weeklyInfo || [];
+    monthlyInfo = monthlyInfo || [];
+    yearlyInfo = yearlyInfo || [];
+
+    for(const period of weeklyInfo) {
+      const format = [[period.formato_dias, period.fecha, period.cantidad_ordenes, period.suma_montos]]
+      console.log(format)
+      setTable2Data(format);
+     }
+    for(const period of monthlyInfo) {
+      const format = [[period.formato_meses, period.fecha_inicio, period.fecha_termino, period.cantidad_ordenes, period.suma_montos]]
+      console.log(format)
+      setTable3Data(format);
+    }
+    for(const period of yearlyInfo) {
+      const format = [[period.formato_anios, period.fecha_inicio, period.fecha_termino, period.cantidad_ordenes, period.suma_montos]]
+      console.log(format)
+      setTable4Data(format);
+    }
+    // Resto de tu código
+  };
+
+  const setCharts = (data) => {
+    const {weekGraph, month} = data;
+
+  }
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
 
-  
-  const table1Data = [
-    ['08:00', '21/06/2023', '1', '$ 3000'],
-    ['09:00', '21/06/2023', '1', '$ 3000'],
-    ['10:00', '21/06/2023', '1', '$ 3000'],
-    ['10:00', '21/06/2023', '1', '$ 3000'],
-    ['10:00', '21/06/2023', '1', '$ 3000'],
-    ['10:00', '21/06/2023', '1', '$ 3000'],
-    ['10:00', '21/06/2023', '1', '$ 3000'],
-  ];
 
-  const table2Data = [
-    ['Hace 1 días', '21/06/2023', '8', '$3000'],
-    ['Hace 2 días', '21/06/2023', '8', '$3000'],
-    ['Hace 3 días', '21/06/2023', '8', '$3000'],
-    ['Hace 4 días', '21/06/2023', '8', '$3000'],
-    ['Hace 5 días', '21/06/2023', '8', '$3000'],
-  ];
-
-  const table3Data = [
-    ['Enero', '01/01/2023', '01/01/2023', '20', '$2000'],
-    ['Enero', '01/01/2023', '01/01/2023', '20', '$2000'],
-    ['Enero', '01/01/2023', '01/01/2023', '20', '$2000'],
-    ['Enero', '01/01/2023', '01/01/2023', '20', '$2000'],
-    ['Enero', '01/01/2023', '01/01/2023', '20', '$2000'],
-  ];
-
-  const table4Data = [
-    ['2023', '01/01/2023', '01/01/2023', '6', '$3000'],
-    ['2023', '01/01/2023', '01/01/2023', '6', '$3000'],
-    ['2023', '01/01/2023', '01/01/2023', '6', '$3000'],
-    ['2023', '01/01/2023', '01/01/2023', '6', '$3000'],
-    ['2023', '01/01/2023', '01/01/2023', '6', '$3000'],
-  ];
-
-  const dataChartDay = {
-    labels: ['Lun', 'Mar', 'Mie', 'Jue', 'Vie'],
-    datasets: [
-      {
-        label: 'Ingresos',
-        data: [100, 200, 150, 300, 250],
-        backgroundColor: 'rgba(155, 80, 192, 0.6)',
-        borderColor: 'rgba(155, 80, 192, 1)',
-        borderWidth: 2,
-      },
-    ],
-  };
-
-  const dataChartWeek = {
-    labels: ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4'],
+  const dataChart2 = {
+    labels: weekLabels,
     datasets: [
       {
         label: 'Ingresos semanales',
-        data: [100, 200, 150, 300],
+        data: weekIncome,
         backgroundColor: 'rgba(155, 80, 192, 0.6)',
         borderColor: 'rgba(155, 80, 192, 1)',
         borderWidth: 2,
@@ -96,12 +101,12 @@ function IncomeView() {
     ],
   };
 
-  const dataChartMonth = {
-    labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun'],
+  const dataChart3 = {
+    labels: monthLabels,
     datasets: [
       {
         label: 'Ingresos mensuales',
-        data: [100, 200, 150, 300, 250, 350],
+        data: monthIncome,
         backgroundColor: 'rgba(155, 80, 192, 0.6)',
         borderColor: 'rgba(155, 80, 192, 1)',
         borderWidth: 2,
@@ -110,11 +115,11 @@ function IncomeView() {
   };
 
   const dataChartYear = {
-    labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun'],
+    labels: twelveMonthLabels,
     datasets: [
       {
         label: 'Ingresos mensuales',
-        data: [100, 200, 150, 300, 250, 350],
+        data: twelveMonthIncome,
         backgroundColor: 'rgba(155, 80, 192, 0.6)',
         borderColor: 'rgba(155, 80, 192, 1)',
         borderWidth: 2,
@@ -124,122 +129,35 @@ function IncomeView() {
 
   const renderContent = () => {
     switch (activeTab) {
-      case 'Dia':
-        return <div className='flex flex-col lg:grid lg:grid-cols-2 gap-4'>
-          <div className='w-full flex flex-col border-2 border-gray-200 rounded-md gap-4 shadow-md' style={{ height:'57vh' }}>
-            <Table data={table1Data} headers={['Hora', 'Fecha', 'Cédulas', 'Monto Total']} numColumns={4} />
-          </div>
-          <div className='w-full flex flex-col p-4 border-2 border-gray-200 rounded-md gap-4 shadow-md'>
-            <span className='text-base text-left font-Foco-Corp-Bold text-gris'>Ingresos totales de hoy</span>
-            <BarChart data={dataChartDay} chartId="chart1" />
-          </div>
-        </div>
       case 'semana':
         return <div className='flex flex-col lg:grid lg:grid-cols-2 gap-4'>
           <div className='w-full flex flex-col' style={{ height:'57vh' }}>
-            <div>
-              <span className='text-xl text-left font-Foco-Corp-Bold text-morado'>Filtrar por fecha</span>
-              <div className='flex flex-col lg:grid lg:grid-cols-2 gap-5 mt-2 mb-4'>
-                <div className="flex flex-col w-full">
-                  <label className="font-Foco-Corp-Bold text-gris text-lg mb-1">
-                    Fecha Inicio
-                  </label>
-                  <DatePickerInput
-                    setSelectedDate={''}
-                    selectedDate={''}
-                  />
-                </div>
-                <div className="flex flex-col">
-                  <label className="font-Foco-Corp-Bold text-gris text-lg mb-1">
-                    Fecha Termino
-                  </label>
-                  <DatePickerInput
-                    setSelectedDate={''}
-                    selectedDate={''}
-                  />
-                </div>
-              </div>
-            </div>
             <div className='w-full flex flex-col border-2 border-gray-200 rounded-md gap-4 shadow-md overflow-auto'>
               <Table data={table2Data} headers={['Día', 'Fecha', 'Cédulas', 'Monto Total']} numColumns={4} />
             </div>
           </div>
           <div className='w-full flex flex-col p-4 border-2 border-gray-200 rounded-md gap-4 shadow-md'>
             <span className='text-base text-left font-Foco-Corp-Bold text-gris'>Ingresos totales de la semana</span>
-            <BarChart data={dataChartWeek} chartId="chart1" />
+            <BarChart data={dataChart2} chartId="chart1" />
           </div>
         </div>;
       case 'mes':
         return <div className='flex flex-col lg:grid lg:grid-cols-2 gap-4'>
           <div className='w-full flex flex-col' style={{ height:'57vh' }}>
-            <div>
-              <span className='text-xl text-left font-Foco-Corp-Bold text-morado'>Filtrar por fecha</span>
-              <div className='flex flex-col lg:grid lg:grid-cols-2 gap-5 mt-2 mb-4'>
-                <div className="w-full ">
-                  <div className="flex flex-col w-full">
-                    <label className="font-Foco-Corp-Bold text-gris text-lg mb-1">
-                      Fecha Inicio
-                    </label>
-                    <DatePickerInput
-                      setSelectedDate={''}
-                      selectedDate={''}
-                    />
-                  </div>
-                </div>
-              <div className="w-full">
-                <div className="flex flex-col">
-                  <label className="font-Foco-Corp-Bold text-gris text-lg mb-1">
-                    Fecha Termino
-                  </label>
-                  <DatePickerInput
-                    setSelectedDate={''}
-                    selectedDate={''}
-                  />
-                </div>
-              </div>
-              </div>
-            </div>
             <div className='w-full flex flex-col border-2 border-gray-200 rounded-md gap-4 shadow-md overflow-auto'>
               <Table data={table3Data} headers={['Mes', 'Fecha inicio', 'Fecha final', 'Cédulas', 'Monto Total']} numColumns={5} />
             </div>
           </div>
           <div className='w-full flex flex-col p-4 border-2 border-gray-200 rounded-md gap-4 shadow-md'>
             <span className='text-base text-left font-Foco-Corp-Bold text-gris'>Ingresos totales del mes</span>
-            <BarChart data={dataChartMonth} chartId="chart1" />
+            <BarChart data={dataChart3} chartId="chart1" />
           </div>
         </div>;
       case 'anual':
         return <div className='flex flex-col lg:grid lg:grid-cols-2 gap-4'>
           <div className='w-full flex flex-col' style={{ height:'57vh' }}>
-            <div>
-              <span className='text-xl text-left font-Foco-Corp-Bold text-morado'>Filtrar por fecha</span>
-              <div className='flex flex-col lg:grid lg:grid-cols-2 gap-5 mt-2 mb-4'>
-                <div className="w-full ">
-                  <div className="flex flex-col w-full">
-                    <label className="font-Foco-Corp-Bold text-gris text-lg mb-1">
-                      Fecha Inicio
-                    </label>
-                    <DatePickerInput
-                      setSelectedDate={''}
-                      selectedDate={''}
-                    />
-                  </div>
-                </div>
-              <div className="w-full">
-                <div className="flex flex-col">
-                  <label className="font-Foco-Corp-Bold text-gris text-lg mb-1">
-                    Fecha Termino
-                  </label>
-                  <DatePickerInput
-                    setSelectedDate={''}
-                    selectedDate={''}
-                  />
-                </div>
-              </div>
-              </div>
-            </div>
             <div className='w-full flex flex-col border-2 border-gray-200 rounded-md gap-4 shadow-md overflow-auto'>
-              <Table data={table4Data} headers={['Año', 'Fecha inicio', 'Fecha final', 'Cédulas', 'Monto Total']} numColumns={5} />
+              <Table data={table4Data} headers={['Fecha inicio', 'Fecha final', 'Cédulas', 'Monto Total']} numColumns={4} />
             </div>
           </div>
           <div className='w-full flex flex-col p-4 border-2 border-gray-200 rounded-md gap-4 shadow-md'>
@@ -267,12 +185,7 @@ function IncomeView() {
               {isOpen ? <IoGrid className="text-3xl text-verde hover:text-opacity-80" /> : <IoGrid className="text-3xl text-naranja hover:text-opacity-80" />}
             </button>
           </div>
-          <div className="flex flex-col md:grid md:grid-cols-2 xl:grid-cols-4 gap-x-4 gap-y-4 px-4 lg:px-8 pt-6">
-            <TabButton
-              label={{ count: `$${data?.topInfo[0].total_pagado_hoy || 0}`, text: 'Ingresos del día' }}
-              isActive={activeTab === 'Dia'}
-              onClick={() => handleTabClick('Dia')}
-            />
+          <div className="flex flex-col md:grid md:grid-cols-2 xl:grid-cols-3 gap-x-4 gap-y-4 px-4 lg:px-8 pt-6">
             <TabButton
               label={{ count: `$${data?.topInfo[0].total_pagado_semana_actual || 0}`, text: 'Ingresos Semanales' }}
               isActive={activeTab === 'semana'}
