@@ -1,5 +1,16 @@
 import React from 'react';
 
+/**
+ * @param {JSON} selectedOption 
+ * @param {Date} selectBeginDate 
+ * @param {Date} selectEndDate 
+ * @param {Array<String>} selectedDays 
+ * @param {Function} agregaConceptoPago 
+ * @returns {JSX.Element}
+ * @description renderiza un botón que se deshabilita si no se ha seleccionado algun concepto
+ * de pago; en caso de que el concepto sea diferente a pesos, se deshabilita si no se han seleccionado fechas
+ * y dias.
+ * */
 const DisableableButton = ({
   selectedOption,
   selectBeginDate,

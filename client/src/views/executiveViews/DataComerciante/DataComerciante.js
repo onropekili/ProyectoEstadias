@@ -1,15 +1,15 @@
 import React, {useEffect, useState} from "react";
-import Header from "../../components/Header";
+import Header from "../../../components/Header";
 import {RiUser3Fill, RiMenuFill} from "react-icons/ri";
 import {MdStore} from "react-icons/md";
 import Select from "react-select";
-import selectStylesForm from "../../components/StyleSelectForm";
+import selectStylesForm from "../../../components/StyleSelectForm";
 import Swal from "sweetalert2";
 import {useNavigate, useParams} from "react-router-dom";
-import Modal from "../../components/Modal"; // Importa el componente Modal
+import Modal from "../../../components/Modal";
 import axios from "axios";
-import { setDateFormatDDMMYY} from "../../components/formatDates";
-import useParamsDataComerciante from "../../customHooks/useParamsDataComerciante";
+import { setDateFormatDDMMYY} from "../../../components/formatDates";
+import useParamsDataComerciante from "../../../customHooks/useParamsDataComerciante";
 
 const DataComerciante = () => {
     //*STARTS THE BLOCK FOR DECLARING STATES
@@ -347,7 +347,6 @@ const DataComerciante = () => {
         },
       }).then((result) => {
         if (result.isConfirmed) {
-          //TODO Lógica para eliminar el comerciante
           axios.put(`http://${process.env.REACT_APP_HOST}:4000/baja`, {
             folio: folio
           }).then((res) => {

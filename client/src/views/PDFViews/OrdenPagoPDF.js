@@ -21,8 +21,7 @@ const TramiteImprimible = () => {
   const unidades = new Map();
   unidades.set(1, 'pesos');
   unidades.set(2, 'pesos por metro cuadrado por día');
-  // const setFormatData = (data) => {
-  //   const 
+
 
   useEffect(() => {
     axios.get(`http://${process.env.REACT_APP_HOST}:4000/getInfoOrdenPago?ref=${referencia}`)
@@ -32,7 +31,6 @@ const TramiteImprimible = () => {
         const EndDate = res.data.data.fecha_final;
         const selectedDays = res.data.data.dias.split(',');
         setData(res.data.data);
-        // setFormatData(res.data.data);
         setFechaActual(setDateFormat(res.data.data.fecha_actual));
         if (BeginDate && EndDate && selectedDays.length > 0) {
           let diasTotales = 0;

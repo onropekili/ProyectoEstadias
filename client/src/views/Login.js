@@ -3,7 +3,7 @@ import axios from "axios";
 import { showInfoAlert, showErrorAlert } from "../components/SwAlerts";
 import { useNavigate } from "react-router-dom";
 
-export default function Login({ userData, setUserData }) {
+export default function Login({}) {
   
   useEffect(() => {
     localStorage.clear();
@@ -51,12 +51,7 @@ export default function Login({ userData, setUserData }) {
           let isCorrect = 200;
 
           if (response.status === isCorrect) {
-            console.log(User.tipo_usuario);
             localStorage.setItem('tipo_usuario', JSON.stringify(User.tipo_usuario));
-            setUserData({
-              id_usuario: User.id_usuario,
-              tipo_usuario: User.tipo_usuario,
-            });
             if (User.tipo_usuario === admin) {
               navigate("/DashBoard_A", { state: { data: User } });
             } else {

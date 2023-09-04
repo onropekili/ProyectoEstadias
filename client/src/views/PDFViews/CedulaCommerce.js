@@ -17,7 +17,7 @@ const TramiteImprimible = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const folioValue = folio; // Reemplaza YOUR_FOLIO_VALUE con el valor del folio que deseas consultar
+    const folioValue = folio;
 
     axios
       .get(`http://${process.env.REACT_APP_HOST}:4000/getCedulaData`, {

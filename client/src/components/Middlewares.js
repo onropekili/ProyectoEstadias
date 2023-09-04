@@ -14,10 +14,10 @@ export const ExecutiveProtectedRoute = ({children}) => {
   }
 };
 
-export const LogOut = ({ setuserData, children }) => {
+export const LogOut = ({ children }) => {
   useEffect(() => {
     localStorage.clear()
-  }, [setuserData]);
+  }, []);
   return children;
 };
 

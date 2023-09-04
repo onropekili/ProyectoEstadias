@@ -1,21 +1,24 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import * as React from "react";
 import Login from "./views/Login";
-import DashBoard_Executive from "./views/executiveViews/DashBoard_Executive";
+import DashBoard_Executive from "./views/executiveViews/DashboardExecutive/DashBoard_Executive";
 import DashBoard_Admin from "./views/adminViews/DashBoard_Admin";
-import NewComercianteView from "./views/executiveViews/NewComercianteView";
-import NewComercioView from "./views/executiveViews/NewCommerce";
-import OrdenPago from "./views/executiveViews/OrdenPago";
+import NewComercianteView from "./views/executiveViews/NewComerciante/NewComercianteView";
+import NewComercioView from "./views/executiveViews/NewCommerce/NewCommerce";
+import OrdenPago from "./views/executiveViews/OrdenPago/OrdenPago";
 import TerceraEdad from "./views/PDFViews/TerceraEdad";
 import OrdenPagoPDF from "./views/PDFViews/OrdenPagoPDF";
 import IncomeView from "./views/adminViews/IncomeView";
-import { LogOut, ExecutiveProtectedRoute, AdminProtectedRoute } from "./components/Middlewares";
+import {
+  LogOut,
+  ExecutiveProtectedRoute,
+  AdminProtectedRoute,
+} from "./components/Middlewares";
 import { useState } from "react";
-import DataComerciante from "./views/executiveViews/DataComerciante";
+import DataComerciante from "./views/executiveViews/DataComerciante/DataComerciante";
 import Cedulacommerce from "./views/PDFViews/CedulaCommerce";
 import BajaCommerce from "./views/PDFViews/BajaCommerce";
 export default function App() {
-  
   const [userData, setuserData] = useState(null);
 
   return (
@@ -24,8 +27,8 @@ export default function App() {
         <Route
           path="/"
           element={
-            <LogOut setuserData={setuserData}>
-              <Login userData={userData} setUserData={setuserData} />
+            <LogOut >
+              <Login />
             </LogOut>
           }
         />
@@ -33,28 +36,24 @@ export default function App() {
         <Route
           path="/DashBoard_E"
           element={
-            <ExecutiveProtectedRoute user={userData}>
+            <ExecutiveProtectedRoute>
               <DashBoard_Executive />
             </ExecutiveProtectedRoute>
           }
         />
-        <Route path="/DashBoard_A" element={
-          <AdminProtectedRoute>
-        <DashBoard_Admin/>
-        </AdminProtectedRoute>} />
         <Route
           path="/Registrar-comerciante"
           element={
-            <ExecutiveProtectedRoute >
-              <NewComercianteView currentView={'NuevoComerciante'}/>
+            <ExecutiveProtectedRoute>
+              <NewComercianteView currentView={"NuevoComerciante"} />
             </ExecutiveProtectedRoute>
           }
         />
         <Route
           path="/Registrar-comerciante-evento"
           element={
-            <ExecutiveProtectedRoute >
-              <NewComercianteView currentView={'NuevoComercianteEventual'}/>
+            <ExecutiveProtectedRoute>
+              <NewComercianteView currentView={"NuevoComercianteEventual"} />
             </ExecutiveProtectedRoute>
           }
         />
@@ -62,72 +61,80 @@ export default function App() {
           path="/Registrar-comercio"
           element={
             <ExecutiveProtectedRoute>
-              <NewComercioView currentView={'NuevoComerciante'}/>
+              <NewComercioView currentView={"NuevoComerciante"} />
             </ExecutiveProtectedRoute>
           }
         />
         <Route
           path="/Registrar-comercio-evento"
           element={
-            <ExecutiveProtectedRoute >
-              <NewComercioView currentView={'NuevoComercianteEventual'}/>
+            <ExecutiveProtectedRoute>
+              <NewComercioView currentView={"NuevoComercianteEventual"} />
             </ExecutiveProtectedRoute>
           }
         />
         <Route
           path="/Orden-de-Pago"
           element={
-             <ExecutiveProtectedRoute >
+            <ExecutiveProtectedRoute>
               <OrdenPago />
-             </ExecutiveProtectedRoute>
+            </ExecutiveProtectedRoute>
           }
         />
         <Route
           path="/TerceraEdad/:id_comerciante"
           element={
-             <ExecutiveProtectedRoute >
+            <ExecutiveProtectedRoute>
               <TerceraEdad />
-             </ExecutiveProtectedRoute>
+            </ExecutiveProtectedRoute>
           }
         />
         <Route
           path="/OrdenPagoPDF"
           element={
-             <ExecutiveProtectedRoute >
+            <ExecutiveProtectedRoute>
               <OrdenPagoPDF />
-             </ExecutiveProtectedRoute>
+            </ExecutiveProtectedRoute>
           }
         />
         <Route
           path="/Datos-Comerciante-Comercio/:folio"
           element={
-             <ExecutiveProtectedRoute >
+            <ExecutiveProtectedRoute>
               <DataComerciante />
-             </ExecutiveProtectedRoute>
+            </ExecutiveProtectedRoute>
           }
         />
         <Route
           path="/Cedula-de-comercio/:folio"
           element={
-             <ExecutiveProtectedRoute >
-              <Cedulacommerce/>
-             </ExecutiveProtectedRoute>
+            <ExecutiveProtectedRoute>
+              <Cedulacommerce />
+            </ExecutiveProtectedRoute>
           }
         />
         <Route
           path="/Formato-baja-comercio/:folio"
           element={
-             <ExecutiveProtectedRoute >
-              <BajaCommerce/>
-             </ExecutiveProtectedRoute>
+            <ExecutiveProtectedRoute>
+              <BajaCommerce />
+            </ExecutiveProtectedRoute>
+          }
+        />
+        <Route
+          path="/DashBoard_A"
+          element={
+            <AdminProtectedRoute>
+              <DashBoard_Admin />
+            </AdminProtectedRoute>
           }
         />
         <Route
           path="/Ingresos-Totales"
           element={
-            // <ExecutiveProtectedRoute user={userData}>
-              <IncomeView/>
-            // </ExecutiveProtectedRoute>
+            <AdminProtectedRoute>
+              <IncomeView />
+            </AdminProtectedRoute>
           }
         />
       </Routes>
