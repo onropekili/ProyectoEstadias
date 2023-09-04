@@ -107,13 +107,12 @@ const OrdenPago = () => {
     function calculateTemporaryTotal(conceptosPago, diasTotales, merchant, totalMetraje) {
       let temporaryTotal = 0;
       const isTerceraEdad = merchant?.tercera_edad;
-
       for (const concepto of conceptosPago) {
         if (concepto.unidad === "PESOS") {
-          temporaryTotal += concepto.importe * diasTotales;
+          console.log(concepto.importe)
+          temporaryTotal += concepto.importe;
         } else {
           if (isTerceraEdad) {
-            console.log("tercera edad");
             temporaryTotal += 0;
           } else {
             temporaryTotal += concepto.importe * totalMetraje * diasTotales;
@@ -124,17 +123,15 @@ const OrdenPago = () => {
     }
 
     const calculateTotal = useMemo(() => {
-      if (!selectBeginDate || !selectEndDate || selectedDays.length < 0) {
+      if (conceptosPago[0]?.unidad !== 'PESOS' && ( !selectBeginDate || !selectEndDate || selectedDays.length < 0)) {
         return;
       }
-
       const diasTotales = calculateTotalDaysWorked(selectBeginDate, selectEndDate, selectedDays);
       setTotalDaysWorked(diasTotales);
 
       const temporaryTotal = calculateTemporaryTotal(conceptosPago, diasTotales, merchant, totalMetraje);
-      console.log(temporaryTotal);
       setTotal(temporaryTotal);
-    }, [selectBeginDate, selectEndDate, selectedDays, conceptosPago, merchant, totalMetraje]);
+    }, [selectBeginDate, selectEndDate, selectedDays, conceptosPago]);
 
 
     const setListaDeConceptosAgregados = (conceptosPago) => {
