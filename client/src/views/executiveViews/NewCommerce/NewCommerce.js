@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import Header from "../../../components/Header";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -120,6 +120,7 @@ const NewComercioView = () => {
                     Comercios en festividades
                   </option>
                 </select>
+
               </div>
               <div className="flex flex-col mb-4 col-span-1">
                 <label

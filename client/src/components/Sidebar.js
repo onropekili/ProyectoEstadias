@@ -21,7 +21,7 @@ const Sidebar = ({ isOpen }) => {
               <span className='text-xl font-Foco-Corp-Bold'>Ingresos</span>
             </li>
           </Link>
-          <Link to="/">
+          <Link to="/DashBoard_A">
             <li className="flex flex-col items-center cursor-pointer text-gris hover:text-azul hover:bg-gray-50 px-2 py-4">
               <IoStorefrontSharp className="text-3xl mb-2" />
               <span className='text-xl font-Foco-Corp-Bold'>Comercios</span>
