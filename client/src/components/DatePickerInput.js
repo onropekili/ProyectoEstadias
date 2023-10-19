@@ -3,6 +3,12 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { FiCalendar } from 'react-icons/fi';
 
+/**
+ * @param setSelectedDate
+ * @param selectedDate
+ * @returns {JSX.Element}
+ * @description Este componente renderiza un input con un calendario para seleccionar una fecha
+ */
 const DatePickerInput = ({setSelectedDate, selectedDate}) => {
 
   const handleDateChange = (date) => {

@@ -141,7 +141,7 @@ const OrdenPago = () => {
           importe={concepto.importe}
           unidad={concepto.unidad}
           metraje={shop ? shop.metraje : ""}
-          totalDaysWorked={totalDaysWorked}
+          diasTotalesTrabajados={totalDaysWorked}
         />
       ));
       setListaDeConceptos(ListaDeConceptosAgregados);

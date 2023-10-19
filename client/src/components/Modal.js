@@ -13,8 +13,6 @@ const Modal = ({ closeModal }) => {
 
   const handleRefrendarClick = (event) => {
     setPendding(false);
-    //wait 10 seconds to simulate the api call
-    setTimeout(() => {}, 10000);
     
     event.preventDefault();// Evitar el envío del formulario y la recarga de la página
 
@@ -24,16 +22,14 @@ const Modal = ({ closeModal }) => {
     // Obtener el valor del input
     const numeroReferencia = inputNumeroReferencia.value;
 
-    
     axios.get(`http://${process.env.REACT_APP_HOST}:4000/refrendarComercio?numeroReferencia=${numeroReferencia}`)
       .then((response) => {
-        console.log(response.data);
         setPendding(true);
         if (!(isNaN(response.data))) {
           openCedula(response.data);
           closeModal();
         } else if (response.data === 'Comerciante refrendado') {
-          reloadWindow();
+          refrendarComerciante();
           closeModal();
         } else if (response.data === 'Orden de pago pagada') {
           otherCases();
@@ -50,7 +46,7 @@ const Modal = ({ closeModal }) => {
     }
   };
 
-  const reloadWindow = () => {
+  const refrendarComerciante = () => {
     Swal.fire({
       title: 'Comerciante refrendado',
       text: 'El comerciante ha sido refrendado exitosamente.',

@@ -4,24 +4,22 @@ import { useNavigate } from 'react-router-dom';
 
 const currentDate = new Date();
 
+/**
+ * @param {Number} folio
+ * @param {String} nombre
+ * @param {String} giroActivo
+ * @param {String} observaciones
+ * @param {String} fecha_termino
+ * @param {Boolean} tercera_edad
+ * @returns {JSX.Element}
+ * @description Este componente renderiza la información de un comerciante
+ * @example <InfoComponent folio={1} nombre="Juan" giroActivo="Comercio" observaciones="Sin observaciones" fecha_termino="2021-01-01" tercera_edad={false} />
+ */
 export const InfoComponent = ({ folio, nombre, giroActivo, observaciones, fecha_termino, tercera_edad }) => {
 
     const navigate = useNavigate();
-
-    let colorAll = "";
-
-    if (observaciones) {
-        colorAll = 'rojo ring-rojo fill-rojo'; // Rojo
-    } else if (tercera_edad) {
-        colorAll = 'azul ring-azul fill-azul'; // Azul
-    } else if (new Date(fecha_termino) >= currentDate) {
-        colorAll = 'verde ring-verde fill-verde'; // Verde
-    } else {
-        colorAll = 'gris ring-gris fill-gris'; // Gris
-    }
-
-    const observacionesText = observaciones ? observaciones : 'Sin observaciones';
-
+    const colorAll = whatColor({ observaciones, tercera_edad, fecha_termino });
+    const observacionesText = observaciones || 'Sin observaciones';
     const formattedFechaTermino = format(new Date(fecha_termino), 'dd/MM/yyyy');
 
     const verTodo = () => {
@@ -71,3 +69,17 @@ export const InfoComponent = ({ folio, nombre, giroActivo, observaciones, fecha_
         </div>
     );
 };
+
+const whatColor = ({ observaciones, tercera_edad, fecha_termino }) => {
+    let colorAll;
+    if (observaciones) {
+        colorAll = 'rojo ring-rojo fill-rojo'; // Rojo
+    } else if (tercera_edad) {
+        colorAll = 'azul ring-azul fill-azul'; // Azul
+    } else if (new Date(fecha_termino) >= currentDate) {
+        colorAll = 'verde ring-verde fill-verde'; // Verde
+    } else {
+        colorAll = 'gris ring-gris fill-gris'; // Gris
+    }
+    return colorAll;
+}

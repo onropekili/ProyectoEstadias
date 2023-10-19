@@ -2,20 +2,9 @@ import React from 'react'
 import logoEmpresa from '../assets/images/logoEmpresa.jpg';
 import DashBoard_Ejecutivo from '../views/executiveViews/DashboardExecutive/DashBoard_Executive';
 import {useNavigate} from "react-router-dom";
-export default function Header({ useButton, currentPage }) {
+export default function Header({ currentPage }) {
   const navigate = useNavigate();
-  let title = "";
-
-  if (currentPage === DashBoard_Ejecutivo) {
-    useButton = true;
-    title = "Cerrar sesión"
-  } else if (currentPage === 'NuevoComerciante') {
-    useButton = false;
-    title = "Alta en vía pública";
-  } else if (currentPage === 'NuevoComercianteEventual') {
-    useButton = false;
-    title = "Alta por evento";
-  }
+  const {useButton, title} = whatToRender({currentPage});
 const cerrarSesion = () => {
     navigate("/");
 }
@@ -55,4 +44,20 @@ const cerrarSesion = () => {
       </div>
     </header>
   )
+}
+
+const whatToRender = ({currentPage}) => {
+  let useButton;
+  let title;
+  if (currentPage === DashBoard_Ejecutivo) {
+    useButton = true;
+    title = "Cerrar sesión"
+  } else if (currentPage === 'NuevoComerciante') {
+    useButton = false;
+    title = "Alta en vía pública";
+  } else if (currentPage === 'NuevoComercianteEventual') {
+    useButton = false;
+    title = "Alta por evento";
+  }
+  return {useButton, title}
 }

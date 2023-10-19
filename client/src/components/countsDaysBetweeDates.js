@@ -1,5 +1,13 @@
 const moment = require("moment");
-
+/**
+ * Cuenta los días de la semana que hay entre dos fechas
+ * @param {Date} fechaInicialSinFormato
+ * @param {Date} fechaFinalSinFormato
+ * @param {Number} diaDeLaSemana
+ * @returns {number}
+ * @description Esta función hace el conteo de cuantas veces se repite un día de la semana entre dos fechas dadas
+ * @example contarDiasDeLaSemana('2021-01-01', '2021-01-31', 'Lun') // 5
+ */
 const contarDiasDeLaSemana = (
   fechaInicialSinFormato,
   fechaFinalSinFormato,
@@ -21,6 +29,11 @@ const contarDiasDeLaSemana = (
   return contador;
 };
 
+/**
+ * @param {Time} fechaSinFormato
+ * @description Esta función formatea la fecha a la mostrada al usuario
+ * @returns {String}
+ */
 const formatearfechas = (fechaSinFormato) => {
   const fecha = new Date(fechaSinFormato);
   const anio = fecha.getFullYear();
